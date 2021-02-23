@@ -690,7 +690,7 @@ public class GraphicsRunner extends JPanel implements MouseListener
 		    	    buildDirection(game.getCurrentDirection());
 		    	    if(game.canPlay())
 		    	    {
-		    	    	buildHistory(game.getLastPlayerTurn());
+		    	    	buildHistory(game.getLastPlayerTurn("play"));
 		    	    }
 		    	    buildColorTracker(game.showTopCard().getColor().toString());
 		    	    if(gamestate.isOver())
