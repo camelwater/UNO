@@ -30,12 +30,19 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 	private int cardHeight = 180;
 	private int cardWidth = 130;
 	private int page = 1;
+	private int page2 = 1;
+	private int page3 = 1;
+	private int page4 = 1;
+	
+	private int maxPage = 0;
+	private int maxPage2 = 0;
+	private int maxPage3 = 0;
+	private int maxPage4 = 0;
 	
 	private boolean colorPickerDraw = false;
 	private boolean colorPickerPlay = false;
 	private int colorPickerPlayCoord = 517;
 	private int wildIndex = 0;
-	private int maxPage = 0;
 	
 	private boolean start = true;
 	private boolean enterNames = false;
@@ -486,7 +493,60 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 			
 		}
 		
-		//make arrows for gameEndedBack
+		if(gameEndedBack)
+		{
+			maxPage2 = Math.max(1,(int)(Math.ceil((double)game.playerList.get(1).getHandSize()/7)));
+			maxPage3 = Math.max(1,(int)(Math.ceil((double)game.playerList.get(2).getHandSize()/7)));
+			maxPage4 = Math.max(1,(int)(Math.ceil((double)game.playerList.get(3).getHandSize()/7)));
+			
+			if (page3!=1)
+			{
+			
+				g.setColor(Color.LIGHT_GRAY);
+				g.setFont(new Font("Roboto", Font.BOLD, 100));
+				g.drawString(">",1000, 175);
+				
+			}
+			if (page3!=maxPage)
+			{
+				g.setColor(Color.LIGHT_GRAY);
+				g.setFont(new Font("Roboto", Font.BOLD, 100));
+				g.drawString("<",500, 175);
+				
+			}
+			
+			if (page2!=1)
+			{
+			
+				g.setColor(Color.LIGHT_GRAY);
+				g.setFont(new Font("Roboto", Font.BOLD, 100));
+				g.drawString("^",180, 350);
+				
+			}
+			if (page2!=maxPage)
+			{
+				g.setColor(Color.LIGHT_GRAY);
+				g.setFont(new Font("Roboto", Font.BOLD, 100));
+				g.drawString("v",180, 750);
+				
+			}
+			
+			if (page4!=1)
+			{
+			
+				g.setColor(Color.LIGHT_GRAY);
+				g.setFont(new Font("Roboto", Font.BOLD, 100));
+				g.drawString("v", 1600, 350);
+				
+			}
+			if (page4!=maxPage)
+			{
+				g.setColor(Color.LIGHT_GRAY);
+				g.setFont(new Font("Roboto", Font.BOLD, 100));
+				g.drawString("^", 1600, 750);
+				
+			}
+		}
 	}
 	public void paintCPUHands(Graphics g, int x, int y)
 	{
@@ -1592,36 +1652,37 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 					page+=1;
 					repaint();
 				}
-//				else if(e.getX()>= 385 && e.getX()<= 440 && e.getY()>=850 && e.getY()<=937 && page2>1 && gameEndedBack)
-//				{
-//					page2-=1;
-//					repaint();
-//				}
-//				else if(e.getX()>= 1360 && e.getX()<=1415 && e.getY()>=850 && e.getY()<=937 && page2<maxPage2 && gameEndedBack)
-//				{
-//					page2+=1;
-//					repaint();
-//				}
-//				else if(e.getX()>= 385 && e.getX()<= 440 && e.getY()>=850 && e.getY()<=937 && page3>1 && gameEndedBack)
-//				{
-//					page3-=1;
-//					repaint();
-//				}
-//				else if(e.getX()>= 1360 && e.getX()<=1415 && e.getY()>=850 && e.getY()<=937 && page3<maxPage3 && gameEndedBack)
-//				{
-//					page3+=1;
-//					repaint();
-//				}
-//				else if(e.getX()>= 385 && e.getX()<= 440 && e.getY()>=850 && e.getY()<=937 && page4>1 && gameEndedBack)
-//				{
-//					page4-=1;
-//					repaint();
-//				}
-//				else if(e.getX()>= 1360 && e.getX()<=1415 && e.getY()>=850 && e.getY()<=937 && page4<maxPage4 && gameEndedBack)
-//				{
-//					page4+=1;
-//					repaint();
-//				}
+				
+				else if(e.getX()>= 150 && e.getX()<= 200 && e.getY()>=325 && e.getY()<=375 && page2>1 && gameEndedBack)
+				{
+					page2-=1;
+					repaint();
+				}
+				else if(e.getX()>= 150 && e.getX()<=200 && e.getY()>=725 && e.getY()<=775 && page2<maxPage2 && gameEndedBack)
+				{
+					page2+=1;
+					repaint();
+				}
+				else if(e.getX()>= 975 && e.getX()<= 1025 && e.getY()>=150 && e.getY()<=200 && page3>1 && gameEndedBack)
+				{
+					page3-=1;
+					repaint();
+				}
+				else if(e.getX()>= 475 && e.getX()<=525 && e.getY()>=150 && e.getY()<=200 && page3<maxPage3 && gameEndedBack)
+				{
+					page3+=1;
+					repaint();
+				}
+				else if(e.getX()>=1575  && e.getX()<= 1625 && e.getY()>= 725 && e.getY()<=775 && page4>1 && gameEndedBack)
+				{
+					page4-=1;
+					repaint();
+				}
+				else if(e.getX()>= 1575 && e.getX()<=1625 && e.getY()>=325 && e.getY()<=375 && page4<maxPage4 && gameEndedBack)
+				{
+					page4+=1;
+					repaint();
+				}
 				
 			}
 		}
