@@ -3,6 +3,7 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -19,6 +20,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.plaf.synth.SynthSeparatorUI;
+
 import java.util.*;
 
 public class UnoGraphics extends JPanel implements MouseListener, MouseMotionListener
@@ -26,6 +28,12 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 	JFrame frame;
 	Board game;
 	GameState gamestate;
+	
+	private double scrWidth = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+	private double scrHeight = Toolkit.getDefaultToolkit().getScreenSize().getHeight(); 
+	
+	private double wFactor = scrWidth/1920;
+	private double hFactor = scrHeight/1080;
 	
 	private int cardHeight = 180;
 	private int cardWidth = 130;
@@ -88,16 +96,15 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 		addMouseListener(this);
 		addMouseMotionListener(this);
 		
-		try {
-			frame.setIconImage(ImageIO.read(getClass().getResource("card_back_large.png")));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+//			frame.setIconImage(ImageIO.read(getClass().getResource("card_back_large.png")));
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		frame.add(this);
-		frame.setSize(1920,1080);
+		frame.setSize((int)scrWidth, (int)scrHeight);
 		frame.setResizable(true);
-		//frame.setFocusable(true);
 		frame.setAutoRequestFocus(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
@@ -115,49 +122,70 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 	{
 		cpu = x;
 	}
+	public int x(int x)
+	{
+		x+=25;
+		return (int)(x*wFactor);
+	}
+	public int font(int s)
+	{
+		return (int)(s*wFactor);
+	}
+	public int xs(int s)
+	{
+		return (int)(s*wFactor);
+	}
+	public int y(int y)
+	{
+		return (int)(y*hFactor);
+	}
+	public int ys(int y)
+	{
+		return (int)(y*hFactor);
+	}
 	public void paintComponent(Graphics g)
 	{
 		if(start)
 		{
 			g.setColor(Color.DARK_GRAY);
-			g.fillRect(0, 0, 1920, 1080);
+			g.fillRect(0, 0, xs(1920), ys(1080));
 			g.setColor(Color.red);
-			g.setFont(new Font("Trebuchet", Font.BOLD, 75));
-			g.drawString("UNO", 850, 200);
-			try {
-				g.drawImage(ImageIO.read(getClass().getResource("card_back_alt.png")), 867, 225, cardWidth, cardHeight, null);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			g.setFont(new Font("Trebuchet", Font.BOLD, font(75)));
+			g.drawString("UNO", x(850), y(200));
+//			try {
+//				g.drawImage(ImageIO.read(getClass().getResource("card_back_alt.png")), x(867), y(225), x(cardWidth), y(cardHeight), null);
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
 			
 			g.setColor(Color.white);
-			g.setFont(new Font("Trebuchet", Font.BOLD, 40));
-			g.fillRect(857,450, 150, 62);
-			g.fillRect(857,530, 150, 62);
-			g.fillRect(872,669, 120, 52);
+			g.setFont(new Font("Trebuchet", Font.BOLD, font(40)));
+			g.fillRect(x(857),y(450), xs(150), ys(62));
+			g.fillRect(x(857),y(530), xs(150), ys(62));
+			g.fillRect(x(872),y(669), xs(120), ys(52));
 			
 			g.setColor(Color.black);
-			g.drawRect(857,450, 150, 62);
-			g.drawRect(857,530, 150, 62);
-			g.drawRect(872,669, 120, 52);
-			g.drawRect(858,451, 148, 60);
-			g.drawRect(858,531, 148, 60);
-			g.drawRect(873,670, 118, 50);
+			g.drawRect(x(857),y(450), xs(150), ys(62));
+			g.drawRect(x(857),y(530), xs(150), ys(62));
+			g.drawRect(x(872),y(669), xs(120), ys(52));
+			g.drawRect(x(857)+1,y(450)+1, xs(150)-2, ys(62)-2);
+			g.drawRect(x(857)+1,y(530)+1, xs(150)-2, ys(62)-2);
+			g.drawRect(x(872)+1,y(669)+1, xs(120)-2, ys(52)-2);
 			
-			g.drawString("LOCAL", 865, 495);
-			g.setFont(new Font("Trebuchet", Font.BOLD, 45));
-			g.drawString("EXIT", 882, 712);
-			g.drawString("CPU", 883, 578);
+			g.drawString("LOCAL", x(865), y(495));
+			g.setFont(new Font("Trebuchet", Font.BOLD, font(45)));
+			g.drawString("EXIT", x(882), y(712));
+			g.drawString("CPU", x(883), y(578));
 			
 		}
 		else if(enterNames)
 		{
 			g.setColor(Color.DARK_GRAY);
-			g.fillRect(0, 0, 1920, 1080);
+			g.fillRect(0, 0, xs(1920), ys(1080));
 			this.add(nameText);
-			nameText.setBounds(800,250, 300, 75);
-			nameText.setFont(new Font("Times New Roman", Font.PLAIN, 50));
+			nameText.setBounds(x(800),y(250), xs(300), ys(75));
+			nameText.setFont(new Font("Times New Roman", Font.PLAIN, font(50)));
 			if(names.size()>=4 || confirm)
 			{
     			nameText.setEnabled(false);
@@ -171,104 +199,104 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
     		}
 			
 			try {
-				g.drawImage(ImageIO.read(getClass().getResource("plus.png")), 1100,250, 75, 75, null);
+				g.drawImage(ImageIO.read(getClass().getResource("plus.png")), x(1100),y(250), xs(75), ys(75), null);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			g.setFont(new Font("Roboto", Font.BOLD| Font.CENTER_BASELINE, 75));
+			g.setFont(new Font("Roboto", Font.BOLD| Font.CENTER_BASELINE, font(75)));
 			g.setColor(new Color(222,219,246));
-			g.drawString("PLAYER NAMES", 657, 170);
+			g.drawString("PLAYER NAMES", x(657), y(170));
 			
 			g.setColor(Color.white);
-			g.setFont(new Font("Trebuchet", Font.BOLD, 35));
-			g.fillRect(725, 400, 120, 50);
+			g.setFont(new Font("Trebuchet", Font.BOLD, font(35)));
+			g.fillRect(x(725), y(400), xs(120), ys(50));
 			g.fillRect(1070, 400, 120, 50);
 			
 			g.setColor(Color.black);
-			g.drawRect(725, 400, 120, 50);
-			g.drawRect(1070, 400, 120, 50);
+			g.drawRect(x(725), y(400), xs(120), ys(50));
+			g.drawRect(x(1070), y(400), xs(120), ys(50));
 //			g.drawRect(726, 401, 118, 48);
 //			g.drawRect(1071, 401, 118, 48);
-			g.drawString("BACK", 735, 439);
+			g.drawString("BACK", x(735), y(439));
 			g.drawString("DONE", 1081, 439);
 			
 			for(int i = 0;i<names.size();i++)
 			{
 				g.setColor(Color.white);
-				g.setFont(new Font("Times New Roman", Font.ITALIC, 25));
+				g.setFont(new Font("Times New Roman", Font.ITALIC, font(25)));
 				if(i==0)
 				{
 					if(hovering1)
 					{
 						g.setColor(Color.red);
-						g.setFont(new Font("Times New Roman", Font.ITALIC |Font.BOLD, 25));
+						g.setFont(new Font("Times New Roman", Font.ITALIC |Font.BOLD, font(25)));
 					}
 					if(names.get(0).length()>10)
-						g.drawString(names.get(0).substring(0,9)+"...", 800, 550);
+						g.drawString(names.get(0).substring(0,9)+"...", x(800), y(550));
 					else
-						g.drawString(names.get(0), 800, 550);
+						g.drawString(names.get(0), x(800), y(550));
 				}
 				else if(i==1)
 				{
 					g.setColor(Color.white);
-					g.setFont(new Font("Times New Roman", Font.ITALIC, 25));
+					g.setFont(new Font("Times New Roman", Font.ITALIC, font(25)));
 					if(hovering2)
 					{
 						g.setColor(Color.red);
-						g.setFont(new Font("Times New Roman", Font.ITALIC |Font.BOLD, 25));
+						g.setFont(new Font("Times New Roman", Font.ITALIC |Font.BOLD, font(25)));
 					}
 					if(names.get(1).length()>10)
-						g.drawString(names.get(1).substring(0,9)+"...", 1010, 550);
+						g.drawString(names.get(1).substring(0,9)+"...", x(1010), y(550));
 					else
-						g.drawString(names.get(1), 1010, 550);
+						g.drawString(names.get(1), x(1010), y(550));
 				}
 				else if(i==2)
 				{
 					g.setColor(Color.white);
-					g.setFont(new Font("Times New Roman", Font.ITALIC, 25));
+					g.setFont(new Font("Times New Roman", Font.ITALIC, font(25)));
 					if(hovering3)
 					{
 						g.setColor(Color.red);
-						g.setFont(new Font("Times New Roman", Font.ITALIC |Font.BOLD, 25));
+						g.setFont(new Font("Times New Roman", Font.ITALIC |Font.BOLD, font(25)));
 					}
 					if(names.get(2).length()>10)
-						g.drawString(names.get(2).substring(0,9)+"...", 800, 650);
+						g.drawString(names.get(2).substring(0,9)+"...", x(800), y(650));
 					else
-						g.drawString(names.get(2), 800, 650);
+						g.drawString(names.get(2), x(800), x(650));
 				}
 				else if(i==3)
 				{
 					g.setColor(Color.white);
-					g.setFont(new Font("Times New Roman", Font.ITALIC, 25));
+					g.setFont(new Font("Times New Roman", Font.ITALIC, font(25)));
 					if(hovering4)
 					{
 						g.setColor(Color.red);
-						g.setFont(new Font("Times New Roman", Font.ITALIC |Font.BOLD, 25));
+						g.setFont(new Font("Times New Roman", Font.ITALIC |Font.BOLD, font(25)));
 					}
 					if(names.get(3).length()>10)
-						g.drawString(names.get(3).substring(0,9)+"...", 1010, 650);
+						g.drawString(names.get(3).substring(0,9)+"...", x(1010), y(650));
 					else
-						g.drawString(names.get(3), 1010, 650);
+						g.drawString(names.get(3), x(1010), y(650));
 				}
 			}
 			
 			if(confirm)
 			{
 				g.setColor(Color.white);
-				g.fillRect(790, 375, 320, 365);
+				g.fillRect(x(790), y(375), xs(320), ys(365));
 				g.setColor(Color.black);
-				g.drawRect(790, 375, 320, 365);
+				g.drawRect(x(790), y(375), xs(320), ys(365));
 				
-				g.drawRect(840, 670, 50, 30);
-				g.drawRect(1000, 670, 60, 30);
-				g.setFont(new Font("Trebuchet", Font.PLAIN, 25));
-				g.drawString("You didn't enter 4 names.", 810, 435);
-				g.drawString("Continue?", 895, 460);
+				g.drawRect(x(840), y(670), xs(50), ys(30));
+				g.drawRect(x(1000), y(670), xs(60), ys(30));
+				g.setFont(new Font("Trebuchet", Font.PLAIN, font(25)));
+				g.drawString("You didn't enter 4 names.", x(810), y(435));
+				g.drawString("Continue?", x(895), y(460));
 				
-				g.setFont(new Font("Trebuchet", Font.BOLD, 22));
-				g.drawString("YES", 1008, 695);
-				g.drawString("NO", 849, 695);
+				g.setFont(new Font("Trebuchet", Font.BOLD, font(22)));
+				g.drawString("YES", x(1008), y(695));
+				g.drawString("NO", x(849), y(695));
 			}
 			
 			
@@ -298,10 +326,10 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 			
 			
 			g.setColor(new Color(0,138,138));
-			g.fillRect(0, 0, 1920, 1080);
+			g.fillRect(0, 0, x(1920), y(1080));
 			
 			try {
-				g.drawImage(ImageIO.read(getClass().getResource("menu.png")), 1715, 10, 150, 100, null);
+				g.drawImage(ImageIO.read(getClass().getResource("menu.png")), x(1715), y(10), xs(150), ys(100), null);
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -312,28 +340,28 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 			if(gameEndedBack)
 			{
 				g.setColor(Color.white);
-				g.fillRect(1645, 915, 125, 53);
+				g.fillRect(x(1645), y(915), xs(125), ys(53));
 				g.setColor(Color.black);
-				g.drawRect(1645, 915, 125, 53);
-				g.setFont(new Font("Trebuchet", Font.BOLD|Font.CENTER_BASELINE, 35));
-				g.drawString("FINISH", 1653, 956);
+				g.drawRect(x(1645), y(915), xs(125), ys(53));
+				g.setFont(new Font("Trebuchet", Font.BOLD|Font.CENTER_BASELINE, font(35)));
+				g.drawString("FINISH", x(1653), y(956));
 			}
 			
 			try {
-				g.drawImage(ImageIO.read(getClass().getResource("card_back.png")),670,400, cardWidth, cardHeight, null);
+				g.drawImage(ImageIO.read(getClass().getResource("card_back.png")),x(670),y(400), xs(cardWidth), ys(cardHeight), null);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
-			paintDiscard(g,950, 400);
+			paintDiscard(g,x(950), y(400));
 			if(cpu)
 			{
-				paintCPUHands(g, 475, 800);
+				paintCPUHands(g, x(475), y(800));
 				paintTurnArrow(g, game.getTurn());
 			}
 			else
-		    	paintHands(g,475, 800);
+		    	paintHands(g,x(475), y(800));
 			
 		    paintExtra(g,game.getCurrentDirection(), game.showTopCard().getColor().toString());
 		    paintHistory(g);
@@ -342,49 +370,49 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 		    if (colorPickerDraw) //drew wild card color picker
 		    {
 		    	g.setColor(Color.black);
-		    	g.setFont(new Font("Trebuchet", Font.BOLD, 45));
+		    	g.setFont(new Font("Trebuchet", Font.BOLD, font(45)));
 		    	g.drawString("V", 722, 642);
 		    	g.setColor(new Color(246,72,72));
-		    	g.fillRect(622, 665, 50, 50);
+		    	g.fillRect(x(622), y(665), xs(50), ys(50));
 		    	g.setColor(new Color(0,191,255));
-		    	g.fillRect(682, 665, 50, 50);
+		    	g.fillRect(x(682), y(665), xs(50), ys(50));
 		    	g.setColor(new Color(0,229,145));
-		    	g.fillRect(742,665, 50, 50);
+		    	g.fillRect(x(742),y(665), xs(50), ys(50));
 		    	g.setColor(Color.yellow);
-		    	g.fillRect(802,665, 50, 50);
+		    	g.fillRect(x(802),y(665), xs(50), ys(50));
 		    }
 		    else if(colorPickerPlay) //played wild card color picker
 		    {
 		    	g.setColor(Color.black);
-		    	g.setFont(new Font("Trebuchet", Font.PLAIN, 65));
-		    	g.drawString("^", colorPickerPlayCoord, 810);
+		    	g.setFont(new Font("Trebuchet", Font.PLAIN, font(65)));
+		    	g.drawString("^", x(colorPickerPlayCoord), y(810));
 		    	g.setColor(new Color(246,72,72));
-		    	g.fillRect(colorPickerPlayCoord-102, 690, 50, 50);
+		    	g.fillRect(x(colorPickerPlayCoord-102), y(690), xs(50), ys(50));
 		    	g.setColor(new Color(0,191,255));
-		    	g.fillRect(colorPickerPlayCoord-102+60, 690, 50, 50);
+		    	g.fillRect(x(colorPickerPlayCoord-102+60), y(690), xs(50), ys(50));
 		    	g.setColor(new Color(0,229,145));
-		    	g.fillRect(colorPickerPlayCoord-102+120,690, 50, 50);
+		    	g.fillRect(x(colorPickerPlayCoord-102+120),y(690), xs(50), ys(50));
 		    	g.setColor(Color.yellow);
-		    	g.fillRect(colorPickerPlayCoord-102+180,690, 50, 50);
+		    	g.fillRect(x(colorPickerPlayCoord-102+180),y(690), xs(50), ys(50));
 		    }
 		    if(menu)
 			{
 				
 				g.setColor(Color.white);
-				g.fillRect(1650, 0, 270, 1080);
+				g.fillRect(x(1650), 0, xs(270), ys(1080));
 				
 				try {
-					g.drawImage(ImageIO.read(getClass().getResource("menu.png")), 1715, 10, 150, 100, null);
+					g.drawImage(ImageIO.read(getClass().getResource("menu.png")), x(1715), y(10), xs(150), ys(100), null);
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				
 				g.setColor(Color.black);
-				g.drawRect(1700, 115, 100, 45);
-				g.drawRect(1650, 0, 267, 1076);
-				g.setFont(new Font("Trebuchet", Font.BOLD|Font.CENTER_BASELINE, 30));
-				g.drawString("HOME", 1706, 149);
+				g.drawRect(x(1700), y(115), xs(100), ys(45));
+				g.drawRect(x(1650), 0, xs(267), ys(1076));
+				g.setFont(new Font("Trebuchet", Font.BOLD|Font.CENTER_BASELINE, font(30)));
+				g.drawString("HOME", x(1706), y(149));
 			}
 		    
 		    
@@ -424,20 +452,20 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 		if(history.size()>0)
 		{
 			g.setColor(Color.black);
-			g.setFont(new Font("Arial", Font.BOLD, 11));
+			g.setFont(new Font("Arial", Font.BOLD, font(11)));
 			String[]x = new String[8];
 			System.arraycopy(history.toArray(), 0, x, 0, history.size());
 			for(int i = 0;i<x.length;i++)
 			{
 				if(x[i]!=null)
-					g.drawString(x[i], 25, 25+15*i);
+					g.drawString(x[i], x(25), y(25+15*i));
 			}	
 		}
 	}
 	public void paintTurnArrow(Graphics g, int turn)
 	{
 		g.setColor(Color.black);
-		g.setFont(new Font("Trebuchet", Font.BOLD, 35));
+		g.setFont(new Font("Trebuchet", Font.BOLD, font(35)));
 		
 		BufferedImage img = null;
 		try {
@@ -448,21 +476,21 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 		}
 		if(turn == 0)
 		{
-			g.drawImage(img, 840, 455, 75, 75, null);
+			g.drawImage(img, x(840), y(455), xs(75), ys(75), null);
 		}
 		else if(turn==1)
 		{
 
-			g.drawImage(rotateClockwise90(img), 840, 455, 75, 75, null);
+			g.drawImage(rotateClockwise90(img), x(840), y(455), xs(75), ys(75), null);
 		}
 		else if(turn==2)
 		{
-			g.drawImage(rotate180(img), 840, 455, 75, 75, null);
+			g.drawImage(rotate180(img), x(840), y(455), xs(75), ys(75), null);
 		}
 		else
 		{
 
-			g.drawImage(rotateClockwise270(img), 840, 455, 75, 75, null);
+			g.drawImage(rotateClockwise270(img), x(840), y(455), xs(75), ys(75), null);
 		}
 	}
 	public void addHistory(String add)
@@ -481,15 +509,15 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 		{
 		
 			g.setColor(Color.LIGHT_GRAY);
-			g.setFont(new Font("Roboto", Font.BOLD, 100));
-			g.drawString("<",385, 937);
+			g.setFont(new Font("Roboto", Font.BOLD, font(100)));
+			g.drawString("<",x(385), y(937));
 			
 		}
 		if (page!=maxPage && arrows)
 		{
 			g.setColor(Color.LIGHT_GRAY);
-			g.setFont(new Font("Roboto", Font.BOLD, 100));
-			g.drawString(">",1360, 937);
+			g.setFont(new Font("Roboto", Font.BOLD, font(100)));
+			g.drawString(">",x(1360), y(937));
 			
 		}
 		
@@ -503,15 +531,15 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 			{
 			
 				g.setColor(Color.LIGHT_GRAY);
-				g.setFont(new Font("Roboto", Font.BOLD, 100));
-				g.drawString(">",1000, 175);
+				g.setFont(new Font("Roboto", Font.BOLD, font(70)));
+				g.drawString(">",x(1000), y(175));
 				
 			}
 			if (page3!=maxPage)
 			{
 				g.setColor(Color.LIGHT_GRAY);
-				g.setFont(new Font("Roboto", Font.BOLD, 100));
-				g.drawString("<",500, 175);
+				g.setFont(new Font("Roboto", Font.BOLD, font(70)));
+				g.drawString("<",x(500), y(175));
 				
 			}
 			
@@ -519,15 +547,15 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 			{
 			
 				g.setColor(Color.LIGHT_GRAY);
-				g.setFont(new Font("Roboto", Font.BOLD, 100));
-				g.drawString("^",180, 350);
+				g.setFont(new Font("Roboto", Font.BOLD, font(70)));
+				g.drawString("^",x(180), y(350));
 				
 			}
 			if (page2!=maxPage)
 			{
 				g.setColor(Color.LIGHT_GRAY);
-				g.setFont(new Font("Roboto", Font.BOLD, 100));
-				g.drawString("v",180, 750);
+				g.setFont(new Font("Roboto", Font.BOLD, font(70)));
+				g.drawString("v",x(180), y(750));
 				
 			}
 			
@@ -535,15 +563,15 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 			{
 			
 				g.setColor(Color.LIGHT_GRAY);
-				g.setFont(new Font("Roboto", Font.BOLD, 100));
-				g.drawString("v", 1600, 350);
+				g.setFont(new Font("Roboto", Font.BOLD, font(70)));
+				g.drawString("v", x(1600), y(350));
 				
 			}
 			if (page4!=maxPage)
 			{
 				g.setColor(Color.LIGHT_GRAY);
-				g.setFont(new Font("Roboto", Font.BOLD, 100));
-				g.drawString("^", 1600, 750);
+				g.setFont(new Font("Roboto", Font.BOLD, font(70)));
+				g.drawString("^", x(1600), y(750));
 				
 			}
 		}
@@ -573,7 +601,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 				a = card.getColor().toString().toLowerCase()+"_"+card.toInt()+".png";
 			
 			try {
-				g.drawImage(ImageIO.read(getClass().getResource(a)),x+120*(i%7),y, cardWidth, cardHeight, null);
+				g.drawImage(ImageIO.read(getClass().getResource(a)),x(x+120*(i%7)),y(y), xs(cardWidth), ys(cardHeight), null);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -582,15 +610,15 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 		}
 		paintArrows(g, game.playerList.get(0).getHandSize());
 		g.setColor(Color.white);
-		g.setFont(new Font("Trebuchet", Font.BOLD, 13));
-		g.drawString(game.playerList.get(0).getPaintName(), 775, 775);
+		g.setFont(new Font("Trebuchet", Font.BOLD, font(13)));
+		g.drawString(game.playerList.get(0).getPaintName(), x(775), y(775));
 		g.setColor(Color.DARK_GRAY);
-		g.drawString("Cards: "+Integer.toString((game.playerList.get(0).getHandSize())), 925, 775);
+		g.drawString("Cards: "+Integer.toString((game.playerList.get(0).getHandSize())), x(925), y(775));
 		if(gamestate.isUno(game.playerList.get(0)))
 		{
 			g.setColor(Color.red);
-			g.setFont(new Font("Trebuchet", Font.BOLD, 15));
-	    	g.drawString("UNO",850,750);
+			g.setFont(new Font("Trebuchet", Font.BOLD, font(15)));
+	    	g.drawString("UNO",x(850),y(750));
 		}
 		for(int i =1;i<game.playerList.size();i++)
 		{
@@ -618,7 +646,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 							a = card.getColor().toString().toLowerCase()+"_"+card.toInt()+".png";
 						
 						try {
-							g.drawImage(rotate180(ImageIO.read(getClass().getResource(a))),669+100*h,100, cardWidth, cardHeight, null);
+							g.drawImage(rotate180(ImageIO.read(getClass().getResource(a))),x(669+100*h),y(100), xs(cardWidth), ys(cardHeight), null);
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -631,7 +659,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 					{
 						
 						try {
-							g.drawImage(rotate180(ImageIO.read(getClass().getResource("card_back_alt.png"))),669+50*h,100, cardWidth, cardHeight, null);
+							g.drawImage(rotate180(ImageIO.read(getClass().getResource("card_back_alt.png"))),x(669+50*h),y(100), xs(cardWidth), ys(cardHeight), null);
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -639,15 +667,15 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 					}
 				}
 				g.setColor(Color.white);
-				g.setFont(new Font("Trebuchet", Font.BOLD, 13));
-				g.drawString(game.playerList.get(2).getPaintName(), 800, 310);
+				g.setFont(new Font("Trebuchet", Font.BOLD, font(13)));
+				g.drawString(game.playerList.get(2).getPaintName(), x(800), y(310));
 				g.setColor(Color.DARK_GRAY);
-				g.drawString("Cards: "+Integer.toString(game.playerList.get(2).getHandSize()), 900, 310);
+				g.drawString("Cards: "+Integer.toString(game.playerList.get(2).getHandSize()),x(900), y(310));
 				if(gamestate.isUno(game.playerList.get(2)))
 				{
 					g.setColor(Color.red);
-					g.setFont(new Font("Trebuchet", Font.BOLD, 15));
-			    	g.drawString("UNO",850,350);
+					g.setFont(new Font("Trebuchet", Font.BOLD, font(15)));
+			    	g.drawString("UNO",x(850),y(350));
 				}
 			}
 			else if (i == 1)
@@ -680,7 +708,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 							e1.printStackTrace();
 						}
 						
-						g.drawImage(im,200,290+100*h, cardHeight, cardWidth, null);
+						g.drawImage(im,x(200),y(290+100*h), xs(cardHeight), ys(cardWidth), null);
 					}
 				}
 				else
@@ -693,20 +721,20 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							}
-						g.drawImage(im,200,290+50*h, cardHeight, cardWidth, null);
+						g.drawImage(im,x(200),y(290+50*h), xs(cardHeight), ys(cardWidth), null);
 						
 					}
 				}
 				g.setColor(Color.white);
-				g.setFont(new Font("Trebuchet", Font.BOLD, 13));
-				g.drawString(game.playerList.get(1).getPaintName(), 400, 500);
+				g.setFont(new Font("Trebuchet", Font.BOLD, font(13)));
+				g.drawString(game.playerList.get(1).getPaintName(), x(400), y(500));
 				g.setColor(Color.DARK_GRAY);
-				g.drawString("Cards: "+Integer.toString(game.playerList.get(1).getHandSize()), 400, 600);
+				g.drawString("Cards: "+Integer.toString(game.playerList.get(1).getHandSize()), x(400), y(600));
 				if(gamestate.isUno(game.playerList.get(1)))
 				{
 					g.setColor(Color.red);
-					g.setFont(new Font("Trebuchet", Font.BOLD, 15));
-			    	g.drawString("UNO",450,550);
+					g.setFont(new Font("Trebuchet", Font.BOLD, font(15)));
+			    	g.drawString("UNO",x(450),y(550));
 				}
 			}
 			else if(i==3)
@@ -739,7 +767,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
-						g.drawImage(im,1480,290+100*h, cardHeight, cardWidth, null);
+						g.drawImage(im,x(1480),y(290+100*h), xs(cardHeight), ys(cardWidth), null);
 					}
 
 				}
@@ -754,18 +782,18 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 							e1.printStackTrace();
 						}
 					
-						g.drawImage(im,1480,290+50*h, cardHeight, cardWidth, null);
+						g.drawImage(im,x(1480),y(290+50*h), xs(cardHeight), ys(cardWidth), null);
 					}
 				g.setColor(Color.white);
-				g.setFont(new Font("Trebuchet", Font.BOLD, 13));
-				g.drawString(game.playerList.get(3).getPaintName(),1370 ,500);
+				g.setFont(new Font("Trebuchet", Font.BOLD, font(13)));
+				g.drawString(game.playerList.get(3).getPaintName(),x(1370) ,y(500));
 				g.setColor(Color.DARK_GRAY);
-				g.drawString("Cards: "+Integer.toString(game.playerList.get(3).getHandSize()), 1370, 600);
+				g.drawString("Cards: "+Integer.toString(game.playerList.get(3).getHandSize()), x(1370), y(600));
 				if(gamestate.isUno(game.playerList.get(3)))
 				{
 					g.setColor(Color.red);
-					g.setFont(new Font("Trebuchet", Font.BOLD, 15));
-			    	g.drawString("UNO",1320,550);
+					g.setFont(new Font("Trebuchet", Font.BOLD, font(15)));
+			    	g.drawString("UNO",x(1320),y(550));
 				}
 			}
 			
@@ -795,7 +823,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 				a = card.getColor().toString().toLowerCase()+"_"+card.toInt()+".png";
 			
 			try {
-				g.drawImage(ImageIO.read(getClass().getResource(a)),x+120*(i%7),y, cardWidth, cardHeight, null);
+				g.drawImage(ImageIO.read(getClass().getResource(a)),x(x+120*(i%7)),y(y), xs(cardWidth), ys(cardHeight), null);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -804,15 +832,15 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 		}
 		paintArrows(g, game.current_player.getHandSize());
 		g.setColor(Color.white);
-		g.setFont(new Font("Trebuchet", Font.BOLD, 13));
-		g.drawString(game.current_player.getPaintName(), 775, 775);
+		g.setFont(new Font("Trebuchet", Font.BOLD, font(13)));
+		g.drawString(game.current_player.getPaintName(), x(775), y(775));
 		g.setColor(Color.DARK_GRAY);
-		g.drawString("Cards: "+Integer.toString((game.current_player.getHandSize())), 925, 775);
+		g.drawString("Cards: "+Integer.toString((game.current_player.getHandSize())), x(925), y(775));
 		if(gamestate.isUno(game.current_player))
 		{
 			g.setColor(Color.red);
-			g.setFont(new Font("Trebuchet", Font.BOLD, 15));
-	    	g.drawString("UNO",850,750);
+			g.setFont(new Font("Trebuchet", Font.BOLD, font(15)));
+	    	g.drawString("UNO",x(850),y(750));
 		}
 		for(int i =0;i<game.playerList.size();i++)
 		{
@@ -843,7 +871,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 								a = card.getColor().toString().toLowerCase()+"_"+card.toInt()+".png";
 							
 							try {
-								g.drawImage(rotate180(ImageIO.read(getClass().getResource(a))),669+100*h,100, cardWidth, cardHeight, null);
+								g.drawImage(rotate180(ImageIO.read(getClass().getResource(a))),x(669+100*h),y(100), xs(cardWidth), ys(cardHeight), null);
 							} catch (IOException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -856,7 +884,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 						{
 							
 							try {
-								g.drawImage(rotate180(ImageIO.read(getClass().getResource("card_back_alt.png"))),669+50*h,100, cardWidth, cardHeight, null);
+								g.drawImage(rotate180(ImageIO.read(getClass().getResource("card_back_alt.png"))),x(669+50*h),y(100), xs(cardWidth), ys(cardHeight), null);
 							} catch (IOException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -865,15 +893,15 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 						}
 					}
 					g.setColor(Color.white);
-					g.setFont(new Font("Trebuchet", Font.BOLD, 13));
-					g.drawString(game.playerList.get((game.getTurn()+2)%4).getPaintName(), 800, 310);
+					g.setFont(new Font("Trebuchet", Font.BOLD, font(13)));
+					g.drawString(game.playerList.get((game.getTurn()+2)%4).getPaintName(), x(800), y(310));
 					g.setColor(Color.DARK_GRAY);
-					g.drawString("Cards: "+Integer.toString(game.playerList.get((game.getTurn()+2)%4).getHandSize()), 900, 310);
+					g.drawString("Cards: "+Integer.toString(game.playerList.get((game.getTurn()+2)%4).getHandSize()), x(900), y(310));
 					if(gamestate.isUno(game.playerList.get((game.getTurn()+2)%4)))
 					{
 						g.setColor(Color.red);
-						g.setFont(new Font("Trebuchet", Font.BOLD, 15));
-				    	g.drawString("UNO",850,350);
+						g.setFont(new Font("Trebuchet", Font.BOLD, font(15)));
+				    	g.drawString("UNO",x(850),y(350));
 					}
 				}
 				else if ( i == (game.getTurn()+1)%4)
@@ -907,7 +935,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							}
-							g.drawImage(im,200,290+100*h, cardHeight, cardWidth, null);
+							g.drawImage(im,x(200),y(290+100*h), xs(cardHeight), ys(cardWidth), null);
 						}
 					}
 					else
@@ -921,20 +949,20 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 								e1.printStackTrace();
 							}
 							
-							g.drawImage(im,200,290+50*h, cardHeight, cardWidth, null);
+							g.drawImage(im,x(200),y(290+50*h), xs(cardHeight), ys(cardWidth), null);
 							
 						}
 					}
 					g.setColor(Color.white);
-					g.setFont(new Font("Trebuchet", Font.BOLD, 13));
-					g.drawString(game.playerList.get((game.getTurn()+1)%4).getPaintName(), 400, 500);
+					g.setFont(new Font("Trebuchet", Font.BOLD, font(13)));
+					g.drawString(game.playerList.get((game.getTurn()+1)%4).getPaintName(), x(400), y(500));
 					g.setColor(Color.DARK_GRAY);
-					g.drawString("Cards: "+Integer.toString(game.playerList.get((game.getTurn()+1)%4).getHandSize()), 400, 600);
+					g.drawString("Cards: "+Integer.toString(game.playerList.get((game.getTurn()+1)%4).getHandSize()), x(400), y(600));
 					if(gamestate.isUno(game.playerList.get((game.getTurn()+1)%4)))
 					{
 						g.setColor(Color.red);
-						g.setFont(new Font("Trebuchet", Font.BOLD, 15));
-				    	g.drawString("UNO",450,550);
+						g.setFont(new Font("Trebuchet", Font.BOLD, font(15)));
+				    	g.drawString("UNO",x(450),y(550));
 					}
 				}
 				else if(i==(game.getTurn()+3)%4)
@@ -969,7 +997,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 								e1.printStackTrace();
 							}
 							
-							g.drawImage(im,1480,290+100*h, cardHeight, cardWidth, null);
+							g.drawImage(im,x(1480),y(290+100*h), xs(cardHeight), ys(cardWidth), null);
 						}
 					}
 					else
@@ -983,19 +1011,19 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 								e1.printStackTrace();
 							}
 						
-							g.drawImage(im,1480,290+50*h, cardHeight, cardWidth, null);
+							g.drawImage(im,x(1480),y(290+50*h), xs(cardHeight), ys(cardWidth), null);
 						}
 					}
 					g.setColor(Color.white);
-					g.setFont(new Font("Trebuchet", Font.BOLD, 13));
-					g.drawString(game.playerList.get((game.getTurn()+3)%4).getPaintName(),1370 ,500);
+					g.setFont(new Font("Trebuchet", Font.BOLD, font(13)));
+					g.drawString(game.playerList.get((game.getTurn()+3)%4).getPaintName(),x(1370) ,y(500));
 					g.setColor(Color.DARK_GRAY);
-					g.drawString("Cards: "+Integer.toString(game.playerList.get((game.getTurn()+3)%4).getHandSize()), 1370, 600);
+					g.drawString("Cards: "+Integer.toString(game.playerList.get((game.getTurn()+3)%4).getHandSize()), x(1370), y(600));
 					if(gamestate.isUno(game.playerList.get((game.getTurn()+3)%4)))
 					{
 						g.setColor(Color.red);
-						g.setFont(new Font("Trebuchet", Font.BOLD, 15));
-				    	g.drawString("UNO",1320,550);
+						g.setFont(new Font("Trebuchet", Font.BOLD, font(15)));
+				    	g.drawString("UNO",x(1320),y(550));
 					}
 				}
 			}
@@ -1059,7 +1087,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 			a = card.getColor().toString().toLowerCase()+"_"+card.toInt()+".png";
 		
 		try {
-			g.drawImage(ImageIO.read(getClass().getResource(a)),x,y, cardWidth, cardHeight, null);
+			g.drawImage(ImageIO.read(getClass().getResource(a)),x(x),y(y), xs(cardWidth), ys(cardHeight), null);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1082,15 +1110,15 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 		}
 		
 		if(direction.contains("Counter"))
-			g.drawImage(img, x+125, y, -125, 75, null);
+			g.drawImage(img, x(x+125),y(y), xs(-125), ys(75), null);
 		else
-			g.drawImage(img, x, y, 125, 75, null);
+			g.drawImage(img, x(x), y(y), xs(125), ys(75), null);
 		
 			
 		x = 951;
 		y = 587;
 		
-		g.setFont(new Font("Roboto", Font.BOLD, 30));
+		g.setFont(new Font("Roboto", Font.BOLD, font(30)));
 		if(color.equals("Yellow"))
 			g.setColor(Color.YELLOW);
 		else if(color.equals("Blue"))
@@ -1100,7 +1128,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 		else
 			g.setColor(new Color(0,229,145));
 		
-		g.fillRect(x, y,cardWidth, 7);
+		g.fillRect(x(x), y(y),xs(cardWidth), ys(7));
 	}
 	
 	public void paintEndText(Graphics g)
@@ -1108,31 +1136,30 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 		int x = 555+((Math.max(5-game.getLastTurn().getPaintName().length(), 0))*40);
 		int y = 350;
 		g.setColor(Color.DARK_GRAY);
-		g.fillRect(0,0,1920,1080);
+		g.fillRect(0,0,xs(1920),ys(1080));
 		
 		
-		g.setFont(new Font("Trebuchet", Font.CENTER_BASELINE,75));
+		g.setFont(new Font("Trebuchet", Font.CENTER_BASELINE,font(75)));
 		g.setColor(Color.RED);
-		g.drawString(game.current_player.getPaintName()+" is the winner!!!", x, y);
+		g.drawString(game.current_player.getPaintName()+" is the winner!!!", x(x), y(y));
 		
 		g.setColor(Color.white);
-//		790 && e.getX()<=1100 && e.getY()>=480 && e.getY()<=590
-		//
-		g.drawRect(785, 491, 310, 80);
-		g.drawRect(804, 641, 275, 80);
-		g.fillRect(880, 395, 110, 50);
+
+		g.drawRect(x(785), y(491), xs(310), ys(80));
+		g.drawRect(x(804), y(641), xs(275), ys(80));
+		g.fillRect(x(880), y(395), xs(110), ys(50));
 		g.setColor(Color.black);
-		g.drawRect(880, 395, 110, 50);
-		g.drawRect(881, 396, 108, 48);
+		g.drawRect(x(880), y(395), xs(110), ys(50));
+		g.drawRect(x(881), y(396), xs(108), ys(48));
 		
-		g.setFont(new Font("Trebuchet", Font.CENTER_BASELINE,50));
+		g.setFont(new Font("Trebuchet", Font.CENTER_BASELINE,font(50)));
 		g.setColor(Color.green);
-		g.drawString("NEW GAME", 800, 550);
-		g.drawString("REMATCH", 818, 700);
+		g.drawString("NEW GAME", x(800), y(550));
+		g.drawString("REMATCH", x(818), y(700));
 		
-		g.setFont(new Font("Trebuchet", Font.CENTER_BASELINE,35));
+		g.setFont(new Font("Trebuchet", Font.CENTER_BASELINE,font(35)));
 		g.setColor(Color.black);
-		g.drawString("BACK", 887, 435);
+		g.drawString("BACK", x(887), y(435));
 		
 	}
 	
