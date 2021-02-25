@@ -549,7 +549,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 			{
 				g.setColor(Color.LIGHT_GRAY);
 				g.setFont(new Font("Roboto", Font.BOLD, font(55)));
-				g.drawString(">",x(1200), y(210));
+				g.drawString(">",x(1190), y(210));
 				
 			}
 			if (page3!=maxPage3)
@@ -1471,7 +1471,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 					page2+=1;
 					repaint();
 				}
-				else if(e.getX()>= x(1195) && e.getX()<= x(1235) && e.getY()>=y(165) && e.getY()<=y(215) && page3>1)
+				else if(e.getX()>= x(1185) && e.getX()<= x(1225) && e.getY()>=y(165) && e.getY()<=y(215) && page3>1)
 				{
 					
 					page3-=1;
