@@ -264,7 +264,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 					if(names.get(2).length()>10)
 						g.drawString(names.get(2).substring(0,9)+"...", x(800), y(650));
 					else
-						g.drawString(names.get(2), x(800), x(650));
+						g.drawString(names.get(2), x(800), y(650));
 				}
 				else if(i==3)
 				{
@@ -453,13 +453,13 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 		if(history.size()>0)
 		{
 			g.setColor(Color.black);
-			g.setFont(new Font("Arial", Font.BOLD, font(11)));
+			g.setFont(new Font("Arial", Font.BOLD, font(12)));
 			String[]x = new String[8];
 			System.arraycopy(history.toArray(), 0, x, 0, history.size());
 			for(int i = 0;i<x.length;i++)
 			{
 				if(x[i]!=null)
-					g.drawString(x[i], x(25), y(25+15*i));
+					g.drawString(x[i], x(25), y(45+15*i));
 			}	
 		}
 	}
@@ -709,7 +709,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 							e1.printStackTrace();
 						}
 						
-						g.drawImage(im,x(200),y(290+100*h), xs(cardHeight), ys(cardWidth), null);
+						g.drawImage(im,x(200),y(250+100*h), xs(cardHeight), ys(cardWidth), null);
 					}
 				}
 				else
@@ -722,7 +722,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							}
-						g.drawImage(im,x(200),y(290+50*h), xs(cardHeight), ys(cardWidth), null);
+						g.drawImage(im,x(200),y(250+50*h), xs(cardHeight), ys(cardWidth), null);
 						
 					}
 				}
@@ -768,7 +768,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
-						g.drawImage(im,x(1480),y(290+100*h), xs(cardHeight), ys(cardWidth), null);
+						g.drawImage(im,x(1480),y(250+100*h), xs(cardHeight), ys(cardWidth), null);
 					}
 
 				}
@@ -783,7 +783,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 							e1.printStackTrace();
 						}
 					
-						g.drawImage(im,x(1480),y(290+50*h), xs(cardHeight), ys(cardWidth), null);
+						g.drawImage(im,x(1480),y(250+50*h), xs(cardHeight), ys(cardWidth), null);
 					}
 				g.setColor(Color.white);
 				g.setFont(new Font("Trebuchet", Font.BOLD, font(13)));
@@ -936,7 +936,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							}
-							g.drawImage(im,x(200),y(290+100*h), xs(cardHeight), ys(cardWidth), null);
+							g.drawImage(im,x(200),y(250+100*h), xs(cardHeight), ys(cardWidth), null);
 						}
 					}
 					else
@@ -950,7 +950,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 								e1.printStackTrace();
 							}
 							
-							g.drawImage(im,x(200),y(290+50*h), xs(cardHeight), ys(cardWidth), null);
+							g.drawImage(im,x(200),y(250+50*h), xs(cardHeight), ys(cardWidth), null);
 							
 						}
 					}
@@ -998,7 +998,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 								e1.printStackTrace();
 							}
 							
-							g.drawImage(im,x(1480),y(290+100*h), xs(cardHeight), ys(cardWidth), null);
+							g.drawImage(im,x(1480),y(250+100*h), xs(cardHeight), ys(cardWidth), null);
 						}
 					}
 					else
@@ -1012,7 +1012,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 								e1.printStackTrace();
 							}
 						
-							g.drawImage(im,x(1480),y(290+50*h), xs(cardHeight), ys(cardWidth), null);
+							g.drawImage(im,x(1480),y(250+50*h), xs(cardHeight), ys(cardWidth), null);
 						}
 					}
 					g.setColor(Color.white);
