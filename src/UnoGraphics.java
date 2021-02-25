@@ -86,7 +86,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 	};
 	
 	
-	public UnoGraphics(Board game, GameState gamestate)
+	public UnoGraphics(Board game, GameState gamestate) 
 	{
 		frame = new JFrame("UNO");
 		this.game = game;
