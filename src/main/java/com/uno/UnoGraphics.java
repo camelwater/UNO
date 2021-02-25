@@ -542,21 +542,20 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 				maxPage4 = Math.max(1,(int)(Math.ceil((double)game.playerList.get((game.getTurn()+3)%4).getHandSize()/5)));
 		
 			}
-			System.out.println(maxPage2+" "+maxPage3+" "+maxPage4);
+			
 			
 			if (page3!=1)
 			{
-			
 				g.setColor(Color.LIGHT_GRAY);
 				g.setFont(new Font("Roboto", Font.BOLD, font(55)));
-				g.drawString(">",x(1360), y(210));
+				g.drawString(">",x(1200), y(210));
 				
 			}
 			if (page3!=maxPage3)
 			{
 				g.setColor(Color.LIGHT_GRAY);
 				g.setFont(new Font("Roboto", Font.BOLD, font(55)));
-				g.drawString("<",x(350), y(210));
+				g.drawString("<",x(550), y(210));
 				
 			}
 			
@@ -665,7 +664,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 							a += card.getColor().toString().toLowerCase()+"_"+card.toInt()+".png";
 						
 						try {
-							g.drawImage(rotate180(ImageIO.read(getClass().getResource(a))),x(1115-cardWidth-100*(h%5)),y(100), xs(cardWidth), ys(cardHeight), null);
+							g.drawImage(rotate180(ImageIO.read(getClass().getResource(a))),x(1150-cardWidth-100*(h%5)),y(100), xs(cardWidth), ys(cardHeight), null);
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -678,7 +677,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 					{
 						
 						try {
-							g.drawImage(rotate180(ImageIO.read(getClass().getResource("/card_back_alt.png"))),x(669+50*h),y(100), xs(cardWidth), ys(cardHeight), null);
+							g.drawImage(rotate180(ImageIO.read(getClass().getResource("/card_back_alt.png"))),x(1150-cardWidth-50*h),y(100), xs(cardWidth), ys(cardHeight), null);
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -805,7 +804,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 							e1.printStackTrace();
 						}
 					
-						g.drawImage(im,x(1480),y(250+50*h), xs(cardHeight), ys(cardWidth), null);
+						g.drawImage(im,x(1480),y(780-cardWidth-50*h), xs(cardHeight), ys(cardWidth), null);
 					}
 				g.setColor(Color.white);
 				g.setFont(new Font("Trebuchet", Font.BOLD, font(13)));
@@ -872,9 +871,12 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 				Player p = game.playerList.get(i);
 				if(i == (game.getTurn()+2)%4)
 				{
+					
 					if(gameEndedBack)
 					{
-						for(int h = 0;h<Math.min(p.getHandSize(), 5);h++)
+						int s = (page3-1)*5;
+						int en = Math.min(s+5, game.playerList.get((game.getTurn()+2)%4).getHandSize());
+						for(int h = s;h<en;h++)
 						{
 							String a = "/";
 							UnoCard card = p.getHand().get(h);
@@ -894,7 +896,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 								a += card.getColor().toString().toLowerCase()+"_"+card.toInt()+".png";
 							
 							try {
-								g.drawImage(rotate180(ImageIO.read(getClass().getResource(a))),x(669+100*h),y(100), xs(cardWidth), ys(cardHeight), null);
+								g.drawImage(rotate180(ImageIO.read(getClass().getResource(a))),x(1200-cardHeight-100*(h%5)),y(100), xs(cardWidth), ys(cardHeight), null);
 							} catch (IOException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -907,7 +909,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 						{
 							
 							try {
-								g.drawImage(rotate180(ImageIO.read(getClass().getResource("/card_back_alt.png"))),x(669+50*h),y(100), xs(cardWidth), ys(cardHeight), null);
+								g.drawImage(rotate180(ImageIO.read(getClass().getResource("/card_back_alt.png"))),x(1150-cardWidth-50*h),y(100), xs(cardWidth), ys(cardHeight), null);
 							} catch (IOException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -933,7 +935,9 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 					
 					if(gameEndedBack)
 					{
-						for(int h = 0;h<Math.min(p.getHandSize(), 10);h++)
+						int s = (page2-1)*5;
+						int en = Math.min(s+5, game.playerList.get((game.getTurn()+1)%4).getHandSize());
+						for(int h = s;h<en;h++)
 						{
 							String a = "/";
 							UnoCard card = p.getHand().get(h);
@@ -958,7 +962,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							}
-							g.drawImage(im,x(200),y(250+100*h), xs(cardHeight), ys(cardWidth), null);
+							g.drawImage(im,x(200),y(250+100*(h%5)), xs(cardHeight), ys(cardWidth), null);
 						}
 					}
 					else
@@ -994,7 +998,9 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 					
 					if(gameEndedBack)
 					{
-						for(int h = 0;h<Math.min(p.getHandSize(), 5);h++)
+						int s = (page4-1)*5;
+						int en = Math.min(s+5, game.playerList.get((game.getTurn()+3)%4).getHandSize());
+						for(int h = s;h<en;h++)
 						{
 							String a = "/";
 							UnoCard card = p.getHand().get(h);
@@ -1020,7 +1026,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 								e1.printStackTrace();
 							}
 							
-							g.drawImage(im,x(1480),y(250+100*h), xs(cardHeight), ys(cardWidth), null);
+							g.drawImage(im,x(1480),y(780-cardWidth-100*(h%5)), xs(cardHeight), ys(cardWidth), null);
 						}
 					}
 					else
@@ -1034,7 +1040,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 								e1.printStackTrace();
 							}
 						
-							g.drawImage(im,x(1480),y(250+50*h), xs(cardHeight), ys(cardWidth), null);
+							g.drawImage(im,x(1480),y(780-cardWidth-50*h), xs(cardHeight), ys(cardWidth), null);
 						}
 					}
 					g.setColor(Color.white);
@@ -1454,37 +1460,37 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 				}
 				else if(e.getX()>= x(275) && e.getX()<= x(320) && e.getY()>=y(190) && e.getY()<=y(230) && page2>1)
 				{
-					//System.out.println("asjdh");
+					
 					page2-=1;
 					repaint();
 				}
 				else if(e.getX()>= x(275) && e.getX()<=x(320) && e.getY()>=y(788) && e.getY()<=y(830) && page2<maxPage2)
 				{
-					//System.out.println("asjdh");
+					
 					page2+=1;
 					repaint();
 				}
-				else if(e.getX()>= x(1115) && e.getX()<= x(1150) && e.getY()>=y(125) && e.getY()<=y(175) && page3>1)
+				else if(e.getX()>= x(1195) && e.getX()<= x(1235) && e.getY()>=y(165) && e.getY()<=y(215) && page3>1)
 				{
-					//System.out.println("asjdh");
+					
 					page3-=1;
 					repaint();
 				}
-				else if(e.getX()>= x(475) && e.getX()<=x(525) && e.getY()>=y(125) && e.getY()<=y(175) && page3<maxPage3)
+				else if(e.getX()>= x(542) && e.getX()<=x(587) && e.getY()>=y(165) && e.getY()<=y(215) && page3<maxPage3)
 				{
-					//System.out.println("asjdh");
+					
 					page3+=1;
 					repaint();
 				}
 				else if(e.getX()>=x(1550)  && e.getX()<= x(1595) && e.getY()>= y(788) && e.getY()<=y(830) && page4>1)
 				{
-					//.out.println("asjdh");
+					
 					page4-=1;
 					repaint();
 				}
 				else if(e.getX()>= x(1550) && e.getX()<=x(1595) && e.getY()>=y(190) && e.getY()<=y(230) && page4<maxPage4)
 				{
-					//System.out.println("asjdh");
+					
 					page4+=1;
 					repaint();
 				}
