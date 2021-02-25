@@ -96,12 +96,12 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 		addMouseListener(this);
 		addMouseMotionListener(this);
 		
-//		try {
-//			frame.setIconImage(ImageIO.read(getClass().getResource("card_back_large.png")));
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		try {
+			frame.setIconImage(ImageIO.read(getClass().getResource("resources\\card_back_large.png")));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		frame.add(this);
 		frame.setSize((int)scrWidth, (int)scrHeight);
 		frame.setResizable(true);
@@ -152,12 +152,12 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 			g.setColor(Color.red);
 			g.setFont(new Font("Trebuchet", Font.BOLD, font(75)));
 			g.drawString("UNO", x(850), y(200));
-//			try {
-//				g.drawImage(ImageIO.read(getClass().getResource("card_back_alt.png")), x(867), y(225), x(cardWidth), y(cardHeight), null);
-//			} catch (IOException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
+			try {
+				g.drawImage(ImageIO.read(getClass().getResource("resources\\card_back_alt.png")), x(867), y(225), x(cardWidth), y(cardHeight), null);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
 			g.setColor(Color.white);
 			g.setFont(new Font("Trebuchet", Font.BOLD, font(40)));
@@ -199,7 +199,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
     		}
 			
 			try {
-				g.drawImage(ImageIO.read(getClass().getResource("plus.png")), x(1100),y(250), xs(75), ys(75), null);
+				g.drawImage(ImageIO.read(getClass().getResource("resources\\plus.png")), x(1100),y(250), xs(75), ys(75), null);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -329,7 +329,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 			g.fillRect(0, 0, x(1920), y(1080));
 			
 			try {
-				g.drawImage(ImageIO.read(getClass().getResource("menu.png")), x(1715), y(10), xs(150), ys(100), null);
+				g.drawImage(ImageIO.read(getClass().getResource("resources\\menu.png")), x(1715), y(10), xs(150), ys(100), null);
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -348,7 +348,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 			}
 			
 			try {
-				g.drawImage(ImageIO.read(getClass().getResource("card_back.png")),x(670),y(400), xs(cardWidth), ys(cardHeight), null);
+				g.drawImage(ImageIO.read(getClass().getResource("resources\\card_back.png")),x(670),y(400), xs(cardWidth), ys(cardHeight), null);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -402,7 +402,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 				g.fillRect(x(1650), 0, xs(270), ys(1080));
 				
 				try {
-					g.drawImage(ImageIO.read(getClass().getResource("menu.png")), x(1715), y(10), xs(150), ys(100), null);
+					g.drawImage(ImageIO.read(getClass().getResource("resources\\menu.png")), x(1715), y(10), xs(150), ys(100), null);
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -469,7 +469,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 		
 		BufferedImage img = null;
 		try {
-			img = ImageIO.read(getClass().getResource("arrow pointer.png"));
+			img = ImageIO.read(getClass().getResource("resources\\arrow pointer.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -584,21 +584,21 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 		int end = Math.min(start+7, game.playerList.get(0).getHandSize());
 		for(int i = start;i<end;i++)
 		{
-			String a = "";
+			String a = "resources\\";
 			UnoCard card = game.playerList.get(0).getHand().get(i);
 			
 			if(card.getValue().toString().equals("Reverse"))
-				a = card.getColor().toString().toLowerCase()+"_reverse"+".png";
+				a += card.getColor().toString().toLowerCase()+"_reverse"+".png";
 			else if(card.getValue().toString().equals("DrawTwo"))
-				a = card.getColor().toString().toLowerCase()+"_picker"+".png";
+				a += card.getColor().toString().toLowerCase()+"_picker"+".png";
 			else if(card.getValue().toString().equals("Wild"))
-				a = "wild_color_changer.png";
+				a += "wild_color_changer.png";
 			else if(card.getValue().toString().equals("Skip"))
-				a = card.getColor().toString().toLowerCase()+"_skip"+".png";
+				a += card.getColor().toString().toLowerCase()+"_skip"+".png";
 			else if(card.getValue().toString().equals("Wild_Four"))
-				a = "wild_pick_four.png";
+				a += "wild_pick_four.png";
 			else
-				a = card.getColor().toString().toLowerCase()+"_"+card.toInt()+".png";
+				a += card.getColor().toString().toLowerCase()+"_"+card.toInt()+".png";
 			
 			try {
 				g.drawImage(ImageIO.read(getClass().getResource(a)),x(x+120*(i%7)),y(y), xs(cardWidth), ys(cardHeight), null);
@@ -629,21 +629,21 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 				{
 					for(int h = 0;h<Math.min(p.getHandSize(), 5);h++)
 					{
-						String a = "";
+						String a = "resources\\";
 						UnoCard card = game.playerList.get(2).getHand().get(h);
 						
 						if(card.getValue().toString().equals("Reverse"))
-							a = card.getColor().toString().toLowerCase()+"_reverse"+".png";
+							a += card.getColor().toString().toLowerCase()+"_reverse"+".png";
 						else if(card.getValue().toString().equals("DrawTwo"))
-							a = card.getColor().toString().toLowerCase()+"_picker"+".png";
+							a += card.getColor().toString().toLowerCase()+"_picker"+".png";
 						else if(card.getValue().toString().equals("Wild"))
-							a = "wild_color_changer.png";
+							a += "wild_color_changer.png";
 						else if(card.getValue().toString().equals("Skip"))
-							a = card.getColor().toString().toLowerCase()+"_skip"+".png";
+							a += card.getColor().toString().toLowerCase()+"_skip"+".png";
 						else if(card.getValue().toString().equals("Wild_Four"))
-							a = "wild_pick_four.png";
+							a += "wild_pick_four.png";
 						else
-							a = card.getColor().toString().toLowerCase()+"_"+card.toInt()+".png";
+							a += card.getColor().toString().toLowerCase()+"_"+card.toInt()+".png";
 						
 						try {
 							g.drawImage(rotate180(ImageIO.read(getClass().getResource(a))),x(669+100*h),y(100), xs(cardWidth), ys(cardHeight), null);
@@ -659,7 +659,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 					{
 						
 						try {
-							g.drawImage(rotate180(ImageIO.read(getClass().getResource("card_back_alt.png"))),x(669+50*h),y(100), xs(cardWidth), ys(cardHeight), null);
+							g.drawImage(rotate180(ImageIO.read(getClass().getResource("resources\\card_back_alt.png"))),x(669+50*h),y(100), xs(cardWidth), ys(cardHeight), null);
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -685,21 +685,21 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 				{
 					for(int h = 0;h<Math.min(p.getHandSize(), 5);h++)
 					{
-						String a = "";
+						String a = "resources\\";
 						UnoCard card = game.playerList.get(1).getHand().get(h);
 						
 						if(card.getValue().toString().equals("Reverse"))
-							a = card.getColor().toString().toLowerCase()+"_reverse"+".png";
+							a += card.getColor().toString().toLowerCase()+"_reverse"+".png";
 						else if(card.getValue().toString().equals("DrawTwo"))
-							a = card.getColor().toString().toLowerCase()+"_picker"+".png";
+							a += card.getColor().toString().toLowerCase()+"_picker"+".png";
 						else if(card.getValue().toString().equals("Wild"))
-							a = "wild_color_changer.png";
+							a += "wild_color_changer.png";
 						else if(card.getValue().toString().equals("Skip"))
-							a = card.getColor().toString().toLowerCase()+"_skip"+".png";
+							a += card.getColor().toString().toLowerCase()+"_skip"+".png";
 						else if(card.getValue().toString().equals("Wild_Four"))
-							a = "wild_pick_four.png";
+							a += "wild_pick_four.png";
 						else
-							a = card.getColor().toString().toLowerCase()+"_"+card.toInt()+".png";
+							a += card.getColor().toString().toLowerCase()+"_"+card.toInt()+".png";
 						
 						try {
 							im = rotateClockwise90(ImageIO.read(getClass().getResource(a)));
@@ -716,7 +716,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 					for(int h = 0;h<Math.min(p.getHandSize(), 10);h++)
 					{
 							try {
-								im = rotateClockwise90(ImageIO.read(getClass().getResource("card_back_alt.png")));
+								im = rotateClockwise90(ImageIO.read(getClass().getResource("resources\\card_back_alt.png")));
 							} catch (IOException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
@@ -745,21 +745,21 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 				{
 					for(int h = 0;h<Math.min(p.getHandSize(), 5);h++)
 					{
-						String a = "";
+						String a = "resources\\";
 						UnoCard card = game.playerList.get(3).getHand().get(h);
 						
 						if(card.getValue().toString().equals("Reverse"))
-							a = card.getColor().toString().toLowerCase()+"_reverse"+".png";
+							a += card.getColor().toString().toLowerCase()+"_reverse"+".png";
 						else if(card.getValue().toString().equals("DrawTwo"))
-							a = card.getColor().toString().toLowerCase()+"_picker"+".png";
+							a += card.getColor().toString().toLowerCase()+"_picker"+".png";
 						else if(card.getValue().toString().equals("Wild"))
-							a = "wild_color_changer.png";
+							a += "wild_color_changer.png";
 						else if(card.getValue().toString().equals("Skip"))
-							a = card.getColor().toString().toLowerCase()+"_skip"+".png";
+							a += card.getColor().toString().toLowerCase()+"_skip"+".png";
 						else if(card.getValue().toString().equals("Wild_Four"))
-							a = "wild_pick_four.png";
+							a += "wild_pick_four.png";
 						else
-							a = card.getColor().toString().toLowerCase()+"_"+card.toInt()+".png";
+							a += card.getColor().toString().toLowerCase()+"_"+card.toInt()+".png";
 						
 						try {
 							im = rotateClockwise270(ImageIO.read(getClass().getResource(a)));
@@ -776,7 +776,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 					{
 						
 						try {
-							im = rotateClockwise270(ImageIO.read(getClass().getResource("card_back_alt.png")));
+							im = rotateClockwise270(ImageIO.read(getClass().getResource("resources\\card_back_alt.png")));
 						} catch (IOException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
@@ -806,21 +806,21 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 		int end = Math.min(start+7, game.current_player.getHandSize());
 		for(int i = start;i<end;i++)
 		{
-			String a = "";
+			String a = "resources\\";
 			UnoCard card = game.current_player.getHand().get(i);
 			
 			if(card.getValue().toString().equals("Reverse"))
-				a = card.getColor().toString().toLowerCase()+"_reverse"+".png";
+				a += card.getColor().toString().toLowerCase()+"_reverse"+".png";
 			else if(card.getValue().toString().equals("DrawTwo"))
-				a = card.getColor().toString().toLowerCase()+"_picker"+".png";
+				a += card.getColor().toString().toLowerCase()+"_picker"+".png";
 			else if(card.getValue().toString().equals("Wild"))
-				a = "wild_color_changer.png";
+				a += "wild_color_changer.png";
 			else if(card.getValue().toString().equals("Skip"))
-				a = card.getColor().toString().toLowerCase()+"_skip"+".png";
+				a += card.getColor().toString().toLowerCase()+"_skip"+".png";
 			else if(card.getValue().toString().equals("Wild_Four"))
-				a = "wild_pick_four.png";
+				a += "wild_pick_four.png";
 			else
-				a = card.getColor().toString().toLowerCase()+"_"+card.toInt()+".png";
+				a += card.getColor().toString().toLowerCase()+"_"+card.toInt()+".png";
 			
 			try {
 				g.drawImage(ImageIO.read(getClass().getResource(a)),x(x+120*(i%7)),y(y), xs(cardWidth), ys(cardHeight), null);
@@ -853,22 +853,22 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 					{
 						for(int h = 0;h<Math.min(p.getHandSize(), 5);h++)
 						{
-							String a = "";
+							String a = "resources\\";
 							UnoCard card = p.getHand().get(h);
 							p.sortHand(game.showTopCard().getColor(), game.showTopCard().getValue());
 							
 							if(card.getValue().toString().equals("Reverse"))
-								a = card.getColor().toString().toLowerCase()+"_reverse"+".png";
+								a += card.getColor().toString().toLowerCase()+"_reverse"+".png";
 							else if(card.getValue().toString().equals("DrawTwo"))
-								a = card.getColor().toString().toLowerCase()+"_picker"+".png";
+								a += card.getColor().toString().toLowerCase()+"_picker"+".png";
 							else if(card.getValue().toString().equals("Wild"))
-								a = "wild_color_changer.png";
+								a += "wild_color_changer.png";
 							else if(card.getValue().toString().equals("Skip"))
-								a = card.getColor().toString().toLowerCase()+"_skip"+".png";
+								a += card.getColor().toString().toLowerCase()+"_skip"+".png";
 							else if(card.getValue().toString().equals("Wild_Four"))
-								a = "wild_pick_four.png";
+								a += "wild_pick_four.png";
 							else
-								a = card.getColor().toString().toLowerCase()+"_"+card.toInt()+".png";
+								a += card.getColor().toString().toLowerCase()+"_"+card.toInt()+".png";
 							
 							try {
 								g.drawImage(rotate180(ImageIO.read(getClass().getResource(a))),x(669+100*h),y(100), xs(cardWidth), ys(cardHeight), null);
@@ -884,7 +884,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 						{
 							
 							try {
-								g.drawImage(rotate180(ImageIO.read(getClass().getResource("card_back_alt.png"))),x(669+50*h),y(100), xs(cardWidth), ys(cardHeight), null);
+								g.drawImage(rotate180(ImageIO.read(getClass().getResource("resources\\card_back_alt.png"))),x(669+50*h),y(100), xs(cardWidth), ys(cardHeight), null);
 							} catch (IOException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -912,22 +912,22 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 					{
 						for(int h = 0;h<Math.min(p.getHandSize(), 10);h++)
 						{
-							String a = "";
+							String a = "resources\\";
 							UnoCard card = p.getHand().get(h);
 							p.sortHand(game.showTopCard().getColor(), game.showTopCard().getValue());
 							
 							if(card.getValue().toString().equals("Reverse"))
-								a = card.getColor().toString().toLowerCase()+"_reverse"+".png";
+								a += card.getColor().toString().toLowerCase()+"_reverse"+".png";
 							else if(card.getValue().toString().equals("DrawTwo"))
-								a = card.getColor().toString().toLowerCase()+"_picker"+".png";
+								a += card.getColor().toString().toLowerCase()+"_picker"+".png";
 							else if(card.getValue().toString().equals("Wild"))
-								a = "wild_color_changer.png";
+								a += "wild_color_changer.png";
 							else if(card.getValue().toString().equals("Skip"))
-								a = card.getColor().toString().toLowerCase()+"_skip"+".png";
+								a += card.getColor().toString().toLowerCase()+"_skip"+".png";
 							else if(card.getValue().toString().equals("Wild_Four"))
-								a = "wild_pick_four.png";
+								a += "wild_pick_four.png";
 							else
-								a = card.getColor().toString().toLowerCase()+"_"+card.toInt()+".png";
+								a += card.getColor().toString().toLowerCase()+"_"+card.toInt()+".png";
 							
 							try {
 								im = rotateClockwise90(ImageIO.read(getClass().getResource(a)));
@@ -943,7 +943,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 						for(int h = 0;h<Math.min(p.getHandSize(), 10);h++)
 						{
 							try {
-								im = rotateClockwise90(ImageIO.read(getClass().getResource("card_back_alt.png")));
+								im = rotateClockwise90(ImageIO.read(getClass().getResource("resources\\card_back_alt.png")));
 							} catch (IOException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
@@ -973,22 +973,22 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 					{
 						for(int h = 0;h<Math.min(p.getHandSize(), 5);h++)
 						{
-							String a = "";
+							String a = "resources\\";
 							UnoCard card = p.getHand().get(h);
 							p.sortHand(game.showTopCard().getColor(), game.showTopCard().getValue());
 							
 							if(card.getValue().toString().equals("Reverse"))
-								a = card.getColor().toString().toLowerCase()+"_reverse"+".png";
+								a += card.getColor().toString().toLowerCase()+"_reverse"+".png";
 							else if(card.getValue().toString().equals("DrawTwo"))
-								a = card.getColor().toString().toLowerCase()+"_picker"+".png";
+								a += card.getColor().toString().toLowerCase()+"_picker"+".png";
 							else if(card.getValue().toString().equals("Wild"))
-								a = "wild_color_changer.png";
+								a += "wild_color_changer.png";
 							else if(card.getValue().toString().equals("Skip"))
-								a = card.getColor().toString().toLowerCase()+"_skip"+".png";
+								a += card.getColor().toString().toLowerCase()+"_skip"+".png";
 							else if(card.getValue().toString().equals("Wild_Four"))
-								a = "wild_pick_four.png";
+								a += "wild_pick_four.png";
 							else
-								a = card.getColor().toString().toLowerCase()+"_"+card.toInt()+".png";
+								a += card.getColor().toString().toLowerCase()+"_"+card.toInt()+".png";
 							
 							try {
 								im = rotateClockwise270(ImageIO.read(getClass().getResource(a)));
@@ -1005,7 +1005,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 						for(int h = 0;h<Math.min(p.getHandSize(), 10);h++)
 						{
 							try {
-								im = rotateClockwise270(ImageIO.read(getClass().getResource("card_back_alt.png")));
+								im = rotateClockwise270(ImageIO.read(getClass().getResource("resources\\card_back_alt.png")));
 							} catch (IOException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
@@ -1070,21 +1070,21 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 	}
 	public void paintDiscard(Graphics g, int x, int y)
 	{
-		String a = "";
+		String a = "resources\\";
 		UnoCard card = game.deck.discard.get(game.deck.discard.size()-1);
 		
 		if(card.getValue().toString().equals("Reverse"))
-			a = card.getColor().toString().toLowerCase()+"_reverse"+".png";
+			a += card.getColor().toString().toLowerCase()+"_reverse"+".png";
 		else if(card.getValue().toString().equals("DrawTwo"))
-			a = card.getColor().toString().toLowerCase()+"_picker"+".png";
+			a += card.getColor().toString().toLowerCase()+"_picker"+".png";
 		else if(card.getValue().toString().equals("Wild"))
-			a = "wild_color_changer.png";
+			a += "wild_color_changer.png";
 		else if(card.getValue().toString().equals("Skip"))
-			a = card.getColor().toString().toLowerCase()+"_skip.png";
+			a += card.getColor().toString().toLowerCase()+"_skip.png";
 		else if(card.getValue().toString().equals("Wild_Four"))
-			a = "wild_pick_four.png";
+			a += "wild_pick_four.png";
 		else 
-			a = card.getColor().toString().toLowerCase()+"_"+card.toInt()+".png";
+			a += card.getColor().toString().toLowerCase()+"_"+card.toInt()+".png";
 		
 		try {
 			g.drawImage(ImageIO.read(getClass().getResource(a)),x(x),y(y), xs(cardWidth), ys(cardHeight), null);
@@ -1103,7 +1103,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 		//g.drawString(direction, x, y);
 		BufferedImage img = null;
 		try {
-			img = ImageIO.read(getClass().getResource("direction arrow.png"));
+			img = ImageIO.read(getClass().getResource("resources\\direction arrow.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
