@@ -116,36 +116,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 		
 		
 	}
-	public void skipStart()
-	{
-		start = false;
-	}
-	public void setCPU(boolean x)
-	{
-		cpu = x;
-	}
-	public int x(int x)
-	{
-		x+=35;
-		return (int)(x*wFactor);
-	}
-	public int font(int s)
-	{
-		return (int)(s*wFactor);
-	}
-	public int xs(int s)
-	{
-		return (int)(s*wFactor);
-	}
-	public int y(int y)
-	{
-		y-=25;
-		return (int)(y*hFactor);
-	}
-	public int ys(int y)
-	{
-		return (int)(y*hFactor);
-	}
+	
 	public void paintComponent(Graphics g)
 	{
 		if(start)
@@ -449,6 +420,36 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 			addHistory(game.getLastPlayerTurn("play"));
 		
 		repaint();
+	}
+	public void skipStart()
+	{
+		start = false;
+	}
+	public void setCPU(boolean x)
+	{
+		cpu = x;
+	}
+	public int x(int x)
+	{
+		x+=35;
+		return (int)(x*wFactor);
+	}
+	public int font(int s)
+	{
+		return (int)(s*wFactor);
+	}
+	public int xs(int s)
+	{
+		return (int)(s*wFactor);
+	}
+	public int y(int y)
+	{
+		y-=25;
+		return (int)(y*hFactor);
+	}
+	public int ys(int y)
+	{
+		return (int)(y*hFactor);
 	}
 	public void paintHistory(Graphics g)
 	{
