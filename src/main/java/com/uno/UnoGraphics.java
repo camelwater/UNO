@@ -105,7 +105,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 		}
 		frame.add(this);
 		frame.setSize((int)scrWidth, (int)scrHeight);
-		System.out.println("Screen Dimensions: "+scrWidth+" x "+scrHeight);
+		System.out.println("Screen Dimension: "+scrWidth+" x "+scrHeight);
 		frame.setResizable(true);
 		frame.setAutoRequestFocus(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -315,7 +315,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 			this.remove(nameText);
 			if(cpu)
 			{
-				if(game.getTurn()==0)
+				if(game.getTurn()==0 ||  gameEndedBack)
 				{
 					game.cpuActive = false;
 					arrows = true;
@@ -548,15 +548,15 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 			{
 			
 				g.setColor(Color.LIGHT_GRAY);
-				g.setFont(new Font("Roboto", Font.BOLD, font(70)));
-				g.drawString(">",x(1000), y(175));
+				g.setFont(new Font("Roboto", Font.BOLD, font(55)));
+				g.drawString(">",x(1260), y(210));
 				
 			}
 			if (page3!=maxPage3)
 			{
 				g.setColor(Color.LIGHT_GRAY);
-				g.setFont(new Font("Roboto", Font.BOLD, font(70)));
-				g.drawString("<",x(500), y(175));
+				g.setFont(new Font("Roboto", Font.BOLD, font(55)));
+				g.drawString("<",x(650), y(210));
 				
 			}
 			
@@ -565,30 +565,30 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 			
 				g.setColor(Color.LIGHT_GRAY);
 				g.setFont(new Font("Roboto", Font.BOLD, font(70)));
-				g.drawString("^",x(180), y(350));
+				g.drawString("^",x(275), y(250));
 				
 			}
 			if (page2!=maxPage2)
 			{
 				g.setColor(Color.LIGHT_GRAY);
-				g.setFont(new Font("Roboto", Font.BOLD, font(70)));
-				g.drawString("v",x(180), y(750));
+				g.setFont(new Font("Roboto", Font.BOLD, font(55)));
+				g.drawString("v",x(275), y(825));
 				
 			}
 			
-			if (page4!=1)
-			{
-			
-				g.setColor(Color.LIGHT_GRAY);
-				g.setFont(new Font("Roboto", Font.BOLD, font(70)));
-				g.drawString("v", x(1600), y(350));
-				
-			}
 			if (page4!=maxPage4)
 			{
+			
 				g.setColor(Color.LIGHT_GRAY);
 				g.setFont(new Font("Roboto", Font.BOLD, font(70)));
-				g.drawString("^", x(1600), y(750));
+				g.drawString("^", x(1550), y(250));
+				
+			}
+			if (page4!=1)
+			{
+				g.setColor(Color.LIGHT_GRAY);
+				g.setFont(new Font("Roboto", Font.BOLD, font(55)));
+				g.drawString("v", x(1550), y(825));
 				
 			}
 		}
@@ -644,7 +644,9 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 			{
 				if(gameEndedBack)
 				{
-					for(int h = 0;h<Math.min(p.getHandSize(), 5);h++)
+					int s= (page3-1)*5;
+					int en = Math.min(s+5, game.playerList.get(2).getHandSize());
+					for(int h = s;h<en;h++)
 					{
 						String a = "/";
 						UnoCard card = game.playerList.get(2).getHand().get(h);
@@ -663,7 +665,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 							a += card.getColor().toString().toLowerCase()+"_"+card.toInt()+".png";
 						
 						try {
-							g.drawImage(rotate180(ImageIO.read(getClass().getResource(a))),x(669+100*h),y(100), xs(cardWidth), ys(cardHeight), null);
+							g.drawImage(rotate180(ImageIO.read(getClass().getResource(a))),x(1115-cardWidth-100*(h%5)),y(100), xs(cardWidth), ys(cardHeight), null);
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -700,7 +702,9 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 				BufferedImage im = null;
 				if(gameEndedBack)
 				{
-					for(int h = 0;h<Math.min(p.getHandSize(), 5);h++)
+					int s= (page2-1)*5;
+					int en = Math.min(s+5, game.playerList.get(1).getHandSize());
+					for(int h = s;h<en;h++)
 					{
 						String a = "/";
 						UnoCard card = game.playerList.get(1).getHand().get(h);
@@ -725,7 +729,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 							e1.printStackTrace();
 						}
 						
-						g.drawImage(im,x(200),y(250+100*h), xs(cardHeight), ys(cardWidth), null);
+						g.drawImage(im,x(200),y(250+100*(h%5)), xs(cardHeight), ys(cardWidth), null);
 					}
 				}
 				else
@@ -760,7 +764,9 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 				
 				if(gameEndedBack)
 				{
-					for(int h = 0;h<Math.min(p.getHandSize(), 5);h++)
+					int s= (page4-1)*5;
+					int en = Math.min(s+5, game.playerList.get(3).getHandSize());
+					for(int h = s;h<en;h++)
 					{
 						String a = "/";
 						UnoCard card = game.playerList.get(3).getHand().get(h);
@@ -784,7 +790,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
-						g.drawImage(im,x(1480),y(250+100*h), xs(cardHeight), ys(cardWidth), null);
+						g.drawImage(im,x(1480),y(780-cardWidth-100*(h%5)), xs(cardHeight), ys(cardWidth), null);
 					}
 
 				}
@@ -1435,6 +1441,61 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 				if(e.getX()>= x(1645) && e.getX()<=x(1770) && e.getY()>=y(915) && e.getY()<=y(969)) //go back to end screen from uno board
 				{
 					gameEndedBack = false;
+					page = 1;
+					page2 = 1;
+					page3 = 1;
+					page4 = 1;
+					
+					maxPage = 0;
+					maxPage2 = 0;
+					maxPage3 = 0;
+					maxPage4 = 0;
+					repaint();
+				}
+				else if(e.getX()>= x(302) && e.getX()<= x(345) && e.getY()>=y(170) && e.getY()<=y(205) && page2>1 && gameEndedBack)
+				{
+					//System.out.println("asjdh");
+					page2-=1;
+					repaint();
+				}
+				else if(e.getX()>= x(302) && e.getX()<=x(345) && e.getY()>=y(770) && e.getY()<=y(800) && page2<maxPage2 && gameEndedBack)
+				{
+					//System.out.println("asjdh");
+					page2+=1;
+					repaint();
+				}
+				else if(e.getX()>= x(975) && e.getX()<= x(1025) && e.getY()>=y(125) && e.getY()<=y(175) && page3>1 && gameEndedBack)
+				{
+					//System.out.println("asjdh");
+					page3-=1;
+					repaint();
+				}
+				else if(e.getX()>= x(475) && e.getX()<=x(525) && e.getY()>=y(125) && e.getY()<=y(175) && page3<maxPage3 && gameEndedBack)
+				{
+					//System.out.println("asjdh");
+					page3+=1;
+					repaint();
+				}
+				else if(e.getX()>=x(1580)  && e.getX()<= x(1625) && e.getY()>= y(770) && e.getY()<=y(800) && page4>1 && gameEndedBack)
+				{
+					//.out.println("asjdh");
+					page4-=1;
+					repaint();
+				}
+				else if(e.getX()>= x(1580) && e.getX()<=x(1625) && e.getY()>=y(170) && e.getY()<=y(205) && page4<maxPage4 && gameEndedBack)
+				{
+					//System.out.println("asjdh");
+					page4+=1;
+					repaint();
+				}
+				else if(e.getX()>= x(385) && e.getX()<= x(440) && e.getY()>=y(850) && e.getY()<=y(937) && page>1)
+				{
+					page-=1;
+					repaint();
+				}
+				else if(e.getX()>= x(1360) && e.getX()<=x(1415) && e.getY()>=y(850) && e.getY()<=y(937) && page<maxPage)
+				{
+					page+=1;
 					repaint();
 				}
 			}
@@ -1698,37 +1759,6 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 				else if(e.getX()>= x(1360) && e.getX()<=x(1415) && e.getY()>=y(850) && e.getY()<=y(937) && page<maxPage)
 				{
 					page+=1;
-					repaint();
-				}
-				
-				else if(e.getX()>= x(150) && e.getX()<= x(200) && e.getY()>=y(325) && e.getY()<=y(375) && page2>1 && gameEndedBack)
-				{
-					page2-=1;
-					repaint();
-				}
-				else if(e.getX()>= x(150) && e.getX()<=x(200) && e.getY()>=y(725) && e.getY()<=y(775) && page2<maxPage2 && gameEndedBack)
-				{
-					page2+=1;
-					repaint();
-				}
-				else if(e.getX()>= x(975) && e.getX()<= x(1025) && e.getY()>=y(150) && e.getY()<=y(200) && page3>1 && gameEndedBack)
-				{
-					page3-=1;
-					repaint();
-				}
-				else if(e.getX()>= x(475) && e.getX()<=x(525) && e.getY()>=y(150) && e.getY()<=y(200) && page3<maxPage3 && gameEndedBack)
-				{
-					page3+=1;
-					repaint();
-				}
-				else if(e.getX()>=x(1575)  && e.getX()<= x(1625) && e.getY()>= y(725) && e.getY()<=y(775) && page4>1 && gameEndedBack)
-				{
-					page4-=1;
-					repaint();
-				}
-				else if(e.getX()>= x(1575) && e.getX()<=x(1625) && e.getY()>=y(325) && e.getY()<=y(375) && page4<maxPage4 && gameEndedBack)
-				{
-					page4+=1;
 					repaint();
 				}
 				
