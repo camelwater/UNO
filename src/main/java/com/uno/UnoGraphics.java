@@ -549,14 +549,14 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 			
 				g.setColor(Color.LIGHT_GRAY);
 				g.setFont(new Font("Roboto", Font.BOLD, font(55)));
-				g.drawString(">",x(1260), y(210));
+				g.drawString(">",x(1360), y(210));
 				
 			}
 			if (page3!=maxPage3)
 			{
 				g.setColor(Color.LIGHT_GRAY);
 				g.setFont(new Font("Roboto", Font.BOLD, font(55)));
-				g.drawString("<",x(650), y(210));
+				g.drawString("<",x(350), y(210));
 				
 			}
 			
@@ -1452,37 +1452,37 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 					maxPage4 = 0;
 					repaint();
 				}
-				else if(e.getX()>= x(302) && e.getX()<= x(345) && e.getY()>=y(170) && e.getY()<=y(205) && page2>1 && gameEndedBack)
+				else if(e.getX()>= x(275) && e.getX()<= x(320) && e.getY()>=y(190) && e.getY()<=y(230) && page2>1)
 				{
 					//System.out.println("asjdh");
 					page2-=1;
 					repaint();
 				}
-				else if(e.getX()>= x(302) && e.getX()<=x(345) && e.getY()>=y(770) && e.getY()<=y(800) && page2<maxPage2 && gameEndedBack)
+				else if(e.getX()>= x(275) && e.getX()<=x(320) && e.getY()>=y(788) && e.getY()<=y(830) && page2<maxPage2)
 				{
 					//System.out.println("asjdh");
 					page2+=1;
 					repaint();
 				}
-				else if(e.getX()>= x(975) && e.getX()<= x(1025) && e.getY()>=y(125) && e.getY()<=y(175) && page3>1 && gameEndedBack)
+				else if(e.getX()>= x(1115) && e.getX()<= x(1150) && e.getY()>=y(125) && e.getY()<=y(175) && page3>1)
 				{
 					//System.out.println("asjdh");
 					page3-=1;
 					repaint();
 				}
-				else if(e.getX()>= x(475) && e.getX()<=x(525) && e.getY()>=y(125) && e.getY()<=y(175) && page3<maxPage3 && gameEndedBack)
+				else if(e.getX()>= x(475) && e.getX()<=x(525) && e.getY()>=y(125) && e.getY()<=y(175) && page3<maxPage3)
 				{
 					//System.out.println("asjdh");
 					page3+=1;
 					repaint();
 				}
-				else if(e.getX()>=x(1580)  && e.getX()<= x(1625) && e.getY()>= y(770) && e.getY()<=y(800) && page4>1 && gameEndedBack)
+				else if(e.getX()>=x(1550)  && e.getX()<= x(1595) && e.getY()>= y(788) && e.getY()<=y(830) && page4>1)
 				{
 					//.out.println("asjdh");
 					page4-=1;
 					repaint();
 				}
-				else if(e.getX()>= x(1580) && e.getX()<=x(1625) && e.getY()>=y(170) && e.getY()<=y(205) && page4<maxPage4 && gameEndedBack)
+				else if(e.getX()>= x(1550) && e.getX()<=x(1595) && e.getY()>=y(190) && e.getY()<=y(230) && page4<maxPage4)
 				{
 					//System.out.println("asjdh");
 					page4+=1;
