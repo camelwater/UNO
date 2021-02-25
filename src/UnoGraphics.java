@@ -104,7 +104,6 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 		}
 		frame.add(this);
 		frame.setSize((int)scrWidth, (int)scrHeight);
-		System.out.println("Screen Size: "+scrWidth+" x "+scrHeight);
 		frame.setResizable(true);
 		frame.setAutoRequestFocus(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -454,7 +453,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 		if(history.size()>0)
 		{
 			g.setColor(Color.black);
-			g.setFont(new Font("Arial", Font.BOLD, font(13)));
+			g.setFont(new Font("Arial", Font.BOLD | Font.ROMAN_BASELINE, font(12)));
 			String[]x = new String[8];
 			System.arraycopy(history.toArray(), 0, x, 0, history.size());
 			for(int i = 0;i<x.length;i++)
@@ -1766,3 +1765,4 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 		
 	}
 }
+
