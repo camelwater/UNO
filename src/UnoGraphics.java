@@ -456,8 +456,8 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 			g.setColor(Color.black);
 			int fontSize = 12;
 			if(scrWidth == 1920.0)
-				fontSize=13;
-			g.setFont(new Font("Arial", Font.BOLD | Font.ROMAN_BASELINE, font(12)));
+				fontSize=11;
+			g.setFont(new Font("Arial", Font.BOLD | Font.ROMAN_BASELINE, font(fontSize)));
 			String[]x = new String[8];
 			System.arraycopy(history.toArray(), 0, x, 0, history.size());
 			for(int i = 0;i<x.length;i++)
