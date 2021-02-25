@@ -1,3 +1,4 @@
+package com.uno;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -72,7 +73,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 	
 	AbstractAction action = new AbstractAction()
 	{
-	    @Override
+	    //@Override
 	    public void actionPerformed(ActionEvent e)
 	    {
 	    	if(enterNames)
@@ -97,7 +98,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 		addMouseMotionListener(this);
 		
 		try {
-			frame.setIconImage(ImageIO.read(getClass().getResource("resources\\card_back_large.png")));
+			frame.setIconImage(ImageIO.read(getClass().getResource("/card_back_large.png")));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -155,7 +156,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 			g.setFont(new Font("Trebuchet", Font.BOLD, font(75)));
 			g.drawString("UNO", x(850), y(200));
 			try {
-				g.drawImage(ImageIO.read(getClass().getResource("resources\\card_back_alt.png")), x(867), y(225), xs(cardWidth), ys(cardHeight), null);
+				g.drawImage(ImageIO.read(getClass().getResource("/card_back_alt.png")), x(867), y(225), xs(cardWidth), ys(cardHeight), null);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -201,7 +202,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
     		}
 			
 			try {
-				g.drawImage(ImageIO.read(getClass().getResource("resources\\plus.png")), x(1100),y(250), xs(75), ys(75), null);
+				g.drawImage(ImageIO.read(getClass().getResource("/plus.png")), x(1100),y(250), xs(75), ys(75), null);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -331,7 +332,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 			g.fillRect(0, 0, x(1920), y(1080));
 			
 			try {
-				g.drawImage(ImageIO.read(getClass().getResource("resources\\menu.png")), x(1715), y(10), xs(150), ys(100), null);
+				g.drawImage(ImageIO.read(getClass().getResource("/menu.png")), x(1715), y(10), xs(150), ys(100), null);
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -350,7 +351,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 			}
 			
 			try {
-				g.drawImage(ImageIO.read(getClass().getResource("resources\\card_back.png")),x(670),y(400), xs(cardWidth), ys(cardHeight), null);
+				g.drawImage(ImageIO.read(getClass().getResource("/card_back.png")),x(670),y(400), xs(cardWidth), ys(cardHeight), null);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -404,7 +405,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 				g.fillRect(x(1650), 0, xs(270), ys(1080));
 				
 				try {
-					g.drawImage(ImageIO.read(getClass().getResource("resources\\menu.png")), x(1715), y(10), xs(150), ys(100), null);
+					g.drawImage(ImageIO.read(getClass().getResource("/menu.png")), x(1715), y(10), xs(150), ys(100), null);
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -474,7 +475,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 		
 		BufferedImage img = null;
 		try {
-			img = ImageIO.read(getClass().getResource("resources\\arrow pointer.png"));
+			img = ImageIO.read(getClass().getResource("/arrow pointer.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -589,7 +590,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 		int end = Math.min(start+7, game.playerList.get(0).getHandSize());
 		for(int i = start;i<end;i++)
 		{
-			String a = "resources\\";
+			String a = "/";
 			UnoCard card = game.playerList.get(0).getHand().get(i);
 			
 			if(card.getValue().toString().equals("Reverse"))
@@ -634,7 +635,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 				{
 					for(int h = 0;h<Math.min(p.getHandSize(), 5);h++)
 					{
-						String a = "resources\\";
+						String a = "/";
 						UnoCard card = game.playerList.get(2).getHand().get(h);
 						
 						if(card.getValue().toString().equals("Reverse"))
@@ -664,7 +665,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 					{
 						
 						try {
-							g.drawImage(rotate180(ImageIO.read(getClass().getResource("resources\\card_back_alt.png"))),x(669+50*h),y(100), xs(cardWidth), ys(cardHeight), null);
+							g.drawImage(rotate180(ImageIO.read(getClass().getResource("/card_back_alt.png"))),x(669+50*h),y(100), xs(cardWidth), ys(cardHeight), null);
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -690,7 +691,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 				{
 					for(int h = 0;h<Math.min(p.getHandSize(), 5);h++)
 					{
-						String a = "resources\\";
+						String a = "/";
 						UnoCard card = game.playerList.get(1).getHand().get(h);
 						
 						if(card.getValue().toString().equals("Reverse"))
@@ -721,7 +722,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 					for(int h = 0;h<Math.min(p.getHandSize(), 10);h++)
 					{
 							try {
-								im = rotateClockwise90(ImageIO.read(getClass().getResource("resources\\card_back_alt.png")));
+								im = rotateClockwise90(ImageIO.read(getClass().getResource("/card_back_alt.png")));
 							} catch (IOException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
@@ -750,7 +751,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 				{
 					for(int h = 0;h<Math.min(p.getHandSize(), 5);h++)
 					{
-						String a = "resources\\";
+						String a = "/";
 						UnoCard card = game.playerList.get(3).getHand().get(h);
 						
 						if(card.getValue().toString().equals("Reverse"))
@@ -781,7 +782,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 					{
 						
 						try {
-							im = rotateClockwise270(ImageIO.read(getClass().getResource("resources\\card_back_alt.png")));
+							im = rotateClockwise270(ImageIO.read(getClass().getResource("/card_back_alt.png")));
 						} catch (IOException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
@@ -811,7 +812,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 		int end = Math.min(start+7, game.current_player.getHandSize());
 		for(int i = start;i<end;i++)
 		{
-			String a = "resources\\";
+			String a = "/";
 			UnoCard card = game.current_player.getHand().get(i);
 			
 			if(card.getValue().toString().equals("Reverse"))
@@ -858,7 +859,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 					{
 						for(int h = 0;h<Math.min(p.getHandSize(), 5);h++)
 						{
-							String a = "resources\\";
+							String a = "/";
 							UnoCard card = p.getHand().get(h);
 							p.sortHand(game.showTopCard().getColor(), game.showTopCard().getValue());
 							
@@ -889,7 +890,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 						{
 							
 							try {
-								g.drawImage(rotate180(ImageIO.read(getClass().getResource("resources\\card_back_alt.png"))),x(669+50*h),y(100), xs(cardWidth), ys(cardHeight), null);
+								g.drawImage(rotate180(ImageIO.read(getClass().getResource("/card_back_alt.png"))),x(669+50*h),y(100), xs(cardWidth), ys(cardHeight), null);
 							} catch (IOException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -917,7 +918,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 					{
 						for(int h = 0;h<Math.min(p.getHandSize(), 10);h++)
 						{
-							String a = "resources\\";
+							String a = "/";
 							UnoCard card = p.getHand().get(h);
 							p.sortHand(game.showTopCard().getColor(), game.showTopCard().getValue());
 							
@@ -948,7 +949,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 						for(int h = 0;h<Math.min(p.getHandSize(), 10);h++)
 						{
 							try {
-								im = rotateClockwise90(ImageIO.read(getClass().getResource("resources\\card_back_alt.png")));
+								im = rotateClockwise90(ImageIO.read(getClass().getResource("/card_back_alt.png")));
 							} catch (IOException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
@@ -978,7 +979,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 					{
 						for(int h = 0;h<Math.min(p.getHandSize(), 5);h++)
 						{
-							String a = "resources\\";
+							String a = "/";
 							UnoCard card = p.getHand().get(h);
 							p.sortHand(game.showTopCard().getColor(), game.showTopCard().getValue());
 							
@@ -1010,7 +1011,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 						for(int h = 0;h<Math.min(p.getHandSize(), 10);h++)
 						{
 							try {
-								im = rotateClockwise270(ImageIO.read(getClass().getResource("resources\\card_back_alt.png")));
+								im = rotateClockwise270(ImageIO.read(getClass().getResource("/card_back_alt.png")));
 							} catch (IOException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
@@ -1075,7 +1076,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 	}
 	public void paintDiscard(Graphics g, int x, int y)
 	{
-		String a = "resources\\";
+		String a = "/";
 		UnoCard card = game.deck.discard.get(game.deck.discard.size()-1);
 		
 		if(card.getValue().toString().equals("Reverse"))
@@ -1103,12 +1104,16 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 	{
 		int x = 817;
 		int y = 560;
+		if(!cpu)
+		{
+			y = 460;
+		}
 		//g.setFont(new Font("Trebuchet MS", Font.BOLD, 20));
 		g.setColor(Color.white);
 		//g.drawString(direction, x, y);
 		BufferedImage img = null;
 		try {
-			img = ImageIO.read(getClass().getResource("resources\\direction arrow.png"));
+			img = ImageIO.read(getClass().getResource("/direction arrow.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1168,26 +1173,26 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 		
 	}
 	
-	@Override
+	//@Override
 	public void mouseClicked(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}
-	@Override
+	//@Override
 	public void mouseEntered(MouseEvent e) {
 			
 	}
-	@Override
+	//@Override
 	public void mouseExited(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}
-	@Override
+	//@Override
 	public void mousePressed(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}
-	@Override
+	//@Override
 	public void mouseReleased(MouseEvent e) {
 		System.out.println("X: "+e.getX()+" Y: "+e.getY());
 		
@@ -1720,7 +1725,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 		}
 	}
 
-	@Override
+	//@Override
 	public void mouseMoved(MouseEvent e) {
 		//System.out.println("HOVERING X: "+e.getX()+" Y: "+e.getY());
 		if(enterNames && !confirm && e.getX()>= x(725) && e.getX()<=x(1200) && e.getY()>=y(475) && e.getY()<=y(700))
@@ -1763,7 +1768,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 			}
 		}
 	}
-	@Override
+	//@Override
 	public void mouseDragged(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
