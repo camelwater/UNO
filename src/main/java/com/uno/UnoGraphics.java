@@ -374,7 +374,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 		    {
 		    	g.setColor(Color.black);
 		    	g.setFont(new Font("Trebuchet", Font.BOLD, font(45)));
-		    	g.drawString("V", 722, 642);
+		    	g.drawString("V", x(722), y(642));
 		    	g.setColor(new Color(246,72,72));
 		    	g.fillRect(x(622), y(665), xs(50), ys(50));
 		    	g.setColor(new Color(0,191,255));
@@ -529,9 +529,20 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 		
 		if(gameEndedBack)
 		{
-			maxPage2 = Math.max(1,(int)(Math.ceil((double)game.playerList.get(1).getHandSize()/7)));
-			maxPage3 = Math.max(1,(int)(Math.ceil((double)game.playerList.get(2).getHandSize()/7)));
-			maxPage4 = Math.max(1,(int)(Math.ceil((double)game.playerList.get(3).getHandSize()/7)));
+			if(cpu)
+			{
+				maxPage2 = Math.max(1,(int)(Math.ceil((double)game.playerList.get(1).getHandSize()/5)));
+				maxPage3 = Math.max(1,(int)(Math.ceil((double)game.playerList.get(2).getHandSize()/5)));
+				maxPage4 = Math.max(1,(int)(Math.ceil((double)game.playerList.get(3).getHandSize()/5)));
+			}
+			else
+			{
+				maxPage2 = Math.max(1,(int)(Math.ceil((double)game.playerList.get((game.getTurn()+1)%4).getHandSize()/5)));
+				maxPage3 = Math.max(1,(int)(Math.ceil((double)game.playerList.get((game.getTurn()+2)%4).getHandSize()/5)));
+				maxPage4 = Math.max(1,(int)(Math.ceil((double)game.playerList.get((game.getTurn()+3)%4).getHandSize()/5)));
+		
+			}
+			System.out.println(maxPage2+" "+maxPage3+" "+maxPage4);
 			
 			if (page3!=1)
 			{
@@ -541,7 +552,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 				g.drawString(">",x(1000), y(175));
 				
 			}
-			if (page3!=maxPage)
+			if (page3!=maxPage3)
 			{
 				g.setColor(Color.LIGHT_GRAY);
 				g.setFont(new Font("Roboto", Font.BOLD, font(70)));
@@ -557,7 +568,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 				g.drawString("^",x(180), y(350));
 				
 			}
-			if (page2!=maxPage)
+			if (page2!=maxPage2)
 			{
 				g.setColor(Color.LIGHT_GRAY);
 				g.setFont(new Font("Roboto", Font.BOLD, font(70)));
@@ -573,7 +584,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 				g.drawString("v", x(1600), y(350));
 				
 			}
-			if (page4!=maxPage)
+			if (page4!=maxPage4)
 			{
 				g.setColor(Color.LIGHT_GRAY);
 				g.setFont(new Font("Roboto", Font.BOLD, font(70)));
