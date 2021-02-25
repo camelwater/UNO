@@ -104,6 +104,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 		}
 		frame.add(this);
 		frame.setSize((int)scrWidth, (int)scrHeight);
+		System.out.println("Screen Size: "+scrWidth+" x "+scrHeight);
 		frame.setResizable(true);
 		frame.setAutoRequestFocus(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
