@@ -592,7 +592,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 				
 			}
 		}
-	}
+	} 
 	public void paintCPUHands(Graphics g, int x, int y)
 	{
 		if(game.getTurn()==0)
