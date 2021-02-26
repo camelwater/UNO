@@ -564,7 +564,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 			{
 			
 				g.setColor(Color.LIGHT_GRAY);
-				g.setFont(new Font("Roboto", Font.BOLD, font(70)));
+				g.setFont(new Font("Roboto", Font.PLAIN, font(70)));
 				g.drawString("^",x(275), y(250));
 				
 			}
@@ -580,7 +580,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 			{
 			
 				g.setColor(Color.LIGHT_GRAY);
-				g.setFont(new Font("Roboto", Font.BOLD, font(70)));
+				g.setFont(new Font("Roboto", Font.PLAIN, font(70)));
 				g.drawString("^", x(1550), y(250));
 				
 			}
