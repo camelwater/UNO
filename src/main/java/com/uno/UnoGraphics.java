@@ -375,7 +375,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 				
 				g.setColor(Color.white);
 				g.fillRect(x(1650), 0, xs(270), ys(1080));
-				
+				 
 				try {
 					g.drawImage(ImageIO.read(getClass().getResource("/menu.png")), x(1715), y(10), xs(150), ys(100), null);
 				} catch (IOException e1) {
