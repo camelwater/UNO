@@ -50,7 +50,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 	
 	private boolean colorPickerDraw = false;
 	private boolean colorPickerPlay = false;
-	private int colorPickerPlayCoord = 517;
+	private int colorPickerPlayCoord = 540;
 	private int wildIndex = 0;
 	
 	private boolean start = true;
@@ -331,16 +331,16 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 			paintDiscard(g,950, 400);
 			if(cpu)
 			{
-				paintCPUHands(g, 475, 800);
+				paintCPUHands(g, 490, 800);
 				paintTurnArrow(g, game.getTurn());
 			}
 			else
-		    	paintHands(g,475, 800);
+		    	paintHands(g,490, 800);
 			
 		    paintExtra(g,game.getCurrentDirection(), game.showTopCard().getColor().toString());
 		    paintHistory(g);
 		    
-		    colorPickerPlayCoord = 517+120*(wildIndex%7);
+		    
 		    if (colorPickerDraw) //drew wild card color picker
 		    {
 		    	g.setColor(Color.black);
@@ -357,6 +357,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 		    }
 		    else if(colorPickerPlay) //played wild card color picker
 		    {
+		    	colorPickerPlayCoord = 540+120*(wildIndex%7);
 		    	g.setColor(Color.black);
 		    	g.setFont(new Font("Trebuchet", Font.PLAIN, font(65)));
 		    	g.drawString("^", x(colorPickerPlayCoord), y(810));
@@ -1573,7 +1574,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 						}
 					}
 					
-					if(e.getX()>= x(475) && e.getX()<=x(595) && e.getY()>=y(800) && e.getY()<=y(980))
+					if(e.getX()>= x(490) && e.getX()<x(610) && e.getY()>=y(800) && e.getY()<=y(980))
 					{
 						if(game.current_player.getHand().size()>7*(page-1))
 						{
@@ -1581,7 +1582,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 							{
 								colorPickerPlay = true;
 								wildIndex = 7*(page-1);
-								colorPickerPlayCoord = 517+120*(wildIndex%7);
+								colorPickerPlayCoord = 540+120*(wildIndex%7);
 								repaint();
 							}
 							else
@@ -1600,7 +1601,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 						}
 						
 					}
-					else if(e.getX()>= x(595) && e.getX()<=x(715) && e.getY()>=y(800) && e.getY()<=y(980))
+					else if(e.getX()>= x(610) && e.getX()<x(730) && e.getY()>=y(800) && e.getY()<=y(980))
 					{
 						if(game.current_player.getHand().size()>1+7*(page-1))
 						{
@@ -1608,7 +1609,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 							{
 								colorPickerPlay = true;
 								wildIndex = 1+7*(page-1);
-								colorPickerPlayCoord = 517+120*(wildIndex%7);
+								colorPickerPlayCoord = 540+120*(wildIndex%7);
 								repaint();
 							}
 							else
@@ -1626,7 +1627,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 							}
 						}
 					}
-					else if(e.getX()>= x(715) && e.getX()<=x(835) && e.getY()>=y(800) && e.getY()<=y(980))
+					else if(e.getX()>= x(740) && e.getX()<x(850) && e.getY()>=y(800) && e.getY()<=y(980))
 					{
 						if(game.current_player.getHand().size()>2+7*(page-1))
 						{
@@ -1634,7 +1635,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 							{
 								colorPickerPlay = true;
 								wildIndex = 2+7*(page-1);
-								colorPickerPlayCoord = 517+120*(wildIndex%7);
+								colorPickerPlayCoord = 540+120*(wildIndex%7);
 								repaint();
 							}
 							else
@@ -1652,7 +1653,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 							}
 						}
 					}
-					else if(e.getX()>= x(835) && e.getX()<=x(955) && e.getY()>=y(800) && e.getY()<=y(980))
+					else if(e.getX()>= x(850) && e.getX()<x(970) && e.getY()>=y(800) && e.getY()<=y(980))
 					{
 						if(game.current_player.getHand().size()>3+7*(page-1))
 						{
@@ -1660,7 +1661,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 							{
 								colorPickerPlay = true;
 								wildIndex = 3+7*(page-1);
-								colorPickerPlayCoord = 517+120*(wildIndex%7);
+								colorPickerPlayCoord = 540+120*(wildIndex%7);
 								repaint();
 							}
 							else
@@ -1678,7 +1679,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 							}
 						}
 					}
-					else if(e.getX()>= x(955) && e.getX()<=x(1075) && e.getY()>=y(800) && e.getY()<=y(980))
+					else if(e.getX()>= x(970) && e.getX()<x(1090) && e.getY()>=y(800) && e.getY()<=y(980))
 					{
 						if(game.current_player.getHand().size()>4+7*(page-1))
 						{
@@ -1686,7 +1687,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 							{
 								colorPickerPlay = true;
 								wildIndex = 4+7*(page-1);
-								colorPickerPlayCoord = 517+120*(wildIndex%7);
+								colorPickerPlayCoord = 540+120*(wildIndex%7);
 								repaint();
 							}
 							else
@@ -1704,7 +1705,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 							}
 						}
 					}
-					else if(e.getX()>= x(1075) && e.getX()<=x(1195) && e.getY()>=y(800) && e.getY()<=y(980))
+					else if(e.getX()>= x(1090) && e.getX()<x(1210) && e.getY()>=y(800) && e.getY()<=y(980))
 					{
 						if(game.current_player.getHand().size()>5+7*(page-1))
 						{
@@ -1712,7 +1713,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 							{
 								colorPickerPlay = true;
 								wildIndex = 5+7*(page-1);
-								colorPickerPlayCoord = 517+120*(wildIndex%7);
+								colorPickerPlayCoord = 540+120*(wildIndex%7);
 								repaint();
 							}
 							else
@@ -1730,7 +1731,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 							}
 						}
 					}
-					else if(e.getX()>= x(1195) && e.getX()<=x(1315) && e.getY()>=y(800) && e.getY()<=y(980))
+					else if(e.getX()>= x(1210) && e.getX()<=x(1330) && e.getY()>=y(800) && e.getY()<=y(980))
 					{
 						if(game.current_player.getHand().size()>6+7*(page-1))
 						{
@@ -1738,7 +1739,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 							{
 								colorPickerPlay = true;
 								wildIndex = 6+7*(page-1);
-								colorPickerPlayCoord = 517+120*(wildIndex%7);
+								colorPickerPlayCoord = 540+120*(wildIndex%7);
 								repaint();
 							}
 							else
