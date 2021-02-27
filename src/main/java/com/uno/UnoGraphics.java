@@ -143,9 +143,9 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 			g.drawRect(x(857),y(450), xs(150), ys(62));
 			g.drawRect(x(857),y(530), xs(150), ys(62));
 			g.drawRect(x(872),y(669), xs(120), ys(52));
-			g.drawRect(x(857)+1,y(450)+1, xs(150)-2, ys(62)-2);
-			g.drawRect(x(857)+1,y(530)+1, xs(150)-2, ys(62)-2);
-			g.drawRect(x(872)+1,y(669)+1, xs(120)-2, ys(52)-2);
+			g.drawRect(x(857+1),y(450+1), xs(150-2), ys(62-2));
+			g.drawRect(x(857+1),y(530+1), xs(150-2), ys(62-2));
+			g.drawRect(x(872+1),y(669+1), xs(120-2), ys(52-2));
 			
 			g.drawString("LOCAL", x(865), y(495));
 			g.setFont(new Font("Trebuchet", Font.BOLD, font(45)));
@@ -1182,10 +1182,10 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 
 		g.drawRect(x(785), y(491), xs(310), ys(80));
 		g.drawRect(x(804), y(641), xs(275), ys(80));
-		g.fillRect(x(880), y(395), xs(110), ys(50));
+		g.fillRect(x(882), y(398), xs(110), ys(50));
 		g.setColor(Color.black);
-		g.drawRect(x(880), y(395), xs(110), ys(50));
-		g.drawRect(x(881), y(396), xs(108), ys(48));
+		g.drawRect(x(882), y(398), xs(110), ys(50));
+		g.drawRect(x(882+1), y(398+1), xs(110-2), ys(50-2));
 		
 		g.setFont(new Font("Trebuchet", Font.CENTER_BASELINE,font(50)));
 		g.setColor(Color.green);
@@ -1194,7 +1194,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 		
 		g.setFont(new Font("Trebuchet", Font.CENTER_BASELINE,font(35)));
 		g.setColor(Color.black);
-		g.drawString("BACK", x(887), y(435));
+		g.drawString("BACK", x(888), y(435));
 		
 	}
 	
