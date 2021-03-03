@@ -56,6 +56,8 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 	private boolean start = true;
 	private boolean enterNames = false;
 	private boolean cpu = false;
+	private boolean LAN = false;
+	
 	private boolean arrows = true;
 	private boolean gameEndedBack = false;
 	private boolean menu = false;
@@ -137,20 +139,24 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 			g.setFont(new Font("Trebuchet", Font.BOLD, font(40)));
 			g.fillRect(x(857),y(450), xs(150), ys(62));
 			g.fillRect(x(857),y(530), xs(150), ys(62));
-			g.fillRect(x(872),y(669), xs(120), ys(52));
+			g.fillRect(x(857), y(610), xs(150), ys(62)); //1007
+			g.fillRect(x(872),y(749), xs(120), ys(52));
 			
 			g.setColor(Color.black);
 			g.drawRect(x(857),y(450), xs(150), ys(62));
 			g.drawRect(x(857),y(530), xs(150), ys(62));
-			g.drawRect(x(872),y(669), xs(120), ys(52));
+			g.drawRect(x(857), y(610), xs(150), ys(62));
+			g.drawRect(x(872),y(749), xs(120), ys(52));
 			g.drawRect(x(857+1),y(450+1), xs(150-2), ys(62-2));
 			g.drawRect(x(857+1),y(530+1), xs(150-2), ys(62-2));
-			g.drawRect(x(872+1),y(669+1), xs(120-2), ys(52-2));
+			g.drawRect(x(872+1),y(610+1), xs(120-2), ys(52-2));
+			g.drawRect(x(872+1),y(749+1), xs(120-2), ys(52-2));
 			
 			g.drawString("LOCAL", x(865), y(495));
 			g.setFont(new Font("Trebuchet", Font.BOLD, font(45)));
 			g.drawString("EXIT", x(882), y(712));
 			g.drawString("CPU", x(883), y(578));
+			g.drawString("LAN", x(883), y(658));
 			
 		}
 		else if(enterNames)
@@ -1372,6 +1378,12 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 					start = false;
 					cpu = true;
 					game.start(cpu);
+					repaint();
+				}
+				else if(e.getX()>= x(865) && e.getX()<=x(1015) && e.getY()>=y(610) && e.getY()<=y(672) && start)
+				{
+					start = false;
+					LAN = true;
 					repaint();
 				}
 				else if(e.getX()>= x(869) && e.getX()<=x(992) && e.getY()>=y(669) && e.getY()<=y(722) && start)
