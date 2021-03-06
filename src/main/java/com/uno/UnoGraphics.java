@@ -147,16 +147,16 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 			g.drawRect(x(857),y(530), xs(150), ys(62));
 			g.drawRect(x(857), y(610), xs(150), ys(62));
 			g.drawRect(x(872),y(749), xs(120), ys(52));
-			g.drawRect(x(857+1),y(450+1), xs(150-2), ys(62-2));
-			g.drawRect(x(857+1),y(530+1), xs(150-2), ys(62-2));
-			g.drawRect(x(872+1),y(610+1), xs(120-2), ys(52-2));
-			g.drawRect(x(872+1),y(749+1), xs(120-2), ys(52-2));
+			g.drawRect(x(857)+1,y(450)+1, xs(150-2), ys(62-2));
+			g.drawRect(x(857)+1,y(530)+1, xs(150-2), ys(62-2));
+			g.drawRect(x(857)+1,y(610)+1, xs(150-2), ys(62-2));
+			g.drawRect(x(872)+1,y(749)+1, xs(120-2), ys(52-2));
 			
 			g.drawString("LOCAL", x(865), y(495));
 			g.setFont(new Font("Trebuchet", Font.BOLD, font(45)));
-			g.drawString("EXIT", x(882), y(712));
+			g.drawString("EXIT", x(882), y(792));
 			g.drawString("CPU", x(883), y(578));
-			g.drawString("LAN", x(883), y(658));
+			g.drawString("LAN", x(886), y(658));
 			
 		}
 		else if(enterNames)
@@ -281,11 +281,31 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 			
 			
 		}
+		else if (LAN)
+		{
+			g.setColor(Color.DARK_GRAY);
+			g.fillRect(0, 0, xs(1920), ys(1080));
+			
+			g.setColor(Color.white);
+			g.fillRect(x(960-75-35),y(500),xs(150),ys(75));
+			g.fillRect(x(960-112-35),y(400),xs(225),ys(75));
+			
+			g.setColor(Color.black);
+			g.drawRect(x(960-75-35),y(500),xs(150),ys(75));
+			g.drawRect(x(960-112-35),y(400),xs(225),ys(75));
+			
+			g.setFont(new Font("Trebuchet", Font.BOLD, font(47)));
+			g.drawString("JOIN", x(960-75-35+22), y(555));
+			g.setFont(new Font("Trebuchet", Font.BOLD, font(47)));
+			g.drawString("CREATE", x(960-112-35+17), y(455));
+			
+			g.setFont(new Font("Trebuchet", Font.BOLD, font(85)));
+			g.drawString("LAN GAME", 585, 175);
+			
+		}
 		else if(gamestate.isOver() && !gameEndedBack)
 		{
-			
 			paintEndText(g);
-
 		}
 		else
 		{
@@ -1366,27 +1386,27 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 			else
 			{
 				//beginning screen
-				if(e.getX()>= x(865) && e.getX()<=x(1015) && e.getY()>=y(450) && e.getY()<=y(512) && start)
+				if(e.getX()>= x(857) && e.getX()<=x(1007) && e.getY()>=y(450) && e.getY()<=y(512) && start)
 				{
 					start = false;
 					enterNames = true;
 					//game.start(names);
 					repaint();
 				}
-				else if(e.getX()>= x(865) && e.getX()<=x(1015) && e.getY()>=y(530) && e.getY()<=y(592) && start)
+				else if(e.getX()>= x(857) && e.getX()<=x(1007) && e.getY()>=y(530) && e.getY()<=y(592) && start)
 				{
 					start = false;
 					cpu = true;
 					game.start(cpu);
 					repaint();
 				}
-				else if(e.getX()>= x(865) && e.getX()<=x(1015) && e.getY()>=y(610) && e.getY()<=y(672) && start)
+				else if(e.getX()>= x(857) && e.getX()<=x(1007) && e.getY()>=y(610) && e.getY()<=y(672) && start)
 				{
 					start = false;
 					LAN = true;
 					repaint();
 				}
-				else if(e.getX()>= x(869) && e.getX()<=x(992) && e.getY()>=y(669) && e.getY()<=y(722) && start)
+				else if(e.getX()>= x(872) && e.getX()<=x(992) && e.getY()>=y(669) && e.getY()<=y(722) && start)
 				{
 					frame.setVisible(false); 
 					frame.dispose();
@@ -1821,6 +1841,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 			}
 			else
 			{
+				this.remove(nameText);
 				hovering1 = false;
 				hovering2 = false;
 				hovering3 = false;
