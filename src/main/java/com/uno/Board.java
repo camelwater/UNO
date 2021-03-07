@@ -10,10 +10,15 @@ public class Board extends Player
 	private Player lastPlayer;
 	public int turn = 0;
 	String lastMove = "";
-	public boolean canPlay = true;
+	private boolean canPlay = true;
 	public boolean cpu = false;
 	public boolean cpuActive = false;
 	public boolean started = false;
+	public boolean laxWildCard = false;
+	public boolean infiniteDraw = false;
+	public int lastDraw= 0;
+	public boolean firstTurn = false;
+	
 	public enum Direction
 	{
 		Clockwise, Counter_Clockwise;
@@ -30,24 +35,33 @@ public class Board extends Player
 		for(int i = 0;i<4;i++)
 			playerList.add(new Player("Player "+(i+1)));
 		
+		//playerList.get(0).getHand().add(new UnoCard(UnoCard.Color.Wild, UnoCard.Value.Wild_Four));
+		
 	}
 	public void start()
 	{
 		started = true;
 		deck.discard.add(deck.getCard());
-
-		if(showTopCard().getColor().equals(UnoCard.Color.Wild))
+		while(showTopCard().getValue().equals(UnoCard.Value.Wild_Four))
 		{
-			int x = (int)Math.random()*4+1;
-			if(x==1)
-				deck.discard.get(deck.discard.size()-1).color = UnoCard.Color.Red;
-			else if(x==2)
-				deck.discard.get(deck.discard.size()-1).color = UnoCard.Color.Blue;
-			else if(x==3)
-				deck.discard.get(deck.discard.size()-1).color = UnoCard.Color.Green;
-			else if(x==4)
-				deck.discard.get(deck.discard.size()-1).color = UnoCard.Color.Yellow;
+			deck.deck.add(0,deck.discard.remove(deck.discard.size()-1));
+			deck.shuffle();
+			deck.discard.add(deck.getCard());
 		}
+//		if(showTopCard().getColor().equals(UnoCard.Color.Wild))
+//		{
+//			int x = (int)Math.random()*4+1;
+//			if(x==1)
+//				deck.discard.get(deck.discard.size()-1).color = UnoCard.Color.Red;
+//			else if(x==2)
+//				deck.discard.get(deck.discard.size()-1).color = UnoCard.Color.Blue;
+//			else if(x==3)
+//				deck.discard.get(deck.discard.size()-1).color = UnoCard.Color.Green;
+//			else if(x==4)
+//				deck.discard.get(deck.discard.size()-1).color = UnoCard.Color.Yellow;
+//		}
+		if(showTopCard().getValue().equals(UnoCard.Value.Wild))
+			firstTurn = true;
 		System.out.println("Initial card is "+deck.discard.get(deck.discard.size()-1));
 		deal();
 		current_player = playerList.get(0);
@@ -63,18 +77,27 @@ public class Board extends Player
 
 		deck.discard.add(deck.getCard());
 		
-		if(showTopCard().getColor().equals(UnoCard.Color.Wild))
+		while(showTopCard().getValue().equals(UnoCard.Value.Wild_Four))
 		{
-			int x = (int)Math.random()*4+1;
-			if(x==1)
-				deck.discard.get(deck.discard.size()-1).color = UnoCard.Color.Red;
-			else if(x==2)
-				deck.discard.get(deck.discard.size()-1).color = UnoCard.Color.Blue;
-			else if(x==3)
-				deck.discard.get(deck.discard.size()-1).color = UnoCard.Color.Green;
-			else if(x==4)
-				deck.discard.get(deck.discard.size()-1).color = UnoCard.Color.Yellow;
+			deck.deck.add(0,deck.discard.remove(deck.discard.size()-1));
+			deck.shuffle();
+			deck.discard.add(deck.getCard());
 		}
+		//deck.discard.add(new UnoCard(UnoCard.Color.Wild, UnoCard.Value.Wild));
+//		if(showTopCard().getValue().equals(UnoCard.Value.Wild))
+//		{
+//			int x = (int)Math.random()*4+1;
+//			if(x==1)
+//				deck.discard.get(deck.discard.size()-1).color = UnoCard.Color.Red;
+//			else if(x==2)
+//				deck.discard.get(deck.discard.size()-1).color = UnoCard.Color.Blue;
+//			else if(x==3)
+//				deck.discard.get(deck.discard.size()-1).color = UnoCard.Color.Green;
+//			else if(x==4)
+//				deck.discard.get(deck.discard.size()-1).color = UnoCard.Color.Yellow;
+//		}
+		if(showTopCard().getValue().equals(UnoCard.Value.Wild))
+			firstTurn = true;
 		System.out.println("Initial card is "+deck.discard.get(deck.discard.size()-1));
 		deal();
 		current_player = playerList.get(0);
@@ -89,19 +112,26 @@ public class Board extends Player
 		{
 			playerList.get(i).name = names.get(i);
 		}
-		
-		if(showTopCard().getColor().equals(UnoCard.Color.Wild))
+		while(showTopCard().getValue().equals(UnoCard.Value.Wild_Four))
 		{
-			int x = (int)Math.random()*4+1;
-			if(x==1)
-				deck.discard.get(deck.discard.size()-1).color = UnoCard.Color.Red;
-			else if(x==2)
-				deck.discard.get(deck.discard.size()-1).color = UnoCard.Color.Blue;
-			else if(x==3)
-				deck.discard.get(deck.discard.size()-1).color = UnoCard.Color.Green;
-			else if(x==4)
-				deck.discard.get(deck.discard.size()-1).color = UnoCard.Color.Yellow;
+			deck.deck.add(0,deck.discard.remove(deck.discard.size()-1));
+			deck.shuffle();
+			deck.discard.add(deck.getCard());
 		}
+//		if(showTopCard().getColor().equals(UnoCard.Color.Wild))
+//		{
+//			int x = (int)Math.random()*4+1;
+//			if(x==1)
+//				deck.discard.get(deck.discard.size()-1).color = UnoCard.Color.Red;
+//			else if(x==2)
+//				deck.discard.get(deck.discard.size()-1).color = UnoCard.Color.Blue;
+//			else if(x==3)
+//				deck.discard.get(deck.discard.size()-1).color = UnoCard.Color.Green;
+//			else if(x==4)
+//				deck.discard.get(deck.discard.size()-1).color = UnoCard.Color.Yellow;
+//		}
+		if(showTopCard().getValue().equals(UnoCard.Value.Wild))
+			firstTurn = true;
 		System.out.println("Initial card is "+deck.discard.get(deck.discard.size()-1));
 		deal();
 		current_player = playerList.get(0);
@@ -167,12 +197,15 @@ public class Board extends Player
 	}
 	public void checkPlayable()
 	{
-		if(current_player.getHand().get(current_player.getHandSize()-1).match(current_player.getHand().get(current_player.getHandSize()-1),showTopCard()))
+		if(firstTurn||current_player.getHand().get(current_player.getHandSize()-1).match(current_player.getHand().get(current_player.getHandSize()-1),showTopCard()))
 		{
+			if(current_player.getHand().get(current_player.getHandSize()-1).getColor().equals(UnoCard.Color.Wild))
+				return;
 			UnoCard card = playCard(current_player.getHandSize()-1, current_player);
 			
 			deck.discard.add(card);
 			current_player.getHand().remove(current_player.getHandSize()-1);
+			setLastMove(current_player.getName()+" draw then play");
 		
 			if(showTopCard().getValue().equals(UnoCard.Value.Reverse))
 			{
@@ -256,6 +289,13 @@ public class Board extends Player
 			}
 
 		}
+		else
+		{
+			if(infiniteDraw)
+			{
+				drawCard();
+			}
+		}
 	}
 	public void shuffleDis()
 	{
@@ -323,9 +363,11 @@ public class Board extends Player
 	public Player getLastTurn()
 	{
 		int t = turn;
+		boolean drawCheck = lastMove.contains("draw then play")&&(showTopCard().getValue().equals(UnoCard.Value.DrawTwo)||
+				showTopCard().getValue().equals(UnoCard.Value.Skip)||showTopCard().getValue().equals(UnoCard.Value.Wild_Four))?true:false;
 		if(direction.toString().equals("Clockwise"))
 		{
-			if(lastMove.contains("Skip")||lastMove.contains("DrawTwo")||lastMove.contains("Wild_Four"))
+			if(lastMove.contains("Skip")||lastMove.contains("DrawTwo")||lastMove.contains("Wild_Four")||drawCheck)
 			{
 				if(t==0)
 					t=2;
@@ -345,7 +387,7 @@ public class Board extends Player
 		}
 		else
 		{
-			if(lastMove.contains("Skip")||lastMove.contains("DrawTwo")||lastMove.contains("Wild_Four"))
+			if(lastMove.contains("Skip")||lastMove.contains("DrawTwo")||lastMove.contains("Wild_Four")||drawCheck)
 			{
 				if(t==3)
 					t=1;
@@ -426,8 +468,7 @@ public class Board extends Player
 			
 		}
 		current_player = playerList.get(turn);
-
-		
+		firstTurn = false;
 	}
 	public int seeNextTurn()
 	{
@@ -453,7 +494,7 @@ public class Board extends Player
 		current_player.sortHand(showTopCard().getColor(), showTopCard().getValue());
 		UnoCard card = playCard(0, current_player);
 		
-		if(card.match(card,deck.discard.get(deck.discard.size()-1)))
+		if(firstTurn||card.match(card,deck.discard.get(deck.discard.size()-1)))
 		{
 			
 			play(0);
@@ -466,18 +507,19 @@ public class Board extends Player
 		}
 		else
 		{
-			if(deck.deck.get(deck.deck.size()-1).getColor().equals(UnoCard.Color.Wild))
-			{
-				drawTempCard();
-				play(-1);
-				String color = getMostColor(current_player); 
-				changeColor(color);
-			}
-			else
-			{
-				drawCard();
-				checkPlayable();
-			}
+//			if(deck.deck.get(deck.deck.size()-1).getColor().equals(UnoCard.Color.Wild))
+//			{
+//				drawTempCard();
+//				play(-1);
+//				String color = getMostColor(current_player); 
+//				changeColor(color);
+//			}
+//			else
+//			{
+//				drawCard();
+//				checkPlayable();
+//			}
+			drawCard();
 			
 		}
 	}
@@ -510,15 +552,33 @@ public class Board extends Player
 	}
 	public void drawCard()
 	{
-		current_player.getHand().add(deck.getCard());
-		if(turn==0)
+		lastDraw++;
+		if(deck.deck.get(deck.deck.size()-1).getColor().equals(UnoCard.Color.Wild))
 		{
-			setLastMove(current_player.name+"rid draw");
-			//cpuActive=false;
+			if(turn==0)
+			{
+				setLastMove(current_player.name+"rid draw");
+				//cpuActive=false;
+			}
+			else
+				setLastMove(current_player.name+"draw");
+			
+			drawTempCard();
 		}
 		else
-			setLastMove(current_player.name+"draw");
-		//System.out.println(lastMove);
+		{
+			current_player.getHand().add(deck.getCard());
+			System.out.println("drew a "+current_player.getHand().get(current_player.getHandSize()-1));
+			if(turn==0)
+			{
+				setLastMove(current_player.name+"rid draw");
+				//cpuActive=false;
+			}
+			else
+				setLastMove(current_player.name+"draw");
+			//System.out.println(lastMove);
+			checkPlayable();
+		}
 	}
 	public void drawCard(Player p)
 	{
@@ -527,6 +587,22 @@ public class Board extends Player
 	public void drawTempCard()
 	{
 		current_player.getTemp().add(deck.getCard());
+		if(cpu && turn!=0)
+		{
+			play(-1);
+			String color = getMostColor(current_player); 
+			changeColor(color);
+		}
+				
+	}
+	public int findFirstNonWild()
+	{
+		for(int i = 0;i<current_player.getHand().size();i++)
+		{
+			if(!current_player.getHand().get(i).getColor().equals(UnoCard.Color.Wild))
+				return i;
+		}
+		return Integer.MAX_VALUE;
 	}
 	public void play(int index)
 	{
@@ -547,7 +623,11 @@ public class Board extends Player
 		else
 		{
 			card = playCard(index, current_player);
-			if(card.match(card,deck.discard.get(deck.discard.size()-1)))
+			if(!laxWildCard &&card.getValue().equals(UnoCard.Value.Wild_Four)&&findFirstNonWild()<index)
+			{
+				card = null;
+			}
+			else if(firstTurn || card.match(card,deck.discard.get(deck.discard.size()-1)))
 			{
 				deck.discard.add(card);
 				current_player.getHand().remove(index);
@@ -682,7 +762,14 @@ public class Board extends Player
 		else if(type.equals("draw"))
 		{
 			if(getLastTurn().getName().length()>25)
-				return getLastTurn().getName().substring(0,23)+"... drew a card.";
+			{
+				if(infiniteDraw && lastDraw>1)
+					return getLastTurn().getName().substring(0,23)+"... drew "+lastDraw+ " cards.";
+				else
+					return getLastTurn().getName().substring(0,23)+"... drew a card.";
+			}
+			if(infiniteDraw && lastDraw>1)
+				return getLastTurn().getName()+" drew "+lastDraw+ " cards.";
 			return getLastTurn().getName()+" drew a card.";
 		}
 		return null;
