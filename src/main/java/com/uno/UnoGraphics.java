@@ -312,7 +312,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 			g.drawString("BACK", x(960-75-35+10), y(750));
 			
 			g.setFont(new Font("Trebuchet", Font.BOLD, font(85)));
-			g.drawString("LAN GAME", 585, 175);
+			g.drawString("LAN GAME", x(690), y(225));
 			
 		}
 		else if(settings)
@@ -369,7 +369,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 			g.setColor(Color.black);
 			g.drawRect(x(960-75-35), y(550), xs(150), ys(60));
 			g.setFont(new Font("Trebuchet", Font.BOLD, font(47)));
-			g.drawString("BACK", x(960-75-35+12), y(597));
+			g.drawString("BACK", x(960-75-35+9), y(597));
 			
 			
 			
