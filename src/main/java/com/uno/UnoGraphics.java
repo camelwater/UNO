@@ -65,6 +65,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 	
 	private boolean laxWildCard = false;
 	private boolean infiniteDraw = false;
+	
 	private boolean hovering1 = false;
 	private boolean hovering2 = false;
 	private boolean hovering3 = false;
@@ -1463,6 +1464,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 					game.start(names);
 					game.laxWildCard = laxWildCard;
 					game.infiniteDraw = infiniteDraw;
+					addHistory("The initial card is a "+game.showTopCard()+".");
 					repaint();
 				}
 			}
@@ -1483,6 +1485,8 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 					game.start(cpu);
 					game.laxWildCard = laxWildCard;
 					game.infiniteDraw = infiniteDraw;
+					addHistory("The initial card is a "+game.showTopCard()+".");
+
 					repaint();
 				}
 				else if(e.getX()>= x(857) && e.getX()<=x(1007) && e.getY()>=y(610) && e.getY()<=y(672) && start)
@@ -1530,6 +1534,8 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 						game.start(names);
 						game.laxWildCard = laxWildCard;
 						game.infiniteDraw = infiniteDraw;
+						addHistory("The initial card is a "+game.showTopCard()+".");
+
 						repaint();
 					}
 					else
@@ -1682,11 +1688,15 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 						game.start(cpu);
 						game.laxWildCard = laxWildCard;
 						game.infiniteDraw = infiniteDraw;
+						addHistory("The initial card is a "+game.showTopCard()+".");
+
 						g.setCPU(true);
 					}
 					else
 					{
 						game.start(names);
+						addHistory("The initial card is a "+game.showTopCard()+".");
+
 						game.laxWildCard = laxWildCard;
 						game.infiniteDraw = infiniteDraw;
 					}
