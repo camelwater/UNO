@@ -1396,6 +1396,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 			gamestate = new GameState(game);
 			start = true;
 			menu= false;
+			gameEndedBack = false;
 			history.clear();
 			repaint();
 		}
@@ -1800,6 +1801,8 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 					game = new Board();
 					gamestate = new GameState(game);
 					history.clear();
+					gameEndedBack = false;
+					menu = false;
 //					frame.setVisible(false);
 //					frame.dispose();
 //					UnoGraphics g = new UnoGraphics(game, gamestate);
@@ -1823,6 +1826,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 //						g.setBG(bgColor);
 					}
 					//g.skipStart();
+					repaint();
 				}
 				else if(e.getX()>= x(880) && e.getX()<=x(990) && e.getY()>=y(395) && e.getY()<=y(445)) //see uno board
 				{
