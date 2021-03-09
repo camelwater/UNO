@@ -18,6 +18,7 @@ public class Board extends Player
 	public boolean infiniteDraw = false;
 	public int lastDraw= 0;
 	public boolean firstTurn = false;
+	public int maxTurn = 3;
 	
 	public enum Direction
 	{
@@ -150,12 +151,29 @@ public class Board extends Player
 		deal();
 		current_player = playerList.get(0);
 		deck.discard.add(deck.getCard());
+//		deck.discard.add(new UnoCard(UnoCard.Color.Wild, UnoCard.Value.Wild));
+//		current_player.getHand().add(new UnoCard(UnoCard.Color.Wild, UnoCard.Value.Wild_Four));
 		
+		if (names.size()<4)
+		{
+			if(names.size()==2)
+			{
+				playerList.remove(3);
+				playerList.remove(2);
+				maxTurn = 1;
+			}
+			else
+			{
+				playerList.remove(3);
+				maxTurn = 2;
+			}
+		}
 		
 		for(int i =0;i<playerList.size();i++)
 		{
 			playerList.get(i).name = names.get(i);
 		}
+		
 		while(showTopCard().getValue().equals(UnoCard.Value.Wild_Four))
 		{
 			deck.deck.add(0,deck.discard.remove(deck.discard.size()-1));
@@ -203,7 +221,7 @@ public class Board extends Player
 
 			if(direction.toString().equals("Clockwise"))
 			{
-				if(turn==3)
+				if(turn==maxTurn)
 				{
 					drawCard(playerList.get(0));
 					drawCard(playerList.get(0));
@@ -226,11 +244,11 @@ public class Board extends Player
 			{
 				if(turn ==0)
 				{
-					drawCard(playerList.get(3));
-					drawCard(playerList.get(3));
-					drawCard(playerList.get(3));
-					drawCard(playerList.get(3));
-					turn=3;
+					drawCard(playerList.get(maxTurn));
+					drawCard(playerList.get(maxTurn));
+					drawCard(playerList.get(maxTurn));
+					drawCard(playerList.get(maxTurn));
+					turn=maxTurn;
 					current_player = playerList.get(turn);
 				}
 
@@ -276,7 +294,7 @@ public class Board extends Player
 			{
 				if(direction.toString().equals("Clockwise"))
 				{
-					if(turn==3)
+					if(turn==maxTurn)
 					{
 						drawCard(playerList.get(0));
 						drawCard(playerList.get(0));
@@ -295,7 +313,7 @@ public class Board extends Player
 					{
 						drawCard(playerList.get(3));
 						drawCard(playerList.get(3));
-						turn=3;
+						turn=maxTurn;
 					}
 					else
 					{
@@ -310,7 +328,7 @@ public class Board extends Player
 			{
 				if(direction.toString().equals("Clockwise"))
 				{
-					if(turn==3)
+					if(turn==maxTurn)
 					{
 						turn=0;
 						current_player = playerList.get(turn);
@@ -330,7 +348,7 @@ public class Board extends Player
 				{
 					if(turn==0)
 					{
-						turn = 3;
+						turn = maxTurn;
 						current_player = playerList.get(turn);
 						System.out.println("top card is now "+deck.discard.get(deck.discard.size()-1));
 						//return;
@@ -420,6 +438,7 @@ public class Board extends Player
 	}
 	public Player getLastTurn()
 	{
+		int numPlayers = playerList.size();
 		int t = turn;
 		boolean drawCheck = lastMove.contains("draw then play")&&(showTopCard().getValue().equals(UnoCard.Value.DrawTwo)||
 				showTopCard().getValue().equals(UnoCard.Value.Skip)||showTopCard().getValue().equals(UnoCard.Value.Wild_Four))?true:false;
@@ -427,18 +446,19 @@ public class Board extends Player
 		{
 			if(lastMove.contains("Skip")||lastMove.contains("DrawTwo")||lastMove.contains("Wild_Four")||drawCheck)
 			{
-				if(t==0)
-					t=2;
-				else if (t==1)
-					t=3;
-				else
-					t-=2;
+//				if(t==0)
+//					t=2;
+//				else if (t==1)
+//					t=3;
+//				else
+//					t-=2;
+				t = ((t-2)+numPlayers)%(maxTurn+1);
 			}
 			else
 			{
 				t--;
 				if(t<0)
-					t = 3;
+					t = maxTurn;
 			}
 			
 			
@@ -447,17 +467,18 @@ public class Board extends Player
 		{
 			if(lastMove.contains("Skip")||lastMove.contains("DrawTwo")||lastMove.contains("Wild_Four")||drawCheck)
 			{
-				if(t==3)
-					t=1;
-				else if(t==2)
-					t=0;
-				else
-					t+=2;
+//				if(t==3)
+//					t=1;
+//				else if(t==2)
+//					t=0;
+//				else
+//					t+=2;
+				t = (t+2)%(maxTurn+1);
 			}
 			else
 			{
 				t++;
-				if(t>3)
+				if(t>maxTurn)
 					t=0;
 			}
 			
@@ -468,40 +489,44 @@ public class Board extends Player
 	}
 	public void fixWinTurn()
 	{
+		int numPlayers = playerList.size();
 		int t = turn;
 		if(direction.toString().equals("Clockwise"))
 		{
 			if(lastMove.contains("Skip")||lastMove.contains("DrawTwo")||lastMove.contains("Wild_Four"))
 			{
-				if(t==0)
-					t=2;
-				else if (t==1)
-					t=3;
-				else
-					t-=2;
+//				if(t==0)
+//					t=2;
+//				else if (t==1)
+//					t=3;
+//				else
+//					t-=2;
+				t = ((t-2)+numPlayers)%(maxTurn+1);
+				
 			}
 			else
 			{
 				t--;
 				if(t<0)
-					t = 3;
+					t = maxTurn;
 			}
 		}
 		else
 		{
 			if(lastMove.contains("Skip")||lastMove.contains("DrawTwo")||lastMove.contains("Wild_Four"))
 			{
-				if(t==3)
-					t=1;
-				else if(t==2)
-					t=0;
-				else
-					t+=2;
+//				if(t==3)
+//					t=1;
+//				else if(t==2)
+//					t=0;
+//				else
+//					t+=2;
+				t = (t+2)%(maxTurn+1);
 			}
 			else
 			{
 				t++;
-				if(t>3)
+				if(t>maxTurn)
 					t=0;
 			}	
 		}
@@ -515,14 +540,14 @@ public class Board extends Player
 		if(direction.toString().equals("Clockwise"))
 		{
 			turn++;
-			if(turn>3)
+			if(turn>maxTurn)
 				turn = 0;
 		}
 		else
 		{
 			turn--;
 			if(turn<0)
-				turn=3;
+				turn=maxTurn;
 			
 		}
 		current_player = playerList.get(turn);
@@ -534,14 +559,14 @@ public class Board extends Player
 		if(direction.toString().equals("Clockwise"))
 		{
 			t++;
-			if(t>3)
+			if(t>maxTurn)
 				t = 0;
 		}
 		else
 		{
 			t--;
 			if(t<0)
-				t=3;
+				t=maxTurn;
 			
 		}
 		return t;
@@ -721,7 +746,7 @@ public class Board extends Player
 		{
 			if(direction.toString().equals("Clockwise"))
 			{
-				if(turn==3)
+				if(turn==maxTurn)
 				{
 					drawCard(playerList.get(0));
 					drawCard(playerList.get(0));
@@ -740,7 +765,7 @@ public class Board extends Player
 				{
 					drawCard(playerList.get(3));
 					drawCard(playerList.get(3));
-					turn=3;
+					turn=maxTurn;
 				}
 				else
 				{
@@ -756,7 +781,7 @@ public class Board extends Player
 			if(direction.toString().equals("Clockwise"))
 			{
 
-				if(turn==3)
+				if(turn==maxTurn)
 				{
 					turn=0;
 					current_player = playerList.get(turn);
@@ -776,7 +801,7 @@ public class Board extends Player
 			{
 				if(turn==0)
 				{
-					turn = 3;
+					turn = maxTurn;
 					current_player = playerList.get(turn);
 					System.out.println("top card is now "+deck.discard.get(deck.discard.size()-1));
 					//return;
