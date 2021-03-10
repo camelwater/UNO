@@ -48,7 +48,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 	private int maxPage3 = 0;
 	private int maxPage4 = 0;
 	
-	private Color bgColor = new Color(0,138,138);
+	private Color bgColor = new Color(0,138,138).darker();
 	ArrayList<Color> bgOptions = new ArrayList<Color>();
 	private boolean bgOptionBox = false;
 	
@@ -111,7 +111,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 		this.game = game;
 		this.gamestate = gamestate;
 		bgOptions.add(Color.DARK_GRAY);
-		bgOptions.add(Color.LIGHT_GRAY);
+		bgOptions.add(Color.LIGHT_GRAY.darker());
 		bgOptions.add(new Color(222, 213, 242));
 		bgOptions.add(new Color(240, 194, 199));
 		bgOptions.add(new Color(207, 255, 245));
@@ -619,7 +619,12 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 	{
 		if(history.size()>0)
 		{
-			g.setColor(Color.black);
+			if(bgColor.equals(Color.DARK_GRAY)|| bgColor.equals(new Color(22, 71, 53)))
+			{
+				g.setColor(Color.LIGHT_GRAY);
+			}
+			else
+				g.setColor(Color.black);
 			int fontSize = 12;
 			if(scrWidth == 1920.0)
 				fontSize=11;
@@ -719,7 +724,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 				
 				if(game.playerList.size()>2)
 					if(game.playerList.size()==3)
-						maxPage3 = Math.max(1,(int)(Math.ceil((double)game.playerList.get((game.getTurn()+2)%numPlayers).getHandSize()/5)));
+						maxPage4 = Math.max(1,(int)(Math.ceil((double)game.playerList.get((game.getTurn()+2)%numPlayers).getHandSize()/5)));
 					else
 						maxPage4 = Math.max(1,(int)(Math.ceil((double)game.playerList.get((game.getTurn()+3)%numPlayers).getHandSize()/5)));
 				else
@@ -1445,6 +1450,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 			start = true;
 			menu= false;
 			gameEndedBack = false;
+			cpu = false;
 			history.clear();
 			repaint();
 		}
@@ -1715,29 +1721,8 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 		}
 		else if(settings)
 		{
-			if(e.getX()>= x(1100) && e.getX()<=x(1175) && e.getY()>=y(265) && e.getY()<=y(300))
-			{
-				infiniteDraw = !infiniteDraw;
-				repaint();
-			}
-			else if(e.getX()>= x(1100) && e.getX()<=x(1175) && e.getY()>=y(365) && e.getY()<=y(400))
-			{
-				laxWildCard = !laxWildCard;
-				repaint();
-			}
-			else if(e.getX()>= x(850) && e.getX()<=x(1000) && e.getY()>=y(650) && e.getY()<=y(710))
-			{
-				settings = false;
-				start = true;
-				repaint();
-			}
-			else if(e.getX()>= x(1100) && e.getX()<=x(1215) && e.getY()>=y(472) && e.getY()<=y(505))
-			{
-				bgOptionBox = !bgOptionBox;
-				repaint();
-			}
 			//choose background color x(1009+50*i), y(538), xs(35), ys(35)
-			else if (e.getX()>= x(1009) && e.getX()<=x(1044) && e.getY()>=y(540) && e.getY()<=y(575) && bgOptionBox)
+			if (e.getX()>= x(1009) && e.getX()<=x(1044) && e.getY()>=y(540) && e.getY()<=y(575) && bgOptionBox)
 			{
 				bgOptionBox = false;
 				bgOptions.add(0,bgColor);
@@ -1784,6 +1769,28 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 				bgOptionBox = false;
 				repaint();
 			}
+			else if(e.getX()>= x(1100) && e.getX()<=x(1175) && e.getY()>=y(265) && e.getY()<=y(300))
+			{
+				infiniteDraw = !infiniteDraw;
+				repaint();
+			}
+			else if(e.getX()>= x(1100) && e.getX()<=x(1175) && e.getY()>=y(365) && e.getY()<=y(400))
+			{
+				laxWildCard = !laxWildCard;
+				repaint();
+			}
+			else if(e.getX()>= x(850) && e.getX()<=x(1000) && e.getY()>=y(650) && e.getY()<=y(710))
+			{
+				settings = false;
+				start = true;
+				repaint();
+			}
+			else if(e.getX()>= x(1100) && e.getX()<=x(1215) && e.getY()>=y(472) && e.getY()<=y(505))
+			{
+				bgOptionBox = !bgOptionBox;
+				repaint();
+			}
+			
 		}
 		else if(gamestate.isOver())
 		{

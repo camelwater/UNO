@@ -763,8 +763,8 @@ public class Board extends Player
 			{
 				if(turn==0)
 				{
-					drawCard(playerList.get(3));
-					drawCard(playerList.get(3));
+					drawCard(playerList.get(maxTurn));
+					drawCard(playerList.get(maxTurn));
 					turn=maxTurn;
 				}
 				else
