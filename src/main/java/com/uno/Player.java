@@ -73,10 +73,13 @@ public class Player
 	{
 		for(int i = 0;i<hand.size()-1;i++)
 			for(int j = i+1;j<hand.size();j++)
+			{
 				if(hand.get(i).getColor().toString().compareTo(hand.get(j).getColor().toString())>0)
 				{
 					Collections.swap(hand, i, j);
 				}
+			}
+		
 		for(int i = 0;i<hand.size()-1;i++)
 			for(int j = i+1;j<hand.size();j++)
 				if(hand.get(i).getColor().equals(hand.get(j).getColor()))
@@ -93,7 +96,7 @@ public class Player
 		}
 		for(int i = 0;i<hand.size();i++)
 		{
-			if(hand.get(i).getValue().equals(value))
+			if(hand.get(i).getValue().equals(value) && !hand.get(i).getColor().equals(color))
 				hand.add(0, hand.remove(i));
 		}
 		for(int i = 0;i<hand.size();i++)

@@ -97,13 +97,20 @@ public class Deck
 	}
 	public void takeFromDis()
 	{
+		
 		for(int i =discard.size()-2;i>-1;i--)
 		{
 			deck.add(discard.remove(i));
 			//System.out.println("CARDS IN DISCARD: "+discard.size());
 		}
 		shuffle();
-		System.out.println("DECK ADDED NEW CARDS");
+		for(UnoCard c:deck)
+		{
+			if(c.getValue().equals(UnoCard.Value.Wild)||c.getValue().equals(UnoCard.Value.Wild_Four))
+				c.color = UnoCard.Color.Wild;
+
+		}
+		//System.out.println("DECK ADDED NEW CARDS");
 	}
 	
 }

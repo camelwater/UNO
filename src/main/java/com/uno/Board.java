@@ -148,9 +148,9 @@ public class Board extends Player
 	public void start(ArrayList<String> names)
 	{
 		started = true;
-		deal();
+		
 		current_player = playerList.get(0);
-		deck.discard.add(deck.getCard());
+		
 //		deck.discard.add(new UnoCard(UnoCard.Color.Wild, UnoCard.Value.Wild));
 //		current_player.getHand().add(new UnoCard(UnoCard.Color.Wild, UnoCard.Value.Wild_Four));
 		
@@ -173,7 +173,8 @@ public class Board extends Player
 		{
 			playerList.get(i).name = names.get(i);
 		}
-		
+		deal();
+		deck.discard.add(deck.getCard());
 		while(showTopCard().getValue().equals(UnoCard.Value.Wild_Four))
 		{
 			deck.deck.add(0,deck.discard.remove(deck.discard.size()-1));
@@ -201,16 +202,10 @@ public class Board extends Player
 		}
 		if (showTopCard().getValue().equals(UnoCard.Value.Skip))
 		{
-//			try {
-//				Thread.sleep(500);
-//			} catch (InterruptedException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
+
 			nextTurn();
 		}
 		System.out.println("Initial card is "+deck.discard.get(deck.discard.size()-1));
-		
 		current_player.sortHand(showTopCard().getColor(), showTopCard().getValue());
 	}
 	public void changeColor(String c)
@@ -553,6 +548,10 @@ public class Board extends Player
 		current_player = playerList.get(turn);
 		if(firstTurn)
 			firstTurn = false;
+		//System.out.println("CARDS LEFT In DIS: "+deck.discard.size());
+		//System.out.println("CARDS LEFT IN DECK: "+deck.deck.size());
+		if(deck.deck.size()<1)
+			deck.takeFromDis();
 	}
 	public int seeNextTurn()
 	{
@@ -639,7 +638,10 @@ public class Board extends Player
 		if(deck.deck.size()<1)
 			return;
 		lastDraw++;
-		if(deck.deck.get(deck.deck.size()-1).getColor().equals(UnoCard.Color.Wild))
+		UnoCard draw = deck.getCard();
+		if (draw==null)
+			return;
+		if(draw.getColor().equals(UnoCard.Color.Wild))
 		{
 			if(turn==0)
 			{
@@ -649,11 +651,11 @@ public class Board extends Player
 			else
 				setLastMove(current_player.name+" draw");
 			
-			drawTempCard();
+			drawTempCard(draw);
 		}
 		else
 		{
-			current_player.getHand().add(deck.getCard());
+			current_player.getHand().add(draw);
 			System.out.println("drew a "+current_player.getHand().get(current_player.getHandSize()-1));
 			if(turn==0)
 			{
@@ -668,13 +670,15 @@ public class Board extends Player
 	}
 	public void drawCard(Player p)
 	{
-		p.getHand().add(deck.getCard());
+		UnoCard c = deck.getCard();
+		if(c!=null)
+			p.getHand().add(c);
 	}
-	public void drawTempCard()
+	public void drawTempCard(UnoCard card)
 	{
-		if(deck.deck.size()<1)
-			return;
-		current_player.getTemp().add(deck.getCard());
+//		if(deck.deck.size()<1)
+//			return;
+		current_player.getTemp().add(card);
 		if(cpu && turn!=0)
 		{
 			play(-1);
@@ -699,6 +703,10 @@ public class Board extends Player
 		if(index<0)
 		{
 			card = current_player.getTempCard();
+			if(card==null)
+			{
+				return;
+			}
 			deck.discard.add(card);
 			if(turn==0)
 			{
