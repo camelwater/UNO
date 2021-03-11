@@ -311,8 +311,8 @@ public class Board extends Player
 				{
 					if(turn==0)
 					{
-						drawCard(playerList.get(3));
-						drawCard(playerList.get(3));
+						drawCard(playerList.get(maxTurn));
+						drawCard(playerList.get(maxTurn));
 						turn=maxTurn;
 					}
 					else
@@ -551,7 +551,8 @@ public class Board extends Player
 			
 		}
 		current_player = playerList.get(turn);
-		firstTurn = false;
+		if(firstTurn)
+			firstTurn = false;
 	}
 	public int seeNextTurn()
 	{
@@ -635,16 +636,18 @@ public class Board extends Player
 	}
 	public void drawCard()
 	{
+		if(deck.deck.size()<1)
+			return;
 		lastDraw++;
 		if(deck.deck.get(deck.deck.size()-1).getColor().equals(UnoCard.Color.Wild))
 		{
 			if(turn==0)
 			{
-				setLastMove(current_player.name+"rid draw");
+				setLastMove(current_player.name+" rid draw");
 				//cpuActive=false;
 			}
 			else
-				setLastMove(current_player.name+"draw");
+				setLastMove(current_player.name+" draw");
 			
 			drawTempCard();
 		}
@@ -654,11 +657,11 @@ public class Board extends Player
 			System.out.println("drew a "+current_player.getHand().get(current_player.getHandSize()-1));
 			if(turn==0)
 			{
-				setLastMove(current_player.name+"rid draw");
+				setLastMove(current_player.name+" rid draw");
 				//cpuActive=false;
 			}
 			else
-				setLastMove(current_player.name+"draw");
+				setLastMove(current_player.name+" draw");
 			//System.out.println(lastMove);
 			checkPlayable();
 		}
@@ -669,6 +672,8 @@ public class Board extends Player
 	}
 	public void drawTempCard()
 	{
+		if(deck.deck.size()<1)
+			return;
 		current_player.getTemp().add(deck.getCard());
 		if(cpu && turn!=0)
 		{

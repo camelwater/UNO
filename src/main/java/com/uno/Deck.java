@@ -65,7 +65,7 @@ public class Deck
 			takeFromDis();
 		try
 		{
-			return this.deck.remove(deck.size()-1);
+			return deck.remove(deck.size()-1);
 		}catch(IndexOutOfBoundsException e)
 		{
 			return null;
@@ -97,11 +97,13 @@ public class Deck
 	}
 	public void takeFromDis()
 	{
-		for(int i =0;i<discard.size()-1;i++)
+		for(int i =discard.size()-2;i>-1;i--)
 		{
 			deck.add(discard.remove(i));
+			//System.out.println("CARDS IN DISCARD: "+discard.size());
 		}
 		shuffle();
+		System.out.println("DECK ADDED NEW CARDS");
 	}
 	
 }
