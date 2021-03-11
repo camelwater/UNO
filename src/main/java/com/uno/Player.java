@@ -104,6 +104,16 @@ public class Player
 			if(hand.get(i).getColor().equals(color))
 				hand.add(0, hand.remove(i));
 		}
+		
+		if(value.equals(UnoCard.Value.Skip) || value.equals(UnoCard.Value.DrawTwo) ||value.equals(UnoCard.Value.Reverse))
+		{
+			for(int i = 0;i<hand.size();i++)
+				if(hand.get(i).getValue().equals(value))
+					hand.add(0, hand.remove(i));
+		}
+			
+			
+			
 				
 	}
 //	public String getLastPlayerrTurn()
