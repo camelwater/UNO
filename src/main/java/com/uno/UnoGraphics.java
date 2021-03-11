@@ -57,6 +57,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 	private boolean colorPickerPlay = false;
 	private int colorPickerPlayCoord = 540;
 	private int wildIndex = 0;
+	private int hoveringCard = -1;
 	
 	private boolean start = true;
 	private boolean enterNames = false;
@@ -713,7 +714,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 		{
 			g.setColor(Color.LIGHT_GRAY);
 			g.setFont(new Font("Roboto", Font.BOLD, font(100)));
-			g.drawString(">",x(1360), y(937));
+			g.drawString(">",x(1388), y(937));
 			
 		}
 		
@@ -807,6 +808,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 			game.playerList.get(0).sortHand(game.showTopCard().getColor(), game.showTopCard().getValue());	
 		int start = (page-1)*7;
 		int end = Math.min(start+7, game.playerList.get(0).getHandSize());
+		int hoveringIndex = hoveringCard +7*(page-1);
 		for(int i = start;i<end;i++)
 		{
 			String a = "/";
@@ -824,12 +826,23 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 				a += "wild_pick_four.png";
 			else
 				a += card.getColor().toString().toLowerCase()+"_"+card.toInt()+".png";
-			
-			try {
-				g.drawImage(ImageIO.read(getClass().getResource(a)),x(x+120*(i%7)),y(y), xs(cardWidth), ys(cardHeight), null);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			if(hoveringCard>-1 && i==hoveringIndex)
+			{
+				try {
+					g.drawImage(ImageIO.read(getClass().getResource(a)),x(x+120*(i%7)),y(y-60), xs(cardWidth), ys(cardHeight), null);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			else
+			{
+				try {
+					g.drawImage(ImageIO.read(getClass().getResource(a)),x(x+120*(i%7)),y(y), xs(cardWidth), ys(cardHeight), null);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 			
 		}
@@ -1047,6 +1060,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 		game.current_player.sortHand(game.showTopCard().getColor(), game.showTopCard().getValue());	
 		int start = (page-1)*7;
 		int end = Math.min(start+7, game.current_player.getHandSize());
+		int hoveringIndex = hoveringCard +7*(page-1);
 		for(int i = start;i<end;i++)
 		{
 			String a = "/";
@@ -1064,14 +1078,24 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 				a += "wild_pick_four.png";
 			else
 				a += card.getColor().toString().toLowerCase()+"_"+card.toInt()+".png";
-			
-			try {
-				g.drawImage(ImageIO.read(getClass().getResource(a)),x(x+120*(i%7)),y(y), xs(cardWidth), ys(cardHeight), null);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			if(hoveringCard>-1 && i==hoveringIndex)
+			{
+				try {
+					g.drawImage(ImageIO.read(getClass().getResource(a)),x(x+120*(i%7)),y(y-60), xs(cardWidth), ys(cardHeight), null);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
-			
+			else
+			{
+				try {
+					g.drawImage(ImageIO.read(getClass().getResource(a)),x(x+120*(i%7)),y(y), xs(cardWidth), ys(cardHeight), null);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
 		paintArrows(g, game.current_player.getHandSize());
 		g.setColor(Color.white);
@@ -1889,7 +1913,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 					page-=1;
 					repaint();
 				}
-				else if(e.getX()>= x(1360) && e.getX()<=x(1415) && e.getY()>=y(850) && e.getY()<=y(937) && page<maxPage)
+				else if(e.getX()>= x(1388) && e.getX()<=x(1443) && e.getY()>=y(850) && e.getY()<=y(937) && page<maxPage)
 				{
 					page+=1;
 					repaint();
@@ -1956,15 +1980,6 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 				{
 					if(e.getX()>= x(670) && e.getX()<=x(800) && e.getY()>=y(400) && e.getY()<=y(580) && game.deck.deck.size()>0)
 					{
-//						if(game.deck.deck.get(game.deck.deck.size()-1).getColor().equals(UnoCard.Color.Wild))
-//						{
-//							game.drawTempCard();
-//			    			colorPickerDraw = true;
-//			    			
-//			    			repaint();
-//						}
-//						else
-//						{
 						
 						game.drawCard();
 						if(game.current_player.getTemp().size()>0)
@@ -2208,7 +2223,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 					page-=1;
 					repaint();
 				}
-				else if(e.getX()>= x(1360) && e.getX()<=x(1415) && e.getY()>=y(850) && e.getY()<=y(937) && page<maxPage)
+				else if(e.getX()>= x(1388) && e.getX()<=x(1443) && e.getY()>=y(850) && e.getY()<=y(937) && page<maxPage)
 				{
 					page+=1;
 					repaint();
@@ -2260,6 +2275,56 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 				hovering4 = false;
 				repaint();
 			}
+		}
+		else if(!game.cpuActive && !game.isOver() && e.getX()>= x(490) && e.getX()<=x(1330) && e.getY()>=y(750) && e.getY()<=y(980))
+		{
+			if(e.getX()>= x(490) && e.getX()<x(610) && e.getY()>=y(800) && e.getY()<=y(980))
+			{
+				System.out.println("aksjdh");
+				hoveringCard = 0;
+				repaint();
+			}
+			else if(e.getX()>= x(610) && e.getX()<x(730) && e.getY()>=y(800) && e.getY()<=y(980))
+			{
+				hoveringCard = 1;
+				repaint();
+			}
+			else if(e.getX()>= x(730) && e.getX()<x(850) && e.getY()>=y(800) && e.getY()<=y(980))
+			{
+				hoveringCard = 2;
+				repaint();
+			}
+			else if(e.getX()>= x(850) && e.getX()<x(970) && e.getY()>=y(800) && e.getY()<=y(980))
+			{
+				hoveringCard = 3;
+				repaint();
+			}
+			else if(e.getX()>= x(970) && e.getX()<x(1090) && e.getY()>=y(800) && e.getY()<=y(980))
+			{
+				hoveringCard = 4;
+				repaint();
+			}
+			else if(e.getX()>= x(1090) && e.getX()<x(1210) && e.getY()>=y(800) && e.getY()<=y(980))
+			{
+				hoveringCard = 5;
+				repaint();
+			}
+			else if(e.getX()>= x(1210) && e.getX()<=x(1330) && e.getY()>=y(800) && e.getY()<=y(980))
+			{
+				hoveringCard = 6;
+				repaint();
+			}
+			else
+			{
+				hoveringCard = -1;
+				repaint();
+			}
+		}
+		else 
+		{
+			if(hoveringCard>-1)
+				hoveringCard = -1;
+			repaint();
 		}
 	}
 	//@Override

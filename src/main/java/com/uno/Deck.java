@@ -1,15 +1,17 @@
 package com.uno;
 import java.util.Collections;
-import java.util.ArrayList;
+import java.util.*;
 
 
 public class Deck 
 {
-	public ArrayList<UnoCard>deck;
+	//public ArrayList<UnoCard>deck;
+	public Stack<UnoCard>deck;
 	public ArrayList<UnoCard>discard;
 	public Deck()
 	{
-		deck = new ArrayList<UnoCard>();
+		//deck = new ArrayList<UnoCard>();
+		deck = new Stack<UnoCard>();
 		discard = new ArrayList<UnoCard>();
 		UnoCard.Color[] col = new UnoCard.Color[] 
 				{UnoCard.Color.Blue,UnoCard.Color.Yellow,UnoCard.Color.Red,UnoCard.Color.Green};
@@ -24,7 +26,7 @@ public class Deck
 					if(j==1 && v.equals(UnoCard.Value.Zero))
 						continue;
 					else
-						deck.add(new UnoCard(c,v));
+						deck.push(new UnoCard(c,v));
 				}
 			}
 		}
@@ -36,17 +38,17 @@ public class Deck
 					{UnoCard.Value.DrawTwo,UnoCard.Value.Reverse, UnoCard.Value.Skip};
 			for(int j = 0;j<2;j++)
 			{
-					deck.add(new UnoCard(c, values[0]));
-					deck.add(new UnoCard(c, values[1]));
-					deck.add(new UnoCard(c, values[2]));
+					deck.push(new UnoCard(c, values[0]));
+					deck.push(new UnoCard(c, values[1]));
+					deck.push(new UnoCard(c, values[2]));
 			}
 		}
 		
 			UnoCard.Value[] value = new UnoCard.Value[] {UnoCard.Value.Wild,UnoCard.Value.Wild_Four};
 			for(int j = 0;j<4;j++)
 			{
-				deck.add(new UnoCard(UnoCard.Color.Wild, value[0]));
-				deck.add(new UnoCard(UnoCard.Color.Wild, value[1]));
+				deck.push(new UnoCard(UnoCard.Color.Wild, value[0]));
+				deck.push(new UnoCard(UnoCard.Color.Wild, value[1]));
 			}
 		
 		Collections.shuffle(deck);
@@ -65,8 +67,9 @@ public class Deck
 			takeFromDis();
 		try
 		{
-			return deck.remove(deck.size()-1);
-		}catch(IndexOutOfBoundsException e)
+			//return deck.remove(deck.size()-1);
+			return deck.pop();
+		}catch(Exception e)
 		{
 			return null;
 		}
@@ -100,7 +103,7 @@ public class Deck
 		
 		for(int i =discard.size()-2;i>-1;i--)
 		{
-			deck.add(discard.remove(i));
+			deck.push(discard.remove(i));
 			//System.out.println("CARDS IN DISCARD: "+discard.size());
 		}
 		shuffle();

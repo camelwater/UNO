@@ -47,7 +47,7 @@ public class Board extends Player
 		deck.discard.add(deck.getCard());
 		while(showTopCard().getValue().equals(UnoCard.Value.Wild_Four))
 		{
-			deck.deck.add(0,deck.discard.remove(deck.discard.size()-1));
+			deck.deck.push(deck.discard.remove(deck.discard.size()-1));
 			deck.shuffle();
 			deck.discard.add(deck.getCard());
 		}
@@ -393,35 +393,35 @@ public class Board extends Player
 	{
 		return direction.toString();
 	}
-	public UnoCard pullCard()
-	{
-		UnoCard card = null;
-		if(!deck.deck.isEmpty())
-		{
-			deck.takeFromDis();
-			ArrayList<UnoCard>list = deck.deck;
-			if(list.size()!=0)
-			{
-				for(int i = 0;i<list.size();i++)
-					card = list.remove(0);
-				
-				if(card.getValue().toString().equals("Wild_Four"))
-					deck.addCard(new UnoCard(UnoCard.Color.Wild, UnoCard.Value.Wild_Four));
-				else if(card.getValue().toString().equals("Wild"))
-					deck.addCard(new UnoCard(UnoCard.Color.Wild, UnoCard.Value.Wild));
-				else
-					deck.addCard(card);
-				deck.shuffle();
-			}
-			else
-			{
-				System.out.println("No more cards available");
-				return null;
-			}
-			
-		}
-		return deck.getCard();
-	}
+//	public UnoCard pullCard()
+//	{
+//		UnoCard card = null;
+//		if(!deck.deck.isEmpty())
+//		{
+//			deck.takeFromDis();
+//			ArrayList<UnoCard>list = deck.deck;
+//			if(list.size()!=0)
+//			{
+//				for(int i = 0;i<list.size();i++)
+//					card = list.remove(0);
+//				
+//				if(card.getValue().toString().equals("Wild_Four"))
+//					deck.addCard(new UnoCard(UnoCard.Color.Wild, UnoCard.Value.Wild_Four));
+//				else if(card.getValue().toString().equals("Wild"))
+//					deck.addCard(new UnoCard(UnoCard.Color.Wild, UnoCard.Value.Wild));
+//				else
+//					deck.addCard(card);
+//				deck.shuffle();
+//			}
+//			else
+//			{
+//				System.out.println("No more cards available");
+//				return null;
+//			}
+//			
+//		}
+//		return deck.getCard();
+//	}
 	
 	public void setLastMove(String x)
 	{

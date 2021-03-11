@@ -116,10 +116,6 @@ public class Player
 			
 				
 	}
-//	public String getLastPlayerrTurn()
-//	{
-//		return game.getLastTurn()+"played a "+Board.deck.discard.get(Board.deck.discard.size()-1);
-//	}
 	public Player getNextHand()
 	{
 		return playerList.get(game.turn+1);
