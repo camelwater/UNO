@@ -849,12 +849,20 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 		paintArrows(g, game.playerList.get(0).getHandSize());
 		g.setColor(Color.white);
 		g.setFont(new Font("Trebuchet", Font.BOLD, font(13)));
-		g.drawString(game.playerList.get(0).getPaintName(), x(775), y(775));
+		if(!(bgColor.equals(Color.DARK_GRAY) || bgColor.equals(Color.LIGHT_GRAY) || bgColor.equals(new Color(0,138,138).darker())))
+			g.setColor(Color.DARK_GRAY.darker());
+		if(hoveringCard==2)
+			g.drawString(game.playerList.get(0).getPaintName(), x(775), y(775-60));
+		else
+			g.drawString(game.playerList.get(0).getPaintName(), x(775), y(775));
 		if(bgColor.equals(Color.DARK_GRAY) || bgColor.equals(new Color(22, 71, 53)))
 			g.setColor(Color.LIGHT_GRAY);
 		else
 			g.setColor(Color.DARK_GRAY);
-		g.drawString("Cards: "+Integer.toString((game.playerList.get(0).getHandSize())), x(925), y(775));
+		if(hoveringCard==3||hoveringCard==4)
+			g.drawString("Cards: "+Integer.toString((game.playerList.get(0).getHandSize())), x(925), y(775-60));
+		else
+			g.drawString("Cards: "+Integer.toString((game.playerList.get(0).getHandSize())), x(925), y(775));
 		if(gamestate.isUno(game.playerList.get(0)))
 		{
 			g.setColor(Color.red);
@@ -911,6 +919,8 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 				}
 				g.setColor(Color.white);
 				g.setFont(new Font("Trebuchet", Font.BOLD, font(13)));
+				if(!(bgColor.equals(Color.DARK_GRAY) || bgColor.equals(Color.LIGHT_GRAY) || bgColor.equals(new Color(0,138,138).darker())))
+					g.setColor(Color.DARK_GRAY.darker());
 				g.drawString(game.playerList.get(2).getPaintName(), x(800), y(310));
 				if(bgColor.equals(Color.DARK_GRAY) || bgColor.equals(new Color(22, 71, 53)))
 					g.setColor(Color.LIGHT_GRAY);
@@ -975,6 +985,8 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 				}
 				g.setColor(Color.white);
 				g.setFont(new Font("Trebuchet", Font.BOLD, font(13)));
+				if(!(bgColor.equals(Color.DARK_GRAY) || bgColor.equals(Color.LIGHT_GRAY) || bgColor.equals(new Color(0,138,138).darker())))
+					g.setColor(Color.DARK_GRAY.darker());
 				g.drawString(game.playerList.get(1).getPaintName(), x(400), y(500));
 				if(bgColor.equals(Color.DARK_GRAY) || bgColor.equals(new Color(22, 71, 53)))
 					g.setColor(Color.LIGHT_GRAY);
@@ -1039,6 +1051,8 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 					}
 				g.setColor(Color.white);
 				g.setFont(new Font("Trebuchet", Font.BOLD, font(13)));
+				if(!(bgColor.equals(Color.DARK_GRAY) || bgColor.equals(Color.LIGHT_GRAY) || bgColor.equals(new Color(0,138,138).darker())))
+					g.setColor(Color.DARK_GRAY.darker());
 				g.drawString(game.playerList.get(3).getPaintName(),x(1370) ,y(500));
 				if(bgColor.equals(Color.DARK_GRAY) || bgColor.equals(new Color(22, 71, 53)))
 					g.setColor(Color.LIGHT_GRAY);
@@ -1100,12 +1114,20 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 		paintArrows(g, game.current_player.getHandSize());
 		g.setColor(Color.white);
 		g.setFont(new Font("Trebuchet", Font.BOLD, font(13)));
-		g.drawString(game.current_player.getPaintName(), x(775), y(775));
+		if(!(bgColor.equals(Color.DARK_GRAY) || bgColor.equals(Color.LIGHT_GRAY) || bgColor.equals(new Color(0,138,138).darker())))
+			g.setColor(Color.DARK_GRAY.darker());
+		if(hoveringCard == 2)
+			g.drawString(game.current_player.getPaintName(), x(775), y(775-60));
+		else
+			g.drawString(game.current_player.getPaintName(), x(775), y(775));
 		if(bgColor.equals(Color.DARK_GRAY) || bgColor.equals(new Color(22, 71, 53)))
 			g.setColor(Color.LIGHT_GRAY);
 		else
 			g.setColor(Color.DARK_GRAY);
-		g.drawString("Cards: "+Integer.toString((game.current_player.getHandSize())), x(925), y(775));
+		if(hoveringCard == 3 || hoveringCard==4)
+			g.drawString("Cards: "+Integer.toString((game.current_player.getHandSize())), x(925), y(775-60));
+		else
+			g.drawString("Cards: "+Integer.toString((game.current_player.getHandSize())), x(925), y(775));
 		if(gamestate.isUno(game.current_player))
 		{
 			g.setColor(Color.red);
@@ -1168,7 +1190,8 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 					}
 					g.setColor(Color.white);
 					g.setFont(new Font("Trebuchet", Font.BOLD, font(13)));
-					
+					if(!(bgColor.equals(Color.DARK_GRAY) || bgColor.equals(Color.LIGHT_GRAY) || bgColor.equals(new Color(0,138,138).darker())))
+						g.setColor(Color.DARK_GRAY.darker());
 					g.drawString(game.playerList.get(playerIndex).getPaintName(), x(800), y(310));
 					if(bgColor.equals(Color.DARK_GRAY) || bgColor.equals(new Color(22, 71, 53)))
 						g.setColor(Color.LIGHT_GRAY);
@@ -1236,6 +1259,8 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 					
 					g.setColor(Color.white);
 					g.setFont(new Font("Trebuchet", Font.BOLD, font(13)));
+					if(!(bgColor.equals(Color.DARK_GRAY) || bgColor.equals(Color.LIGHT_GRAY) || bgColor.equals(new Color(0,138,138).darker())))
+						g.setColor(Color.DARK_GRAY.darker());
 					g.drawString(game.playerList.get(playerIndex).getPaintName(), x(400), y(500));
 					if(bgColor.equals(Color.DARK_GRAY) || bgColor.equals(new Color(22, 71, 53)))
 						g.setColor(Color.LIGHT_GRAY);
@@ -1302,6 +1327,8 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 					}
 					g.setColor(Color.white);
 					g.setFont(new Font("Trebuchet", Font.BOLD, font(13)));
+					if(!(bgColor.equals(Color.DARK_GRAY) || bgColor.equals(Color.LIGHT_GRAY) || bgColor.equals(new Color(0,138,138).darker())))
+						g.setColor(Color.DARK_GRAY.darker());
 					g.drawString(game.playerList.get(playerIndex).getPaintName(),x(1370) ,y(500));
 					if(bgColor.equals(Color.DARK_GRAY) || bgColor.equals(new Color(22, 71, 53)))
 						g.setColor(Color.LIGHT_GRAY);
