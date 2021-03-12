@@ -51,18 +51,7 @@ public class Board extends Player
 			deck.shuffle();
 			deck.discard.add(deck.getCard());
 		}
-//		if(showTopCard().getColor().equals(UnoCard.Color.Wild))
-//		{
-//			int x = (int)Math.random()*4+1;
-//			if(x==1)
-//				deck.discard.get(deck.discard.size()-1).color = UnoCard.Color.Red;
-//			else if(x==2)
-//				deck.discard.get(deck.discard.size()-1).color = UnoCard.Color.Blue;
-//			else if(x==3)
-//				deck.discard.get(deck.discard.size()-1).color = UnoCard.Color.Green;
-//			else if(x==4)
-//				deck.discard.get(deck.discard.size()-1).color = UnoCard.Color.Yellow;
-//		}
+
 		if(showTopCard().getValue().equals(UnoCard.Value.Wild))
 			firstTurn = true;
 		if(showTopCard().getValue().equals(UnoCard.Value.DrawTwo))
@@ -120,12 +109,6 @@ public class Board extends Player
 			drawCard(current_player);
 			drawCard(current_player);
 			nextTurn();
-//			try {
-//				Thread.sleep(500);
-//			} catch (InterruptedException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
 		}
 		if(showTopCard().getValue().equals(UnoCard.Value.Reverse))
 		{
@@ -133,12 +116,7 @@ public class Board extends Player
 		}
 		if (showTopCard().getValue().equals(UnoCard.Value.Skip))
 		{
-//			try {
-//				Thread.sleep(500);
-//			} catch (InterruptedException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
+
 			nextTurn();
 		}
 		System.out.println("Initial card is "+deck.discard.get(deck.discard.size()-1));
@@ -393,35 +371,7 @@ public class Board extends Player
 	{
 		return direction.toString();
 	}
-//	public UnoCard pullCard()
-//	{
-//		UnoCard card = null;
-//		if(!deck.deck.isEmpty())
-//		{
-//			deck.takeFromDis();
-//			ArrayList<UnoCard>list = deck.deck;
-//			if(list.size()!=0)
-//			{
-//				for(int i = 0;i<list.size();i++)
-//					card = list.remove(0);
-//				
-//				if(card.getValue().toString().equals("Wild_Four"))
-//					deck.addCard(new UnoCard(UnoCard.Color.Wild, UnoCard.Value.Wild_Four));
-//				else if(card.getValue().toString().equals("Wild"))
-//					deck.addCard(new UnoCard(UnoCard.Color.Wild, UnoCard.Value.Wild));
-//				else
-//					deck.addCard(card);
-//				deck.shuffle();
-//			}
-//			else
-//			{
-//				System.out.println("No more cards available");
-//				return null;
-//			}
-//			
-//		}
-//		return deck.getCard();
-//	}
+
 	
 	public void setLastMove(String x)
 	{
@@ -573,7 +523,9 @@ public class Board extends Player
 	}
 	public void cpuTurn()
 	{
-		//cpuActive = true;
+//		if(current_player==playerList.get(0))
+//			return;
+		cpuActive = true;
 		current_player.sortHand(showTopCard().getColor(), showTopCard().getValue());
 		UnoCard card = playCard(0, current_player);
 		
@@ -590,21 +542,13 @@ public class Board extends Player
 		}
 		else
 		{
-//			if(deck.deck.get(deck.deck.size()-1).getColor().equals(UnoCard.Color.Wild))
-//			{
-//				drawTempCard();
-//				play(-1);
-//				String color = getMostColor(current_player); 
-//				changeColor(color);
-//			}
-//			else
-//			{
-//				drawCard();
-//				checkPlayable();
-//			}
+
 			drawCard();
 			
 		}
+		//nextTurn();
+		cpuActive = false;
+		
 	}
 	public String getMostColor(Player p)
 	{
