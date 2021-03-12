@@ -468,11 +468,13 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 				{
 					game.cpuActive = false;
 					arrows = true;
+						
 				}
 				else
 				{
 					game.cpuActive = true;
 					arrows = false;
+					hoveringCard = -1;
 				}
 			}
 			
@@ -2263,7 +2265,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 	//@Override
 	public void mouseMoved(MouseEvent e) {
 		//System.out.println("HOVERING X: "+e.getX()+" Y: "+e.getY());
-		if(enterNames && !confirm && e.getX()>= x(725) && e.getX()<=x(1200) && e.getY()>=y(475) && e.getY()<=y(700))
+		if(enterNames && !confirm && !dupName && e.getX()>= x(725) && e.getX()<=x(1200) && e.getY()>=y(475) && e.getY()<=y(700))
 		{
 			if(names.size()>0 && e.getX()>= x(800) && e.getX()<=x(800+(Math.min(13*names.get(0).length(), 12*10)))&& e.getY()>=y(530) && e.getY()<=y(550))//first name
 			{
@@ -2303,11 +2305,11 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 				repaint();
 			}
 		}
-		else if(!game.cpuActive && !game.isOver() && e.getX()>= x(490) && e.getX()<=x(1330) && e.getY()>=y(750) && e.getY()<=y(980))
+		if(!game.cpuActive && !game.isOver() && !colorPickerPlay && !colorPickerDraw && e.getX()>= x(490) && e.getX()<=x(1330) && e.getY()>=y(750) && e.getY()<=y(980))
 		{
 			if(e.getX()>= x(490) && e.getX()<x(610) && e.getY()>=y(800) && e.getY()<=y(980))
 			{
-				System.out.println("aksjdh");
+				//System.out.println("aksjdh");
 				hoveringCard = 0;
 				repaint();
 			}
@@ -2346,6 +2348,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 				hoveringCard = -1;
 				repaint();
 			}
+
 		}
 		else 
 		{
@@ -2353,6 +2356,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 				hoveringCard = -1;
 			repaint();
 		}
+		
 	}
 	//@Override
 	public void mouseDragged(MouseEvent e) {
