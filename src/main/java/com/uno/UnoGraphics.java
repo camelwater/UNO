@@ -63,6 +63,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 	private int colorPickerPlayCoord = 540;
 	private int wildIndex = 0;
 	private int hoveringCard = -1;
+	private int drawClick = 640;
 	
 	private boolean start = true;
 	private boolean enterNames = false;
@@ -111,7 +112,6 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 	    	}
 	    }
 	};
-	
 	ActionListener cpuTask = new ActionListener() {
 	    public void actionPerformed(ActionEvent evt) 
 	    {
@@ -119,8 +119,6 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 	    }
 	};
 	Timer timer = new Timer(750, cpuTask);
-	
-	
 	
 	
 	public UnoGraphics(Board game, GameState gamestate) 
@@ -422,6 +420,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 					e.printStackTrace();
 				}
 			}
+			
 			if(laxWildCard)
 			{
 				try {
@@ -482,66 +481,8 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 			if(colorPickerPlay || colorPickerDraw)
 				hoveringCard = -1;
 			if(cpu)
-			{
+				arrows = (gameEndedBack||game.getTurn()==0)?true:false;
 
-				if(gameEndedBack||game.getTurn()==0)
-				{
-					arrows = true;
-//					if(!game.cpuActive)
-//					{
-//						Point e = MouseInfo.getPointerInfo().getLocation();
-//						if(!colorPickerPlay && !colorPickerDraw && !timer.isRunning())
-//							if(e.getX()>= x(490) && e.getX()<x(610) && e.getY()>=y(800) && e.getY()<=y(980) && game.current_player.getHand().size()>0+7*(page-1))
-//							{
-//								hoveringCard = 0;
-//								
-//							}
-//							else if(e.getX()>= x(610) && e.getX()<x(730) && e.getY()>=y(800) && e.getY()<=y(980) && game.current_player.getHand().size()>1+7*(page-1))
-//							{
-//								hoveringCard = 1;
-//
-//							}
-//							else if(e.getX()>= x(730) && e.getX()<x(850) && e.getY()>=y(800) && e.getY()<=y(980) && game.current_player.getHand().size()>2+7*(page-1))
-//							{
-//								hoveringCard = 2;
-//
-//							}
-//							else if(e.getX()>= x(850) && e.getX()<x(970) && e.getY()>=y(800) && e.getY()<=y(980) && game.current_player.getHand().size()>3+7*(page-1))
-//							{
-//								hoveringCard = 3;
-//								
-//							}
-//							else if(e.getX()>= x(970) && e.getX()<x(1090) && e.getY()>=y(800) && e.getY()<=y(980) && game.current_player.getHand().size()>4+7*(page-1))
-//							{
-//								hoveringCard = 4;
-//								
-//							}
-//							else if(e.getX()>= x(1090) && e.getX()<x(1210) && e.getY()>=y(800) && e.getY()<=y(980) && game.current_player.getHand().size()>5+7*(page-1))
-//							{
-//								hoveringCard = 5;
-//								
-//							}
-//							else if(e.getX()>= x(1210) && e.getX()<=x(1330) && e.getY()>=y(800) && e.getY()<=y(980) && game.current_player.getHand().size()>6+7*(page-1))
-//							{
-//								hoveringCard = 6;
-//								
-//							}
-//							else
-//							{
-//								hoveringCard = -1;
-//								
-//							}
-//					}
-				}
-				else
-				{
-					//game.cpuActive = true;
-					arrows = false;
-					
-				}
-			}
-			
-			
 			g.setColor(bgColor);
 			g.fillRect(0, 0, x(1920), y(1080));
 			
@@ -551,7 +492,6 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			
 			
 			
 			if(gameEndedBack)
@@ -565,12 +505,20 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 			}
 			
 			if(game.deck.deck.size()>0)
-				try {
-					g.drawImage(ImageIO.read(getClass().getResource("/card_back.png")),x(670),y(400), xs(cardWidth), ys(cardHeight), null);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+			{
+				int max = Math.min(35, game.deck.deck.size());
+				for (int i = 0;i<max;i++)
+				{
+					try {
+						g.drawImage(ImageIO.read(getClass().getResource("/card_back.png")),x(640+i*1),y(400), xs(cardWidth), ys(cardHeight), null);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					if(i==max-1)
+						drawClick = 640+i*1;
 				}
+			}
 			
 			paintDiscard(g,950, 400);
 			if(cpu)
@@ -654,8 +602,6 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 		if(game.current_player==game.playerList.get(0))
 			return;
 		game.cpuTurn();
-		game.nextTurn();
-		//System.out.println("PLAYER NEXT: "+game.current_player.name);
 		if(game.lastMove.contains("draw"))
 			addHistory(game.getLastPlayerTurn("draw"));
 		else
@@ -911,7 +857,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 		paintArrows(g, game.playerList.get(0).getHandSize());
 		g.setColor(Color.white);
 		g.setFont(new Font("Trebuchet", Font.BOLD, font(13)));
-		if(!(bgColor.equals(Color.DARK_GRAY) || bgColor.equals(Color.LIGHT_GRAY) || bgColor.equals(new Color(0,138,138).darker())))
+		if(!(bgColor.equals(Color.DARK_GRAY) || bgColor.equals(new Color(22, 71, 53))|| bgColor.equals(Color.LIGHT_GRAY) || bgColor.equals(new Color(0,138,138).darker())))
 			g.setColor(Color.DARK_GRAY.darker());
 		if(hoveringCard==2)
 			g.drawString(game.playerList.get(0).getPaintName(), x(775), y(775-60));
@@ -981,7 +927,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 				}
 				g.setColor(Color.white);
 				g.setFont(new Font("Trebuchet", Font.BOLD, font(13)));
-				if(!(bgColor.equals(Color.DARK_GRAY) || bgColor.equals(Color.LIGHT_GRAY) || bgColor.equals(new Color(0,138,138).darker())))
+				if(!(bgColor.equals(Color.DARK_GRAY) || bgColor.equals(new Color(22, 71, 53))|| bgColor.equals(Color.LIGHT_GRAY) || bgColor.equals(new Color(0,138,138).darker())))
 					g.setColor(Color.DARK_GRAY.darker());
 				g.drawString(game.playerList.get(2).getPaintName(), x(800), y(310));
 				if(bgColor.equals(Color.DARK_GRAY) || bgColor.equals(new Color(22, 71, 53)))
@@ -1047,7 +993,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 				}
 				g.setColor(Color.white);
 				g.setFont(new Font("Trebuchet", Font.BOLD, font(13)));
-				if(!(bgColor.equals(Color.DARK_GRAY) || bgColor.equals(Color.LIGHT_GRAY) || bgColor.equals(new Color(0,138,138).darker())))
+				if(!(bgColor.equals(Color.DARK_GRAY) || bgColor.equals(new Color(22, 71, 53))|| bgColor.equals(Color.LIGHT_GRAY) || bgColor.equals(new Color(0,138,138).darker())))
 					g.setColor(Color.DARK_GRAY.darker());
 				g.drawString(game.playerList.get(1).getPaintName(), x(400), y(500));
 				if(bgColor.equals(Color.DARK_GRAY) || bgColor.equals(new Color(22, 71, 53)))
@@ -1113,7 +1059,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 					}
 				g.setColor(Color.white);
 				g.setFont(new Font("Trebuchet", Font.BOLD, font(13)));
-				if(!(bgColor.equals(Color.DARK_GRAY) || bgColor.equals(Color.LIGHT_GRAY) || bgColor.equals(new Color(0,138,138).darker())))
+				if(!(bgColor.equals(Color.DARK_GRAY) || bgColor.equals(new Color(22, 71, 53))|| bgColor.equals(Color.LIGHT_GRAY) || bgColor.equals(new Color(0,138,138).darker())))
 					g.setColor(Color.DARK_GRAY.darker());
 				g.drawString(game.playerList.get(3).getPaintName(),x(1370) ,y(500));
 				if(bgColor.equals(Color.DARK_GRAY) || bgColor.equals(new Color(22, 71, 53)))
@@ -1176,7 +1122,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 		paintArrows(g, game.current_player.getHandSize());
 		g.setColor(Color.white);
 		g.setFont(new Font("Trebuchet", Font.BOLD, font(13)));
-		if(!(bgColor.equals(Color.DARK_GRAY) || bgColor.equals(Color.LIGHT_GRAY) || bgColor.equals(new Color(0,138,138).darker())))
+		if(!(bgColor.equals(Color.DARK_GRAY) || bgColor.equals(new Color(22, 71, 53))|| bgColor.equals(Color.LIGHT_GRAY) || bgColor.equals(new Color(0,138,138).darker())))
 			g.setColor(Color.DARK_GRAY.darker());
 		if(hoveringCard == 2)
 			g.drawString(game.current_player.getPaintName(), x(775), y(775-60));
@@ -1252,7 +1198,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 					}
 					g.setColor(Color.white);
 					g.setFont(new Font("Trebuchet", Font.BOLD, font(13)));
-					if(!(bgColor.equals(Color.DARK_GRAY) || bgColor.equals(Color.LIGHT_GRAY) || bgColor.equals(new Color(0,138,138).darker())))
+					if(!(bgColor.equals(Color.DARK_GRAY) || bgColor.equals(new Color(22, 71, 53))|| bgColor.equals(Color.LIGHT_GRAY) || bgColor.equals(new Color(0,138,138).darker())))
 						g.setColor(Color.DARK_GRAY.darker());
 					g.drawString(game.playerList.get(playerIndex).getPaintName(), x(800), y(310));
 					if(bgColor.equals(Color.DARK_GRAY) || bgColor.equals(new Color(22, 71, 53)))
@@ -1321,7 +1267,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 					
 					g.setColor(Color.white);
 					g.setFont(new Font("Trebuchet", Font.BOLD, font(13)));
-					if(!(bgColor.equals(Color.DARK_GRAY) || bgColor.equals(Color.LIGHT_GRAY) || bgColor.equals(new Color(0,138,138).darker())))
+					if(!(bgColor.equals(Color.DARK_GRAY) || bgColor.equals(new Color(22, 71, 53))|| bgColor.equals(Color.LIGHT_GRAY) || bgColor.equals(new Color(0,138,138).darker())))
 						g.setColor(Color.DARK_GRAY.darker());
 					g.drawString(game.playerList.get(playerIndex).getPaintName(), x(400), y(500));
 					if(bgColor.equals(Color.DARK_GRAY) || bgColor.equals(new Color(22, 71, 53)))
@@ -1389,7 +1335,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 					}
 					g.setColor(Color.white);
 					g.setFont(new Font("Trebuchet", Font.BOLD, font(13)));
-					if(!(bgColor.equals(Color.DARK_GRAY) || bgColor.equals(Color.LIGHT_GRAY) || bgColor.equals(new Color(0,138,138).darker())))
+					if(!(bgColor.equals(Color.DARK_GRAY) || bgColor.equals(new Color(22, 71, 53))|| bgColor.equals(Color.LIGHT_GRAY) || bgColor.equals(new Color(0,138,138).darker())))
 						g.setColor(Color.DARK_GRAY.darker());
 					g.drawString(game.playerList.get(playerIndex).getPaintName(),x(1370) ,y(500));
 					if(bgColor.equals(Color.DARK_GRAY) || bgColor.equals(new Color(22, 71, 53)))
@@ -1517,7 +1463,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 	
 	public void paintEndText(Graphics g)
 	{
-		int x = 535+((Math.max(5-game.current_player.getPaintName().length(), 0))*40);
+		int x = 538+((Math.max(5-game.current_player.getPaintName().length(), 0))*40);
 		int y = 350;
 		g.setColor(Color.DARK_GRAY);
 		g.fillRect(0,0,xs(1920),ys(1080));
@@ -2081,7 +2027,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 			{
 				if(!gameEndedBack)
 				{
-					if(e.getX()>= x(670) && e.getX()<=x(800) && e.getY()>=y(400) && e.getY()<=y(580) && game.deck.deck.size()>0)
+					if(e.getX()>= x(drawClick) && e.getX()<=x(drawClick+cardWidth) && e.getY()>=y(400) && e.getY()<=y(580) && game.deck.deck.size()>0)
 					{
 						
 						game.drawCard();
@@ -2386,7 +2332,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 				repaint();
 			}
 		}
-		if(!game.cpuActive && !game.isOver() && !colorPickerPlay && !colorPickerDraw && e.getX()>= x(490) && e.getX()<=x(1330) && e.getY()>=y(750) && e.getY()<=y(980))
+		if(!game.cpuActive && !menu && !game.isOver() && !colorPickerPlay && !colorPickerDraw && e.getX()>= x(490) && e.getX()<=x(1330) && e.getY()>=y(750) && e.getY()<=y(980))
 		{
 			Player p = cpu?game.playerList.get(0):game.current_player;
 			if(e.getX()>= x(490) && e.getX()<x(610) && e.getY()>=y(800) && e.getY()<=y(980) && p.getHand().size()>0+7*(page-1))

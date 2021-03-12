@@ -546,7 +546,7 @@ public class Board extends Player
 			drawCard();
 			
 		}
-		//nextTurn();
+		nextTurn();
 		cpuActive = false;
 		
 	}
