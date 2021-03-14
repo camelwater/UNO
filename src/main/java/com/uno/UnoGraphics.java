@@ -174,6 +174,12 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 	
 	public void paint(Graphics g)
 	{
+		scrWidth = frame.getContentPane().getWidth();
+		scrHeight = frame.getContentPane().getHeight(); 
+		System.out.println("Frame Dimensions: "+scrWidth+" x "+scrHeight);
+		wFactor = scrWidth/1920;
+		hFactor = scrHeight/1080;
+		
 		Rectangle r = g.getClipBounds();
 		if(repaintHover||repaintHoverNames)
 		{
@@ -745,7 +751,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 					arrows = (gameEndedBack||game.getTurn()==0)?true:false;
 	
 				g.setColor(bgColor);
-				g.fillRect(0, 0, x(1920), y(1080));
+				g.fillRect(0, 0, xs(1920), ys(1080));
 				
 				try {
 					g.drawImage(ImageIO.read(getClass().getResource("/menu.png")), x(1715), y(10), xs(150), ys(100), null);
@@ -782,14 +788,6 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 				}
 				
 				paintDiscard(g,950, 400);
-				
-//				hoveringCard0 = hoveringCard==0?-60:0;
-//				hoveringCard1 = hoveringCard==1?-60:0;
-//				hoveringCard2 = hoveringCard==2?-60:0;
-//				hoveringCard3 = hoveringCard==3?-60:0;
-//				hoveringCard4 = hoveringCard==4?-60:0;
-//				hoveringCard5 = hoveringCard==5?-60:0;
-//				hoveringCard6 = hoveringCard==6?-60:0;
 				
 				if(cpu)
 				{
@@ -893,7 +891,6 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 	{
 		bgColor = x;
 	}
-	
 	public int x(int x)
 	{
 		x+=35;
@@ -909,7 +906,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 	}
 	public int y(int y)
 	{
-		y-=25;
+		y-=20;
 		return (int)(y*hFactor);
 	}
 	public int ys(int y)
@@ -1700,7 +1697,6 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 		}
 		//g.setFont(new Font("Trebuchet MS", Font.BOLD, 20));
 		g.setColor(Color.white);
-		//g.drawString(direction, x, y);
 		BufferedImage img = null;
 		try {
 			img = ImageIO.read(getClass().getResource("/direction arrow.png"));

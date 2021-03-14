@@ -1,14 +1,17 @@
 package com.uno;
-//import java.util.Scanner;
+import javax.swing.SwingUtilities;
+
 public class Runner 
 {
-	public static void main(String args[]) throws Exception
+	public static void main(String args[])
 	{
-		Board game = new Board();
-		GameState gamestate = new GameState(game);
-		
 		//game.start();
-		UnoGraphics g = new UnoGraphics(game, gamestate);
-		
+		SwingUtilities.invokeLater(new Runnable() {
+		    public void run() {
+		    	Board game = new Board();
+				GameState gamestate = new GameState(game);
+		        new UnoGraphics(game, gamestate);
+		    }
+		});
 	}
 }
