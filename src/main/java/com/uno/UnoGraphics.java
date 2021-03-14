@@ -2603,7 +2603,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 				
 		}
 		//names hovering
-		if(enterNames && !confirm && !dupName && e.getX()>= x(725) && e.getX()<=x(1200) && e.getY()>=y(475) && e.getY()<=y(700))
+		if(enterNames && !confirm && !dupName && notEnoughPlayers && e.getX()>= x(725) && e.getX()<=x(1200) && e.getY()>=y(475) && e.getY()<=y(700))
 		{
 			if(names.size()>0 && e.getX()>= x(800) && e.getX()<=x(800+(Math.min(13*names.get(0).length(), 12*10)))&& e.getY()>=y(530) && e.getY()<=y(550))//first name
 			{
