@@ -134,11 +134,11 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 	private Timer timer = new Timer(750, cpuTask);
 	
 	
-	public UnoGraphics(Board game, GameState gamestate) 
+	public UnoGraphics() //Board game, GameState gamestate
 	{
 		frame = new JFrame("UNO");
-		this.game = game;
-		this.gamestate = gamestate;
+		this.game = new Board();
+		this.gamestate = new GameState(game);
 		bgOptions.add(new Color(0,138,138).darker());
 		bgOptions.add(Color.LIGHT_GRAY.darker());
 		bgOptions.add(new Color(222, 213, 242));
@@ -176,7 +176,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 	{
 		scrWidth = frame.getContentPane().getWidth();
 		scrHeight = frame.getContentPane().getHeight(); 
-		System.out.println("Frame Dimensions: "+scrWidth+" x "+scrHeight);
+		//System.out.println("Frame Dimensions: "+scrWidth+" x "+scrHeight);
 		wFactor = scrWidth/1920;
 		hFactor = scrHeight/1080;
 		
@@ -906,7 +906,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 	}
 	public int y(int y)
 	{
-		y-=20;
+		y-=15;
 		return (int)(y*hFactor);
 	}
 	public int ys(int y)
@@ -2240,14 +2240,15 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 			{
 				if(e.getX()>= x(785) && e.getX()<=x(1095) && e.getY()>=y(510) && e.getY()<=y(590))//new game
 				{
-					game = new Board();
-					gamestate = new GameState(game);
+//					game = new Board();
+//					gamestate = new GameState(game);
 					frame.setVisible(false);
 					frame.dispose();
-					UnoGraphics g = new UnoGraphics(game, gamestate);
+					//UnoGraphics g = new UnoGraphics(game, gamestate);
+					UnoGraphics g = new UnoGraphics();
 					g.setBG(bgColor);
-					game.laxWildCard = laxWildCard;
-					game.infiniteDraw = infiniteDraw;
+					g.game.laxWildCard = laxWildCard;
+					g.game.infiniteDraw = infiniteDraw;
 				}
 				else if(e.getX()>= x(804) && e.getX()<=x(1080) && e.getY()>=y(641) && e.getY()<=y(721)) //rematch
 				{
@@ -2256,18 +2257,13 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 					history.clear();
 					gameEndedBack = false;
 					menu = false;
-//					frame.setVisible(false);
-//					frame.dispose();
-//					UnoGraphics g = new UnoGraphics(game, gamestate);
+
 					if(cpu)
 					{
 						game.start(cpu);
 						game.laxWildCard = laxWildCard;
 						game.infiniteDraw = infiniteDraw;
 						addHistory("The initial card is a "+game.showTopCard()+".");
-
-//						g.setCPU(true);
-//						g.setBG(bgColor);
 					}
 					else
 					{
@@ -2276,9 +2272,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 
 						game.laxWildCard = laxWildCard;
 						game.infiniteDraw = infiniteDraw;
-//						g.setBG(bgColor);
 					}
-					//g.skipStart();
 					repaint();
 				}
 				else if(e.getX()>= x(880) && e.getX()<=x(990) && e.getY()>=y(395) && e.getY()<=y(445)) //see uno board
