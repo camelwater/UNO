@@ -66,6 +66,15 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 	private int hoveringCard = -1;
 	private int drawClick = 640;
 	
+	private int hoveringCard0 = 0;
+	private int hoveringCard1 = 0;
+	private int hoveringCard2 = 0;
+	private int hoveringCard3 = 0;
+	private int hoveringCard4 = 0;
+	private int hoveringCard5 = 0;
+	private int hoveringCard6 = 0;
+	
+	
 	private boolean start = true;
 	private boolean enterNames = false;
 	private boolean cpu = false;
@@ -172,6 +181,14 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 			g.fillRect(r.x, r.y, r.width, r.height);
 			if(repaintHover)
 			{
+				hoveringCard0 = hoveringCard==0?-60:0;
+				hoveringCard1 = hoveringCard==1?-60:0;
+				hoveringCard2 = hoveringCard==2?-60:0;
+				hoveringCard3 = hoveringCard==3?-60:0;
+				hoveringCard4 = hoveringCard==4?-60:0;
+				hoveringCard5 = hoveringCard==5?-60:0;
+				hoveringCard6 = hoveringCard==6?-60:0;
+				
 				int x = 490;
 				int y = 800;
 				if(!cpu)
@@ -765,6 +782,15 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 				}
 				
 				paintDiscard(g,950, 400);
+				
+//				hoveringCard0 = hoveringCard==0?-60:0;
+//				hoveringCard1 = hoveringCard==1?-60:0;
+//				hoveringCard2 = hoveringCard==2?-60:0;
+//				hoveringCard3 = hoveringCard==3?-60:0;
+//				hoveringCard4 = hoveringCard==4?-60:0;
+//				hoveringCard5 = hoveringCard==5?-60:0;
+//				hoveringCard6 = hoveringCard==6?-60:0;
+				
 				if(cpu)
 				{
 					paintCPUHands(g, 490, 800);
@@ -2300,7 +2326,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 						//}
 					}
 					
-					if(e.getX()>= x(490) && e.getX()<x(610) && e.getY()>=y(800) && e.getY()<=y(980))
+					if(e.getX()>= x(490) && e.getX()<x(610) && e.getY()>=y(800+hoveringCard0) && e.getY()<=y(980))
 					{
 						if(game.current_player.getHand().size()>7*(page-1))
 						{
@@ -2331,7 +2357,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 						}
 						
 					}
-					else if(e.getX()>= x(610) && e.getX()<x(730) && e.getY()>=y(800) && e.getY()<=y(980))
+					else if(e.getX()>= x(610) && e.getX()<x(730) && e.getY()>=y(800+hoveringCard1) && e.getY()<=y(980))
 					{
 						if(game.current_player.getHand().size()>1+7*(page-1))
 						{
@@ -2362,7 +2388,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 							}
 						}
 					}
-					else if(e.getX()>= x(740) && e.getX()<x(850) && e.getY()>=y(800) && e.getY()<=y(980))
+					else if(e.getX()>= x(740) && e.getX()<x(850) && e.getY()>=y(800+hoveringCard2) && e.getY()<=y(980))
 					{
 						if(game.current_player.getHand().size()>2+7*(page-1))
 						{
@@ -2394,7 +2420,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 							}
 						}
 					}
-					else if(e.getX()>= x(850) && e.getX()<x(970) && e.getY()>=y(800) && e.getY()<=y(980))
+					else if(e.getX()>= x(850) && e.getX()<x(970) && e.getY()>=y(800+hoveringCard3) && e.getY()<=y(980))
 					{
 						if(game.current_player.getHand().size()>3+7*(page-1))
 						{
@@ -2425,7 +2451,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 							}
 						}
 					}
-					else if(e.getX()>= x(970) && e.getX()<x(1090) && e.getY()>=y(800) && e.getY()<=y(980))
+					else if(e.getX()>= x(970) && e.getX()<x(1090) && e.getY()>=y(800+hoveringCard4) && e.getY()<=y(980))
 					{
 						if(game.current_player.getHand().size()>4+7*(page-1))
 						{
@@ -2456,7 +2482,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 							}
 						}
 					}
-					else if(e.getX()>= x(1090) && e.getX()<x(1210) && e.getY()>=y(800) && e.getY()<=y(980))
+					else if(e.getX()>= x(1090) && e.getX()<x(1210) && e.getY()>=y(800+hoveringCard5) && e.getY()<=y(980))
 					{
 						if(game.current_player.getHand().size()>5+7*(page-1))
 						{
@@ -2475,7 +2501,6 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 							{
 								game.play(5+7*(page-1));
 							
-					    		
 					    		if(game.canPlay())
 					    	    {
 					    			page = 1;
@@ -2487,7 +2512,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 							}
 						}
 					}
-					else if(e.getX()>= x(1210) && e.getX()<=x(1350) && e.getY()>=y(800) && e.getY()<=y(980))
+					else if(e.getX()>= x(1210) && e.getX()<=x(1350) && e.getY()>=y(800+hoveringCard6) && e.getY()<=y(980))
 					{
 						if(game.current_player.getHand().size()>6+7*(page-1))
 						{
@@ -2506,7 +2531,6 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 							{
 								game.play(6+7*(page-1));
 								
-					    		
 					    		if(game.canPlay())
 					    	    {
 					    			page = 1;
@@ -2633,60 +2657,66 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 		}
 		
 		//cards hovering
-		if(!game.cpuActive && !menu && !game.isOver() && !colorPickerPlay && !colorPickerDraw && e.getX()>= x(490) && e.getX()<=x(1350) && e.getY()>=y(750) && e.getY()<=y(980))
+		if(!game.cpuActive && !menu && !game.isOver() && !colorPickerPlay && !colorPickerDraw && e.getX()>= x(490) && e.getX()<=x(1350) && e.getY()>=y(650) && e.getY()<=y(980))
 		{
 			Player p = cpu?game.playerList.get(0):game.current_player;
-			if(e.getX()>= x(490) && e.getX()<x(610) && e.getY()>=y(800) && e.getY()<=y(980) && p.getHand().size()>0+7*(page-1))
+			if(e.getX()>= x(490) && e.getX()<x(610) && e.getY()>=y(800+hoveringCard0) && e.getY()<=y(980) && p.getHand().size()>0+7*(page-1))
 			{
 				hoveringCard = 0;
 				repaintHover = true;
 				paintImmediately(x(490), y(650), x(1350)-x(490), y(982)-y(650));
 			}
-			else if(e.getX()>= x(610) && e.getX()<x(730) && e.getY()>=y(800) && e.getY()<=y(980)&&p.getHand().size()>1+7*(page-1))
+			else if(e.getX()>= x(610) && e.getX()<x(730) && e.getY()>=y(800+hoveringCard1) && e.getY()<=y(980)&&p.getHand().size()>1+7*(page-1))
 			{
 				hoveringCard = 1;
 				repaintHover = true;
 				paintImmediately(x(490), y(650), x(1350)-x(490), y(982)-y(650));
 			}
-			else if(e.getX()>= x(730) && e.getX()<x(850) && e.getY()>=y(800) && e.getY()<=y(980)&&p.getHand().size()>2+7*(page-1))
+			else if(e.getX()>= x(730) && e.getX()<x(850) && e.getY()>=y(800+hoveringCard2) && e.getY()<=y(980)&&p.getHand().size()>2+7*(page-1))
 			{
 				hoveringCard = 2;
 				repaintHover = true;
 				paintImmediately(x(490), y(650), x(1350)-x(490), y(982)-y(650));
 			}
-			else if(e.getX()>= x(850) && e.getX()<x(970) && e.getY()>=y(800) && e.getY()<=y(980)&&p.getHand().size()>3+7*(page-1))
+			else if(e.getX()>= x(850) && e.getX()<x(970) && e.getY()>=y(800+hoveringCard3) && e.getY()<=y(980)&&p.getHand().size()>3+7*(page-1))
 			{
 				hoveringCard = 3;
 				repaintHover = true;
 				paintImmediately(x(490), y(650), x(1350)-x(490), y(982)-y(650));
 			}
-			else if(e.getX()>= x(970) && e.getX()<x(1090) && e.getY()>=y(800) && e.getY()<=y(980)&&p.getHand().size()>4+7*(page-1))
+			else if(e.getX()>= x(970) && e.getX()<x(1090) && e.getY()>=y(800+hoveringCard4) && e.getY()<=y(980)&&p.getHand().size()>4+7*(page-1))
 			{
 				hoveringCard = 4;
 				repaintHover = true;
 				paintImmediately(x(490), y(650), x(1350)-x(490), y(982)-y(650));
 			}
-			else if(e.getX()>= x(1090) && e.getX()<x(1210) && e.getY()>=y(800) && e.getY()<=y(980)&&p.getHand().size()>5+7*(page-1))
+			else if(e.getX()>= x(1090) && e.getX()<x(1210) && e.getY()>=y(800+hoveringCard5) && e.getY()<=y(980)&&p.getHand().size()>5+7*(page-1))
 			{
 				hoveringCard = 5;
 				repaintHover = true;
 				paintImmediately(x(490), y(650), x(1350)-x(490), y(982)-y(650));
 			}
-			else if(e.getX()>= x(1210) && e.getX()<=x(1350) && e.getY()>=y(800) && e.getY()<=y(980)&&p.getHand().size()>6+7*(page-1))
+			else if(e.getX()>= x(1210) && e.getX()<=x(1350) && e.getY()>=y(800+hoveringCard6) && e.getY()<=y(980)&&p.getHand().size()>6+7*(page-1))
 			{
 				hoveringCard = 6;
 				repaintHover = true;
 				paintImmediately(x(490), y(650), x(1350)-x(490), y(982)-y(650));
 			}
-//			else
-//			{
-//				if(hoveringCard>-1)
-//				{
-//					hoveringCard = -1;
-//					repaintHover = true;
-//					paintImmediately(x(490), y(650), x(1350)-x(490), y(982)-y(650));
-//				}
-//			}
+			else
+			{
+				if(hoveringCard>-1)
+				{
+					hoveringCard = -1;
+					if(game.isOver())
+						repaint();
+					else
+					{
+						repaintHover = true;
+						paintImmediately(x(490), y(650), x(1350)-x(490), y(982)-y(650));
+					}
+					
+				}
+			}
 
 		}
 		else 
@@ -2694,8 +2724,13 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 			if(hoveringCard>-1)
 			{
 				hoveringCard = -1;
-				repaintHover = true;
-				paintImmediately(x(490), y(650), x(1350)-x(490), y(982)-y(650));
+				if(!game.isOver())
+				{
+					repaintHover = true;
+					paintImmediately(x(490), y(650), x(1350)-x(490), y(982)-y(650));
+				}
+				else
+					repaint();
 			}
 		}
 		
