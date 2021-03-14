@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.PointerInfo;
+import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -55,7 +56,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 	
 	//private Color bgColor = new Color(0,138,138).darker();
 	private Color bgColor = Color.DARK_GRAY;
-	ArrayList<Color> bgOptions = new ArrayList<Color>();
+	private ArrayList<Color> bgOptions = new ArrayList<Color>();
 	private boolean bgOptionBox = false;
 	
 	private boolean colorPickerDraw = false;
@@ -78,6 +79,9 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 	private boolean laxWildCard = false;
 	private boolean infiniteDraw = false;
 	
+	private boolean repaintHover = false;
+	private boolean repaintHoverNames = false;
+	private String hoverStart = "none";
 	private boolean hovering1 = false;
 	private boolean hovering2 = false;
 	private boolean hovering3 = false;
@@ -86,7 +90,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 	private boolean dupName = false;
 	private boolean notEnoughPlayers = false;
 	
-	JTextField nameText = new JTextField(20);
+	private JTextField nameText = new JTextField(20);
 	
 	private ArrayList<String> names = new ArrayList<String>();
 	private Queue<String> history = new LinkedList<String>();
@@ -118,7 +122,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 	        cpuTurn();
 	    }
 	};
-	Timer timer = new Timer(750, cpuTask);
+	private Timer timer = new Timer(750, cpuTask);
 	
 	
 	public UnoGraphics(Board game, GameState gamestate) 
@@ -159,415 +163,573 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 		
 	}
 	
-	public void paintComponent(Graphics g)
+	public void paint(Graphics g)
 	{
-		if(start)
+		Rectangle r = g.getClipBounds();
+		if(repaintHover||repaintHoverNames)
 		{
-			g.setColor(Color.DARK_GRAY);
-			g.fillRect(0, 0, xs(1920), ys(1080));
-			g.setColor(Color.red);
-			g.setFont(new Font("Trebuchet", Font.BOLD, font(100)));
-			g.drawString("UNO", x(823), y(175));
-			try {
-				g.drawImage(ImageIO.read(getClass().getResource("/card_back_alt.png")), x(867), y(225), xs(cardWidth), ys(cardHeight), null);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			g.setColor(Color.white);
-			g.setFont(new Font("Trebuchet", Font.BOLD, font(40)));
-			g.fillRect(x(857),y(450), xs(150), ys(62));
-			g.fillRect(x(857),y(530), xs(150), ys(62));
-			g.fillRect(x(857), y(610), xs(150), ys(62)); //1007
-			g.fillRect(x(857), y(690), xs(150), ys(62));
-			g.fillRect(x(872),y(799), xs(120), ys(52));
-			
-			g.setColor(Color.black);
-			g.drawRect(x(857),y(450), xs(150), ys(62));
-			g.drawRect(x(857),y(530), xs(150), ys(62));
-			g.drawRect(x(857), y(610), xs(150), ys(62));
-			g.drawRect(x(857), y(690), xs(150), ys(62));
-			g.drawRect(x(872),y(799), xs(120), ys(52));
-			g.drawRect(x(857)+1,y(450)+1, xs(150-2), ys(62-2));
-			g.drawRect(x(857)+1,y(530)+1, xs(150-2), ys(62-2));
-			g.drawRect(x(857)+1,y(610)+1, xs(150-2), ys(62-2));
-			g.drawRect(x(857)+1,y(690)+1, xs(150-2), ys(62-2));
-			g.drawRect(x(872)+1,y(799)+1, xs(120-2), ys(52-2));
-			
-			g.drawString("LOCAL", x(865), y(495));
-			g.setFont(new Font("Trebuchet", Font.BOLD, font(45)));
-			g.drawString("EXIT", x(882), y(842));
-			g.drawString("CPU", x(883), y(578));
-			g.drawString("LAN", x(886), y(658));
-			
-			g.setFont(new Font("Tecbuchet", Font.BOLD, font(32)));
-			g.drawString("OPTIONS", x(864), y(734));
-			
-		}
-		else if(enterNames) //NEED TO ADD CLEAR BUTTON TO CLEAR NAMES
-		{
-			g.setColor(Color.DARK_GRAY);
-			g.fillRect(0, 0, xs(1920), ys(1080));
-			this.add(nameText);
-			nameText.setBounds(x(800),y(250), xs(300), ys(75));
-			nameText.setFont(new Font("Times New Roman", Font.PLAIN, font(50)));
-			if(names.size()>=4 || confirm)
+			g.setColor(bgColor);
+			g.fillRect(r.x, r.y, r.width, r.height);
+			if(repaintHover)
 			{
-    			nameText.setEnabled(false);
-			}
-    		else
-    		{
-    			nameText.setEnabled(true);
-    			nameText.addActionListener(action);
-    			nameText.grabFocus();
-			    nameText.requestFocusInWindow();
-    		}
-			
-			try {
-				g.drawImage(ImageIO.read(getClass().getResource("/plus.png")), x(1100),y(250), xs(75), ys(75), null);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			g.setFont(new Font("Roboto", Font.BOLD| Font.CENTER_BASELINE, font(75)));
-			g.setColor(new Color(222,219,246));
-			g.drawString("PLAYER NAMES", x(657), y(170));
-			
-			g.setColor(Color.white);
-			g.setFont(new Font("Trebuchet", Font.BOLD, font(35)));
-			g.fillRect(x(725), y(400), xs(120), ys(50));
-			g.fillRect(x(1070), y(400), xs(120), ys(50));
-			
-			g.setColor(Color.black);
-			g.drawRect(x(725), y(400), xs(120), ys(50));
-			g.drawRect(x(1070), y(400), xs(120), ys(50));
-//			g.drawRect(726, 401, 118, 48);
-//			g.drawRect(1071, 401, 118, 48);
-			g.drawString("BACK", x(735), y(439));
-			g.setFont(new Font("Trebuchet", Font.BOLD, font(32)));
-			g.drawString("START", x(1079), y(438));
-			
-			for(int i = 0;i<names.size();i++)
-			{
-				g.setColor(Color.white);
-				g.setFont(new Font("Times New Roman", Font.ITALIC, font(25)));
-				if(i==0)
+				int x = 490;
+				int y = 800;
+				if(!cpu)
 				{
-					if(hovering1)
+					game.current_player.sortHand(game.showTopCard().getColor(), game.showTopCard().getValue());	
+					int start = (page-1)*7;
+					int end = Math.min(start+7, game.current_player.getHandSize());
+					int hoveringIndex = hoveringCard +7*(page-1);
+					for(int i = start;i<end;i++)
 					{
-						g.setColor(Color.red);
-						g.setFont(new Font("Times New Roman", Font.ITALIC |Font.BOLD, font(25)));
+						String a = "/";
+						UnoCard card = game.current_player.getHand().get(i);
+						
+						if(card.getValue().toString().equals("Reverse"))
+							a += card.getColor().toString().toLowerCase()+"_reverse"+".png";
+						else if(card.getValue().toString().equals("DrawTwo"))
+							a += card.getColor().toString().toLowerCase()+"_picker"+".png";
+						else if(card.getValue().toString().equals("Wild"))
+							a += "wild_color_changer.png";
+						else if(card.getValue().toString().equals("Skip"))
+							a += card.getColor().toString().toLowerCase()+"_skip"+".png";
+						else if(card.getValue().toString().equals("Wild_Four"))
+							a += "wild_pick_four.png";
+						else
+							a += card.getColor().toString().toLowerCase()+"_"+card.toInt()+".png";
+						if(hoveringCard>-1 && i==hoveringIndex)
+						{
+							try {
+								g.drawImage(ImageIO.read(getClass().getResource(a)),x(x+120*(i%7)),y(y-60), xs(cardWidth), ys(cardHeight), null);
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+						else
+						{
+							try {
+								g.drawImage(ImageIO.read(getClass().getResource(a)),x(x+120*(i%7)),y(y), xs(cardWidth), ys(cardHeight), null);
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
 					}
-					if(names.get(0).length()>10)
-						g.drawString(names.get(0).substring(0,9)+"...", x(800), y(550));
-					else
-						g.drawString(names.get(0), x(800), y(550));
-				}
-				else if(i==1)
-				{
+					//paintArrows(g, game.current_player.getHandSize());
 					g.setColor(Color.white);
-					g.setFont(new Font("Times New Roman", Font.ITALIC, font(25)));
-					if(hovering2)
+					g.setFont(new Font("Trebuchet", Font.BOLD, font(13)));
+					if(!(bgColor.equals(Color.DARK_GRAY) || bgColor.equals(new Color(22, 71, 53))|| bgColor.equals(Color.LIGHT_GRAY) || bgColor.equals(new Color(0,138,138).darker())))
+						g.setColor(Color.DARK_GRAY.darker());
+					if(hoveringCard == 2)
+						g.drawString(game.current_player.getPaintName(), x(775), y(775-60));
+					else
+						g.drawString(game.current_player.getPaintName(), x(775), y(775));
+					if(bgColor.equals(Color.DARK_GRAY) || bgColor.equals(new Color(22, 71, 53)))
+						g.setColor(Color.LIGHT_GRAY);
+					else
+						g.setColor(Color.DARK_GRAY);
+					if(hoveringCard == 3 || hoveringCard==4)
+						g.drawString("Cards: "+Integer.toString((game.current_player.getHandSize())), x(925), y(775-60));
+					else
+						g.drawString("Cards: "+Integer.toString((game.current_player.getHandSize())), x(925), y(775));
+					if(gamestate.isUno(game.current_player))
 					{
 						g.setColor(Color.red);
-						g.setFont(new Font("Times New Roman", Font.ITALIC |Font.BOLD, font(25)));
+						g.setFont(new Font("Trebuchet", Font.BOLD, font(15)));
+				    	g.drawString("UNO",x(850),y(750));
 					}
-					if(names.get(1).length()>10)
-						g.drawString(names.get(1).substring(0,9)+"...", x(1010), y(550));
-					else
-						g.drawString(names.get(1), x(1010), y(550));
 				}
-				else if(i==2)
+				else
 				{
+					if(game.getTurn()==0)
+						game.playerList.get(0).sortHand(game.showTopCard().getColor(), game.showTopCard().getValue());	
+					int start = (page-1)*7;
+					int end = Math.min(start+7, game.playerList.get(0).getHandSize());
+					int hoveringIndex = hoveringCard +7*(page-1);
+					for(int i = start;i<end;i++)
+					{
+						String a = "/";
+						UnoCard card = game.playerList.get(0).getHand().get(i);
+						
+						if(card.getValue().toString().equals("Reverse"))
+							a += card.getColor().toString().toLowerCase()+"_reverse"+".png";
+						else if(card.getValue().toString().equals("DrawTwo"))
+							a += card.getColor().toString().toLowerCase()+"_picker"+".png";
+						else if(card.getValue().toString().equals("Wild"))
+							a += "wild_color_changer.png";
+						else if(card.getValue().toString().equals("Skip"))
+							a += card.getColor().toString().toLowerCase()+"_skip"+".png";
+						else if(card.getValue().toString().equals("Wild_Four"))
+							a += "wild_pick_four.png";
+						else
+							a += card.getColor().toString().toLowerCase()+"_"+card.toInt()+".png";
+						if(hoveringCard>-1 && i==hoveringIndex)
+						{
+							try {
+								g.drawImage(ImageIO.read(getClass().getResource(a)),x(x+120*(i%7)),y(y-60), xs(cardWidth), ys(cardHeight), null);
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+						else
+						{
+							try {
+								g.drawImage(ImageIO.read(getClass().getResource(a)),x(x+120*(i%7)),y(y), xs(cardWidth), ys(cardHeight), null);
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+						
+					}
+					//paintArrows(g, game.playerList.get(0).getHandSize());
 					g.setColor(Color.white);
-					g.setFont(new Font("Times New Roman", Font.ITALIC, font(25)));
-					if(hovering3)
+					g.setFont(new Font("Trebuchet", Font.BOLD, font(13)));
+					if(!(bgColor.equals(Color.DARK_GRAY) || bgColor.equals(new Color(22, 71, 53))|| bgColor.equals(Color.LIGHT_GRAY) || bgColor.equals(new Color(0,138,138).darker())))
+						g.setColor(Color.DARK_GRAY.darker());
+					if(hoveringCard==2)
+						g.drawString(game.playerList.get(0).getPaintName(), x(775), y(775-60));
+					else
+						g.drawString(game.playerList.get(0).getPaintName(), x(775), y(775));
+					if(bgColor.equals(Color.DARK_GRAY) || bgColor.equals(new Color(22, 71, 53)))
+						g.setColor(Color.LIGHT_GRAY);
+					else
+						g.setColor(Color.DARK_GRAY);
+					if(hoveringCard==3||hoveringCard==4)
+						g.drawString("Cards: "+Integer.toString((game.playerList.get(0).getHandSize())), x(925), y(775-60));
+					else
+						g.drawString("Cards: "+Integer.toString((game.playerList.get(0).getHandSize())), x(925), y(775));
+					if(gamestate.isUno(game.playerList.get(0)))
 					{
 						g.setColor(Color.red);
-						g.setFont(new Font("Times New Roman", Font.ITALIC |Font.BOLD, font(25)));
+						g.setFont(new Font("Trebuchet", Font.BOLD, font(15)));
+				    	g.drawString("UNO",x(850),y(750));
 					}
-					if(names.get(2).length()>10)
-						g.drawString(names.get(2).substring(0,9)+"...", x(800), y(650));
-					else
-						g.drawString(names.get(2), x(800), y(650));
-				}
-				else if(i==3)
-				{
-					g.setColor(Color.white);
-					g.setFont(new Font("Times New Roman", Font.ITALIC, font(25)));
-					if(hovering4)
-					{
-						g.setColor(Color.red);
-						g.setFont(new Font("Times New Roman", Font.ITALIC |Font.BOLD, font(25)));
-					}
-					if(names.get(3).length()>10)
-						g.drawString(names.get(3).substring(0,9)+"...", x(1010), y(650));
-					else
-						g.drawString(names.get(3), x(1010), y(650));
-				}
-			}
-			
-			if(dupName)
-			{
-				nameText.setEnabled(false);
-				g.setColor(Color.white);
-				g.fillRect(x(770), y(375), xs(360), ys(365));
-				g.setColor(Color.black);
-				g.drawRect(x(770), y(375), xs(360), ys(365));
-				
-				g.drawRect(x(915), y(660), xs(70), ys(40));
-				g.setFont(new Font("Trebuchet", Font.PLAIN, font(25)));
-				g.drawString("That name is already taken.", x(800), y(435));
-				g.drawString("Please choose another name.", x(785), y(465));
-				
-				g.setFont(new Font("Trebuchet", Font.BOLD, font(35)));
-				g.drawString("OK", x(925), y(693));
-				
-			}
-			if(notEnoughPlayers)
-			{
-				nameText.setEnabled(false);
-				g.setColor(Color.white);
-				g.fillRect(x(770), y(375), xs(360), ys(365));
-				g.setColor(Color.black);
-				g.drawRect(x(770), y(375), xs(360), ys(365));
-				
-				g.drawRect(x(915), y(660), xs(70), ys(40));
-				g.setFont(new Font("Trebuchet", Font.PLAIN, font(25)));
-				g.drawString("There are not enough players.", x(785), y(435));
-				g.drawString("2-4 players are required.", x(825), y(465));
-				
-				g.setFont(new Font("Trebuchet", Font.BOLD, font(35)));
-				g.drawString("OK", x(925), y(693));
-			}
-			if(confirm)
-			{
-				g.setColor(Color.white);
-				g.fillRect(x(790), y(375), xs(320), ys(365));
-				g.setColor(Color.black);
-				g.drawRect(x(790), y(375), xs(320), ys(365));
-				
-				g.drawRect(x(840), y(670), xs(50), ys(30));
-				g.drawRect(x(1000), y(670), xs(60), ys(30));
-				g.setFont(new Font("Trebuchet", Font.PLAIN, font(25)));
-				g.drawString("This game will only have", x(810), y(435));
-				g.drawString("2 players.", x(899), y(465));
-				g.drawString("Continue?", x(895), y(495));
-				
-				g.setFont(new Font("Trebuchet", Font.BOLD, font(22)));
-				g.drawString("YES", x(1008), y(695));
-				g.drawString("NO", x(849), y(695));
-			}
-			
-			
-		}
-		else if (LAN)
-		{
-			g.setColor(Color.DARK_GRAY);
-			g.fillRect(0, 0, xs(1920), ys(1080));
-			
-			g.setColor(Color.white);
-			g.fillRect(x(960-75-35),y(500),xs(150),ys(75));
-			g.fillRect(x(960-112-35),y(400),xs(225),ys(75));
-			g.fillRect(x(960-75-35),y(700),xs(150),ys(65));
-			
-			g.setColor(Color.black);
-			g.drawRect(x(960-75-35),y(500),xs(150),ys(75));
-			g.drawRect(x(960-112-35),y(400),xs(225),ys(75));
-			g.drawRect(x(960-75-35),y(700),xs(150),ys(65));
-			
-			g.setFont(new Font("Trebuchet", Font.BOLD, font(47)));
-			g.drawString("JOIN", x(960-75-35+22), y(555));
-			g.drawString("CREATE", x(960-112-35+17), y(455));
-			g.setFont(new Font("Trebuchet", Font.BOLD |Font.ROMAN_BASELINE, font(47)));
-			g.drawString("BACK", x(960-75-35+10), y(750));
-			
-			g.setFont(new Font("Trebuchet", Font.BOLD, font(85)));
-			g.drawString("LAN GAME", x(690), y(225));
-			
-		}
-		else if(settings)
-		{
-			g.setColor(Color.DARK_GRAY);
-			g.fillRect(0, 0, xs(1920), ys(1080));
-			
-			g.setColor(Color.black);
-			g.setFont(new Font("Trebuchet", Font.BOLD, font(85)));
-			g.drawString("OPTIONS", x(745), y(175));
-			
-			g.setFont(new Font("Trebuchet", Font.BOLD, font(45)));
-			g.drawString("Infinite Draw", x(730), y(300));
-			g.drawString("Lax Wild Four", x(730), y(400));
-			g.setFont(new Font("Trebuchet", Font.BOLD, font(37)));
-			g.drawString("Background Color", x(730), y(500));
-			
-			if(infiniteDraw)
-			{
-				try {
-					g.drawImage(ImageIO.read(getClass().getResource("/toggle icon.png")), x(1100), y(250), xs(75), ys(75), null);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
 				}
 			}
 			else
 			{
-				try {
-					g.drawImage((ImageIO.read(getClass().getResource("/toggle icon off.png"))), x(1100), y(250), xs(75), ys(75), null);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			
-			if(laxWildCard)
-			{
-				try {
-					g.drawImage(ImageIO.read(getClass().getResource("/toggle icon.png")), x(1100), y(350), xs(75), ys(75), null);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			else 
-			{
-				try {
-					g.drawImage((ImageIO.read(getClass().getResource("/toggle icon off.png"))), x(1100), y(350), xs(75), ys(75), null);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			
-			g.setColor(bgColor);
-			g.fillRect(x(1100), y(472), xs(75), ys(35));
-			g.setColor(Color.black);
-			g.drawRect(x(1100), y(472), xs(75), ys(35));
-			g.fillPolygon(new int[] {x(1185), x(1207), x(1196)}, new int[] {y(483),y(483), y(498)}, 3);
-			
-			if(bgOptionBox)
-			{
-				g.setColor(Color.white);
-				
-				g.fillPolygon(new int[] {x(1145), x(1120), x(1170)}, new int[] {y(512),y(527), y(527)}, 3);
-				g.fillRect(x(1000), y(525), xs(300), ys(65));
-				
-				for(int i = 0;i<bgOptions.size();i++)
+				for(int i = 0;i<names.size();i++)
 				{
-					g.setColor(bgOptions.get(i));
-					g.fillRect(x(1009+50*i), y(540), xs(35), ys(35));
+					g.setColor(Color.white);
+					g.setFont(new Font("Times New Roman", Font.ITALIC, font(25)));
+					if(i==0)
+					{
+						if(hovering1)
+						{
+							g.setColor(Color.red);
+							g.setFont(new Font("Times New Roman", Font.ITALIC |Font.BOLD, font(25)));
+						}
+						if(names.get(0).length()>10)
+							g.drawString(names.get(0).substring(0,9)+"...", x(800), y(550));
+						else
+							g.drawString(names.get(0), x(800), y(550));
+					}
+					else if(i==1)
+					{
+						g.setColor(Color.white);
+						g.setFont(new Font("Times New Roman", Font.ITALIC, font(25)));
+						if(hovering2)
+						{
+							g.setColor(Color.red);
+							g.setFont(new Font("Times New Roman", Font.ITALIC |Font.BOLD, font(25)));
+						}
+						if(names.get(1).length()>10)
+							g.drawString(names.get(1).substring(0,9)+"...", x(1010), y(550));
+						else
+							g.drawString(names.get(1), x(1010), y(550));
+					}
+					else if(i==2)
+					{
+						g.setColor(Color.white);
+						g.setFont(new Font("Times New Roman", Font.ITALIC, font(25)));
+						if(hovering3)
+						{
+							g.setColor(Color.red);
+							g.setFont(new Font("Times New Roman", Font.ITALIC |Font.BOLD, font(25)));
+						}
+						if(names.get(2).length()>10)
+							g.drawString(names.get(2).substring(0,9)+"...", x(800), y(650));
+						else
+							g.drawString(names.get(2), x(800), y(650));
+					}
+					else if(i==3)
+					{
+						g.setColor(Color.white);
+						g.setFont(new Font("Times New Roman", Font.ITALIC, font(25)));
+						if(hovering4)
+						{
+							g.setColor(Color.red);
+							g.setFont(new Font("Times New Roman", Font.ITALIC |Font.BOLD, font(25)));
+						}
+						if(names.get(3).length()>10)
+							g.drawString(names.get(3).substring(0,9)+"...", x(1010), y(650));
+						else
+							g.drawString(names.get(3), x(1010), y(650));
+					}
 				}
 			}
 			
-			g.setColor(Color.white);
-			g.fillRect(x(960-75-35), y(650), xs(150), ys(60));
-			g.setColor(Color.black);
-			g.drawRect(x(960-75-35), y(650), xs(150), ys(60));
-			g.setFont(new Font("Trebuchet", Font.BOLD, font(47)));
-			g.drawString("BACK", x(960-75-35+9), y(697));
-			
-			
-			
-			
+			repaintHover = false;
+			repaintHoverNames = false;
 		}
-		else if(gamestate.isOver() && !gameEndedBack) //game over
+		else
 		{
-			paintEndText(g);
-		}
-		else //game playing in progress
-		{
-			this.remove(nameText);
-			if(colorPickerPlay || colorPickerDraw)
-				hoveringCard = -1;
-			if(cpu)
-				arrows = (gameEndedBack||game.getTurn()==0)?true:false;
-
-			g.setColor(bgColor);
-			g.fillRect(0, 0, x(1920), y(1080));
-			
-			try {
-				g.drawImage(ImageIO.read(getClass().getResource("/menu.png")), x(1715), y(10), xs(150), ys(100), null);
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			
-			
-			if(gameEndedBack)
+			if(start)
 			{
+				g.setColor(Color.DARK_GRAY);
+				g.fillRect(0, 0, xs(1920), ys(1080));
+				g.setColor(Color.red);
+				g.setFont(new Font("Trebuchet", Font.BOLD, font(100)));
+				g.drawString("UNO", x(823), y(175));
+				try {
+					g.drawImage(ImageIO.read(getClass().getResource("/card_back_alt.png")), x(867), y(225), xs(cardWidth), ys(cardHeight), null);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
 				g.setColor(Color.white);
-				g.fillRect(x(1645), y(915), xs(125), ys(53));
-				g.setColor(Color.black);
-				g.drawRect(x(1645), y(915), xs(125), ys(53));
-				g.setFont(new Font("Trebuchet", Font.BOLD|Font.CENTER_BASELINE, font(35)));
-				g.drawString("FINISH", x(1653), y(956));
+				g.setFont(new Font("Trebuchet", Font.BOLD, font(40)));
+				g.fillRect(x(857),y(450), xs(150), ys(62));
+				g.fillRect(x(857),y(530), xs(150), ys(62));
+				g.fillRect(x(857), y(610), xs(150), ys(62)); //1007
+				g.fillRect(x(857), y(690), xs(150), ys(62));
+				g.fillRect(x(872),y(799), xs(120), ys(52));
+				
+				Color outlineColor = hoverStart.equals("local")?Color.red:Color.black;
+				g.setColor(outlineColor);
+				g.drawRect(x(857),y(450), xs(150), ys(62));
+				g.drawRect(x(857)+1,y(450)+1, xs(150-2), ys(62-2));
+				
+				outlineColor = hoverStart.equals("cpu")?Color.red:Color.black;
+				g.setColor(outlineColor);
+				g.drawRect(x(857),y(530), xs(150), ys(62));
+				g.drawRect(x(857)+1,y(530)+1, xs(150-2), ys(62-2));
+				
+				outlineColor = hoverStart.equals("lan")?Color.red:Color.black;
+				g.setColor(outlineColor);
+				g.drawRect(x(857), y(610), xs(150), ys(62));
+				g.drawRect(x(857)+1,y(610)+1, xs(150-2), ys(62-2));
+				
+				outlineColor = hoverStart.equals("options")?Color.red:Color.black;
+				g.setColor(outlineColor);
+				g.drawRect(x(857), y(690), xs(150), ys(62));
+				g.drawRect(x(857)+1,y(690)+1, xs(150-2), ys(62-2));
+				
+				outlineColor = hoverStart.equals("exit")?Color.red:Color.black;
+				g.setColor(outlineColor);
+				g.drawRect(x(872),y(799), xs(120), ys(52));
+				g.drawRect(x(872)+1,y(799)+1, xs(120-2), ys(52-2));
+				
+				
+				
+				
+				
+				Color tColor = hoverStart.equals("local")?Color.red:Color.black;
+				g.setColor(tColor);
+				g.drawString("LOCAL", x(865), y(495));
+				g.setFont(new Font("Trebuchet", Font.BOLD, font(45)));
+				tColor = hoverStart.equals("exit")?Color.red:Color.black;
+				g.setColor(tColor);
+				g.drawString("EXIT", x(882), y(842));
+				tColor = hoverStart.equals("cpu")?Color.red:Color.black;
+				g.setColor(tColor);
+				g.drawString("CPU", x(883), y(578));
+				tColor = hoverStart.equals("lan")?Color.red:Color.black;
+				g.setColor(tColor);
+				g.drawString("LAN", x(886), y(658));
+				
+				g.setFont(new Font("Tecbuchet", Font.BOLD, font(32)));
+				tColor = hoverStart.equals("options")?Color.red:Color.black;
+				g.setColor(tColor);
+				g.drawString("OPTIONS", x(864), y(734));
+				
 			}
-			
-			if(game.deck.deck.size()>0)
+			else if(enterNames) //NEED TO ADD CLEAR BUTTON TO CLEAR NAMES
 			{
-				int max = Math.min(35, game.deck.deck.size());
-				for (int i = 0;i<max;i++)
+				g.setColor(Color.DARK_GRAY);
+				g.fillRect(0, 0, xs(1920), ys(1080));
+				this.add(nameText);
+				nameText.setBounds(x(800),y(250), xs(300), ys(75));
+				nameText.setFont(new Font("Times New Roman", Font.PLAIN, font(50)));
+				if(names.size()>=4 || confirm)
+				{
+	    			nameText.setEnabled(false);
+				}
+	    		else
+	    		{
+	    			nameText.setEnabled(true);
+	    			nameText.addActionListener(action);
+	    			nameText.grabFocus();
+				    nameText.requestFocusInWindow();
+	    		}
+				
+				try {
+					g.drawImage(ImageIO.read(getClass().getResource("/plus.png")), x(1100),y(250), xs(75), ys(75), null);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				g.setFont(new Font("Roboto", Font.BOLD| Font.CENTER_BASELINE, font(75)));
+				g.setColor(new Color(222,219,246));
+				g.drawString("PLAYER NAMES", x(657), y(170));
+				
+				g.setColor(Color.white);
+				g.setFont(new Font("Trebuchet", Font.BOLD, font(35)));
+				g.fillRect(x(725), y(400), xs(120), ys(50));
+				g.fillRect(x(1070), y(400), xs(120), ys(50));
+				
+				g.setColor(Color.black);
+				g.drawRect(x(725), y(400), xs(120), ys(50));
+				g.drawRect(x(1070), y(400), xs(120), ys(50));
+	//			g.drawRect(726, 401, 118, 48);
+	//			g.drawRect(1071, 401, 118, 48);
+				g.drawString("BACK", x(735), y(439));
+				g.setFont(new Font("Trebuchet", Font.BOLD, font(32)));
+				g.drawString("START", x(1079), y(438));
+				
+				for(int i = 0;i<names.size();i++)
+				{
+					g.setColor(Color.white);
+					g.setFont(new Font("Times New Roman", Font.ITALIC, font(25)));
+					if(i==0)
+					{
+						if(hovering1)
+						{
+							g.setColor(Color.red);
+							g.setFont(new Font("Times New Roman", Font.ITALIC |Font.BOLD, font(25)));
+						}
+						if(names.get(0).length()>10)
+							g.drawString(names.get(0).substring(0,9)+"...", x(800), y(550));
+						else
+							g.drawString(names.get(0), x(800), y(550));
+					}
+					else if(i==1)
+					{
+						g.setColor(Color.white);
+						g.setFont(new Font("Times New Roman", Font.ITALIC, font(25)));
+						if(hovering2)
+						{
+							g.setColor(Color.red);
+							g.setFont(new Font("Times New Roman", Font.ITALIC |Font.BOLD, font(25)));
+						}
+						if(names.get(1).length()>10)
+							g.drawString(names.get(1).substring(0,9)+"...", x(1010), y(550));
+						else
+							g.drawString(names.get(1), x(1010), y(550));
+					}
+					else if(i==2)
+					{
+						g.setColor(Color.white);
+						g.setFont(new Font("Times New Roman", Font.ITALIC, font(25)));
+						if(hovering3)
+						{
+							g.setColor(Color.red);
+							g.setFont(new Font("Times New Roman", Font.ITALIC |Font.BOLD, font(25)));
+						}
+						if(names.get(2).length()>10)
+							g.drawString(names.get(2).substring(0,9)+"...", x(800), y(650));
+						else
+							g.drawString(names.get(2), x(800), y(650));
+					}
+					else if(i==3)
+					{
+						g.setColor(Color.white);
+						g.setFont(new Font("Times New Roman", Font.ITALIC, font(25)));
+						if(hovering4)
+						{
+							g.setColor(Color.red);
+							g.setFont(new Font("Times New Roman", Font.ITALIC |Font.BOLD, font(25)));
+						}
+						if(names.get(3).length()>10)
+							g.drawString(names.get(3).substring(0,9)+"...", x(1010), y(650));
+						else
+							g.drawString(names.get(3), x(1010), y(650));
+					}
+				}
+				
+				if(dupName)
+				{
+					nameText.setEnabled(false);
+					g.setColor(Color.white);
+					g.fillRect(x(770), y(375), xs(360), ys(365));
+					g.setColor(Color.black);
+					g.drawRect(x(770), y(375), xs(360), ys(365));
+					
+					g.drawRect(x(915), y(660), xs(70), ys(40));
+					g.setFont(new Font("Trebuchet", Font.PLAIN, font(25)));
+					g.drawString("That name is already taken.", x(800), y(435));
+					g.drawString("Please choose another name.", x(785), y(465));
+					
+					g.setFont(new Font("Trebuchet", Font.BOLD, font(35)));
+					g.drawString("OK", x(925), y(693));
+					
+				}
+				if(notEnoughPlayers)
+				{
+					nameText.setEnabled(false);
+					g.setColor(Color.white);
+					g.fillRect(x(770), y(375), xs(360), ys(365));
+					g.setColor(Color.black);
+					g.drawRect(x(770), y(375), xs(360), ys(365));
+					
+					g.drawRect(x(915), y(660), xs(70), ys(40));
+					g.setFont(new Font("Trebuchet", Font.PLAIN, font(25)));
+					g.drawString("There are not enough players.", x(785), y(435));
+					g.drawString("2-4 players are required.", x(825), y(465));
+					
+					g.setFont(new Font("Trebuchet", Font.BOLD, font(35)));
+					g.drawString("OK", x(925), y(693));
+				}
+				if(confirm)
+				{
+					g.setColor(Color.white);
+					g.fillRect(x(790), y(375), xs(320), ys(365));
+					g.setColor(Color.black);
+					g.drawRect(x(790), y(375), xs(320), ys(365));
+					
+					g.drawRect(x(840), y(670), xs(50), ys(30));
+					g.drawRect(x(1000), y(670), xs(60), ys(30));
+					g.setFont(new Font("Trebuchet", Font.PLAIN, font(25)));
+					g.drawString("This game will only have", x(810), y(435));
+					g.drawString("2 players.", x(899), y(465));
+					g.drawString("Continue?", x(895), y(495));
+					
+					g.setFont(new Font("Trebuchet", Font.BOLD, font(22)));
+					g.drawString("YES", x(1008), y(695));
+					g.drawString("NO", x(849), y(695));
+				}
+				
+				
+			}
+			else if (LAN)
+			{
+				g.setColor(Color.DARK_GRAY);
+				g.fillRect(0, 0, xs(1920), ys(1080));
+				
+				g.setColor(Color.white);
+				g.fillRect(x(960-75-35),y(500),xs(150),ys(75));
+				g.fillRect(x(960-112-35),y(400),xs(225),ys(75));
+				g.fillRect(x(960-75-35),y(700),xs(150),ys(65));
+				
+				g.setColor(Color.black);
+				g.drawRect(x(960-75-35),y(500),xs(150),ys(75));
+				g.drawRect(x(960-112-35),y(400),xs(225),ys(75));
+				g.drawRect(x(960-75-35),y(700),xs(150),ys(65));
+				
+				g.setFont(new Font("Trebuchet", Font.BOLD, font(47)));
+				g.drawString("JOIN", x(960-75-35+22), y(555));
+				g.drawString("CREATE", x(960-112-35+17), y(455));
+				g.setFont(new Font("Trebuchet", Font.BOLD |Font.ROMAN_BASELINE, font(47)));
+				g.drawString("BACK", x(960-75-35+10), y(750));
+				
+				g.setFont(new Font("Trebuchet", Font.BOLD, font(85)));
+				g.drawString("LAN GAME", x(690), y(225));
+				
+			}
+			else if(settings)
+			{
+				g.setColor(Color.DARK_GRAY);
+				g.fillRect(0, 0, xs(1920), ys(1080));
+				
+				g.setColor(Color.black);
+				g.setFont(new Font("Trebuchet", Font.BOLD, font(85)));
+				g.drawString("OPTIONS", x(745), y(175));
+				
+				g.setFont(new Font("Trebuchet", Font.BOLD, font(45)));
+				g.drawString("Infinite Draw", x(730), y(300));
+				g.drawString("Lax Wild Four", x(730), y(400));
+				g.setFont(new Font("Trebuchet", Font.BOLD, font(37)));
+				g.drawString("Background Color", x(730), y(500));
+				
+				if(infiniteDraw)
 				{
 					try {
-						g.drawImage(ImageIO.read(getClass().getResource("/card_back.png")),x(640+i*1),y(400), xs(cardWidth), ys(cardHeight), null);
+						g.drawImage(ImageIO.read(getClass().getResource("/toggle icon.png")), x(1100), y(250), xs(75), ys(75), null);
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					if(i==max-1)
-						drawClick = 640+i*1;
 				}
-			}
-			
-			paintDiscard(g,950, 400);
-			if(cpu)
-			{
-				paintCPUHands(g, 490, 800);
-				paintTurnArrow(g, game.getTurn());
-			}
-			else
-		    	paintHands(g,490, 800);
-			
-		    paintExtra(g,game.getCurrentDirection(), game.showTopCard().getColor().toString());
-		    paintHistory(g);
-		    
-		    
-		    if (colorPickerDraw) //drew wild card color picker
-		    {
-		    	g.setColor(Color.black);
-		    	g.setFont(new Font("Trebuchet", Font.BOLD, font(45)));
-		    	g.drawString("V", x(722), y(642));
-		    	g.setColor(new Color(246,72,72));
-		    	g.fillRect(x(622), y(665), xs(50), ys(50));
-		    	g.setColor(new Color(0,191,255));
-		    	g.fillRect(x(682), y(665), xs(50), ys(50));
-		    	g.setColor(new Color(0,229,145));
-		    	g.fillRect(x(742),y(665), xs(50), ys(50));
-		    	g.setColor(Color.yellow);
-		    	g.fillRect(x(802),y(665), xs(50), ys(50));
-		    }
-		    else if(colorPickerPlay) //played wild card color picker
-		    {
-		    	colorPickerPlayCoord = 540+120*(wildIndex%7);
-		    	g.setColor(Color.black);
-		    	g.setFont(new Font("Trebuchet", Font.PLAIN, font(65)));
-		    	g.drawString("^", x(colorPickerPlayCoord), y(810));
-		    	g.setColor(new Color(246,72,72));
-		    	g.fillRect(x(colorPickerPlayCoord-102), y(690), xs(50), ys(50));
-		    	g.setColor(new Color(0,191,255));
-		    	g.fillRect(x(colorPickerPlayCoord-102+60), y(690), xs(50), ys(50));
-		    	g.setColor(new Color(0,229,145));
-		    	g.fillRect(x(colorPickerPlayCoord-102+120),y(690), xs(50), ys(50));
-		    	g.setColor(Color.yellow);
-		    	g.fillRect(x(colorPickerPlayCoord-102+180),y(690), xs(50), ys(50));
-		    }
-		    if(menu)
-			{
+				else
+				{
+					try {
+						g.drawImage((ImageIO.read(getClass().getResource("/toggle icon off.png"))), x(1100), y(250), xs(75), ys(75), null);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				
+				if(laxWildCard)
+				{
+					try {
+						g.drawImage(ImageIO.read(getClass().getResource("/toggle icon.png")), x(1100), y(350), xs(75), ys(75), null);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				else 
+				{
+					try {
+						g.drawImage((ImageIO.read(getClass().getResource("/toggle icon off.png"))), x(1100), y(350), xs(75), ys(75), null);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				
+				g.setColor(bgColor);
+				g.fillRect(x(1100), y(472), xs(75), ys(35));
+				g.setColor(Color.black);
+				g.drawRect(x(1100), y(472), xs(75), ys(35));
+				g.fillPolygon(new int[] {x(1185), x(1207), x(1196)}, new int[] {y(483),y(483), y(498)}, 3);
+				
+				if(bgOptionBox)
+				{
+					g.setColor(Color.white);
+					
+					g.fillPolygon(new int[] {x(1145), x(1120), x(1170)}, new int[] {y(512),y(527), y(527)}, 3);
+					g.fillRect(x(1000), y(525), xs(300), ys(65));
+					
+					for(int i = 0;i<bgOptions.size();i++)
+					{
+						g.setColor(bgOptions.get(i));
+						g.fillRect(x(1009+50*i), y(540), xs(35), ys(35));
+					}
+				}
 				
 				g.setColor(Color.white);
-				g.fillRect(x(1650), 0, xs(270), ys(1080));
-				 
+				g.fillRect(x(960-75-35), y(650), xs(150), ys(60));
+				g.setColor(Color.black);
+				g.drawRect(x(960-75-35), y(650), xs(150), ys(60));
+				g.setFont(new Font("Trebuchet", Font.BOLD, font(47)));
+				g.drawString("BACK", x(960-75-35+9), y(697));
+				
+				
+				
+				
+			}
+			else if(gamestate.isOver() && !gameEndedBack) //game over
+			{
+				paintEndText(g);
+			}
+			else //game playing in progress
+			{
+				this.remove(nameText);
+				
+				if(colorPickerPlay || colorPickerDraw)
+					hoveringCard = -1;
+				if(cpu)
+					arrows = (gameEndedBack||game.getTurn()==0)?true:false;
+	
+				g.setColor(bgColor);
+				g.fillRect(0, 0, x(1920), y(1080));
+				
 				try {
 					g.drawImage(ImageIO.read(getClass().getResource("/menu.png")), x(1715), y(10), xs(150), ys(100), null);
 				} catch (IOException e1) {
@@ -575,26 +737,110 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 					e1.printStackTrace();
 				}
 				
-				g.setColor(Color.black);
-				g.drawRect(x(1700), y(115), xs(100), ys(45));
-				g.drawRect(x(1650), 0, xs(267), ys(1076));
-				g.setFont(new Font("Trebuchet", Font.BOLD|Font.CENTER_BASELINE, font(30)));
-				g.drawString("QUIT", x(1715), y(149));
-			}
-
-			if(cpu && !(colorPickerPlay || colorPickerDraw) && !gamestate.isOver() && !gameEndedBack && !game.cpuActive && !timer.isRunning())
-		    {
 				
-				//int next = game.getCurrentDirection().equals("Clockwise")?3:1;
-						
-		    	if(game.current_player!=game.playerList.get(0))
-		    	{
-		    		System.out.println("PLAYER: "+game.current_player.name);
-		    		timer.start();
-		    		//repaint();
-		    	}
-		    }
-			
+				if(gameEndedBack)
+				{
+					g.setColor(Color.white);
+					g.fillRect(x(1645), y(915), xs(125), ys(53));
+					g.setColor(Color.black);
+					g.drawRect(x(1645), y(915), xs(125), ys(53));
+					g.setFont(new Font("Trebuchet", Font.BOLD|Font.CENTER_BASELINE, font(35)));
+					g.drawString("FINISH", x(1653), y(956));
+				}
+				
+				if(game.deck.deck.size()>0)
+				{
+					int max = Math.min(35, game.deck.deck.size());
+					for (int i = 0;i<max;i++)
+					{
+						try {
+							g.drawImage(ImageIO.read(getClass().getResource("/card_back.png")),x(640+i*1),y(400), xs(cardWidth), ys(cardHeight), null);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						if(i==max-1)
+							drawClick = 640+i*1;
+					}
+				}
+				
+				paintDiscard(g,950, 400);
+				if(cpu)
+				{
+					paintCPUHands(g, 490, 800);
+					paintTurnArrow(g, game.getTurn());
+				}
+				else
+			    	paintHands(g,490, 800);
+				
+			    paintExtra(g,game.getCurrentDirection(), game.showTopCard().getColor().toString());
+			    paintHistory(g);
+			    
+			    
+			    if (colorPickerDraw) //drew wild card color picker
+			    {
+			    	g.setColor(Color.black);
+			    	g.setFont(new Font("Trebuchet", Font.BOLD, font(45)));
+			    	g.drawString("V", x(722), y(642));
+			    	g.setColor(new Color(246,72,72));
+			    	g.fillRect(x(622), y(665), xs(50), ys(50));
+			    	g.setColor(new Color(0,191,255));
+			    	g.fillRect(x(682), y(665), xs(50), ys(50));
+			    	g.setColor(new Color(0,229,145));
+			    	g.fillRect(x(742),y(665), xs(50), ys(50));
+			    	g.setColor(Color.yellow);
+			    	g.fillRect(x(802),y(665), xs(50), ys(50));
+			    }
+			    else if(colorPickerPlay) //played wild card color picker
+			    {
+			    	colorPickerPlayCoord = 540+120*(wildIndex%7);
+			    	g.setColor(Color.black);
+			    	g.setFont(new Font("Trebuchet", Font.PLAIN, font(65)));
+			    	g.drawString("^", x(colorPickerPlayCoord), y(810));
+			    	g.setColor(new Color(246,72,72));
+			    	g.fillRect(x(colorPickerPlayCoord-102), y(690), xs(50), ys(50));
+			    	g.setColor(new Color(0,191,255));
+			    	g.fillRect(x(colorPickerPlayCoord-102+60), y(690), xs(50), ys(50));
+			    	g.setColor(new Color(0,229,145));
+			    	g.fillRect(x(colorPickerPlayCoord-102+120),y(690), xs(50), ys(50));
+			    	g.setColor(Color.yellow);
+			    	g.fillRect(x(colorPickerPlayCoord-102+180),y(690), xs(50), ys(50));
+			    }
+			    
+			    if(menu)
+				{
+					
+					g.setColor(Color.white);
+					g.fillRect(x(1650), 0, xs(270), ys(1080));
+					 
+					try {
+						g.drawImage(ImageIO.read(getClass().getResource("/menu.png")), x(1715), y(10), xs(150), ys(100), null);
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					
+					g.setColor(Color.black);
+					g.drawRect(x(1700), y(115), xs(100), ys(45));
+					g.drawRect(x(1650), 0, xs(267), ys(1076));
+					g.setFont(new Font("Trebuchet", Font.BOLD|Font.CENTER_BASELINE, font(30)));
+					g.drawString("QUIT", x(1715), y(149));
+				}
+	
+				if(cpu && !(colorPickerPlay || colorPickerDraw) && !gamestate.isOver() && !gameEndedBack && !game.cpuActive && !timer.isRunning())
+			    {
+					
+					//int next = game.getCurrentDirection().equals("Clockwise")?3:1;
+							
+			    	if(game.current_player!=game.playerList.get(0))
+			    	{
+			    		System.out.println("PLAYER: "+game.current_player.name);
+			    		timer.start();
+			    		//repaint();
+			    	}
+			    }
+				
+			}
 		}
 	}
 	public void cpuTurn()
@@ -2241,7 +2487,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 							}
 						}
 					}
-					else if(e.getX()>= x(1210) && e.getX()<=x(1330) && e.getY()>=y(800) && e.getY()<=y(980))
+					else if(e.getX()>= x(1210) && e.getX()<=x(1350) && e.getY()>=y(800) && e.getY()<=y(980))
 					{
 						if(game.current_player.getHand().size()>6+7*(page-1))
 						{
@@ -2292,89 +2538,155 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 	//@Override
 	public void mouseMoved(MouseEvent e) {
 		//System.out.println("HOVERING X: "+e.getX()+" Y: "+e.getY());
+		
+		//start screen hovering buttons
+		if(start && e.getX()>= x(500) && e.getX()<=x(1200) && e.getY()>=y(200) && e.getY()<=y(1080))
+		{
+			if(e.getX()>= x(857) && e.getX()<=x(1007) && e.getY()>=y(450) && e.getY()<=y(512))
+			{
+				hoverStart = "local";
+				repaint();
+			}
+			else if(e.getX()>= x(857) && e.getX()<=x(1007) && e.getY()>=y(530) && e.getY()<=y(592))
+			{
+				hoverStart ="cpu";
+				repaint();
+			}
+			else if(e.getX()>= x(857) && e.getX()<=x(1007) && e.getY()>=y(610) && e.getY()<=y(672))
+			{
+				hoverStart = "lan";
+				repaint();
+			}
+			else if(e.getX()>= x(857) && e.getX()<=x(1007) && e.getY()>=y(690) && e.getY()<=y(752))
+			{
+				hoverStart = "options";
+				repaint();
+			}
+			else if(e.getX()>= x(872) && e.getX()<=x(992) && e.getY()>=y(779) && e.getY()<=y(851))
+			{
+				hoverStart = "exit";
+				repaint();
+			}
+			else
+			{
+				hoverStart = "none";
+				repaint();
+			}
+		}
+		else
+		{
+			if(!hoverStart.equals("none"))
+			{
+				hoverStart = "none";
+				repaint();
+			}
+				
+		}
+		//names hovering
 		if(enterNames && !confirm && !dupName && e.getX()>= x(725) && e.getX()<=x(1200) && e.getY()>=y(475) && e.getY()<=y(700))
 		{
 			if(names.size()>0 && e.getX()>= x(800) && e.getX()<=x(800+(Math.min(13*names.get(0).length(), 12*10)))&& e.getY()>=y(530) && e.getY()<=y(550))//first name
 			{
 				
-				this.remove(nameText);
+				//this.remove(nameText);
 				hovering1 = true;
-				repaint();
+				repaintHoverNames = true;
+				paintImmediately(x(725), y(475), x(1200)-x(725), y(700)-y(475));
 			}
 			else if(names.size()>1 && e.getX()>= x(1010) && e.getX()<=x(1010+(Math.min(12*names.get(1).length(), 12*10))) && e.getY()>=y(530) && e.getY()<=y(550))//second name
 			{
 				
-				this.remove(nameText);
+				//this.remove(nameText);
 				hovering2 = true;
-				repaint();
+				repaintHoverNames = true;
+				paintImmediately(x(725), y(475), x(1200)-x(725), y(700)-y(475));
 			}
 			else if(names.size()>2 && e.getX()>= x(800) && e.getX()<=x(800+(Math.min(12*names.get(2).length(), 12*10))) && e.getY()>=y(630) && e.getY()<=y(650))//third name
 			{
 				
-				this.remove(nameText);
+				//this.remove(nameText);
 				hovering3 = true;
-				repaint();
+				repaintHoverNames = true;
+				paintImmediately(x(725), y(475), x(1200)-x(725), y(700)-y(475));
 			}
 			else if(names.size()>3 && e.getX()>= x(1010) && e.getX()<=x(1010+(Math.min(12*names.get(3).length(), 12*10))) && e.getY()>=y(630) && e.getY()<=y(650))//fourth name
 			{
 				
-				this.remove(nameText);
+				//this.remove(nameText);
 				hovering4 = true;
-				repaint();
+				repaintHoverNames = true;
+				paintImmediately(x(725), y(475), x(1200)-x(725), y(700)-y(475));
 			}
 			else
 			{
-				this.remove(nameText);
-				hovering1 = false;
-				hovering2 = false;
-				hovering3 = false;
-				hovering4 = false;
-				repaint();
+				//this.remove(nameText);
+				if(hovering1||hovering2||hovering3||hovering4)
+				{
+					hovering1 = false;
+					hovering2 = false;
+					hovering3 = false;
+					hovering4 = false;
+					repaintHoverNames = true;
+					paintImmediately(x(725), y(475), x(1200)-x(725), y(700)-y(475));
+				}
 			}
 		}
-		if(!game.cpuActive && !menu && !game.isOver() && !colorPickerPlay && !colorPickerDraw && e.getX()>= x(490) && e.getX()<=x(1330) && e.getY()>=y(750) && e.getY()<=y(980))
+		
+		//cards hovering
+		if(!game.cpuActive && !menu && !game.isOver() && !colorPickerPlay && !colorPickerDraw && e.getX()>= x(490) && e.getX()<=x(1350) && e.getY()>=y(750) && e.getY()<=y(980))
 		{
 			Player p = cpu?game.playerList.get(0):game.current_player;
 			if(e.getX()>= x(490) && e.getX()<x(610) && e.getY()>=y(800) && e.getY()<=y(980) && p.getHand().size()>0+7*(page-1))
 			{
 				hoveringCard = 0;
-				repaint();
+				repaintHover = true;
+				paintImmediately(x(490), y(650), x(1350)-x(490), y(982)-y(650));
 			}
 			else if(e.getX()>= x(610) && e.getX()<x(730) && e.getY()>=y(800) && e.getY()<=y(980)&&p.getHand().size()>1+7*(page-1))
 			{
 				hoveringCard = 1;
-				repaint();
+				repaintHover = true;
+				paintImmediately(x(490), y(650), x(1350)-x(490), y(982)-y(650));
 			}
 			else if(e.getX()>= x(730) && e.getX()<x(850) && e.getY()>=y(800) && e.getY()<=y(980)&&p.getHand().size()>2+7*(page-1))
 			{
 				hoveringCard = 2;
-				repaint();
+				repaintHover = true;
+				paintImmediately(x(490), y(650), x(1350)-x(490), y(982)-y(650));
 			}
 			else if(e.getX()>= x(850) && e.getX()<x(970) && e.getY()>=y(800) && e.getY()<=y(980)&&p.getHand().size()>3+7*(page-1))
 			{
 				hoveringCard = 3;
-				repaint();
+				repaintHover = true;
+				paintImmediately(x(490), y(650), x(1350)-x(490), y(982)-y(650));
 			}
 			else if(e.getX()>= x(970) && e.getX()<x(1090) && e.getY()>=y(800) && e.getY()<=y(980)&&p.getHand().size()>4+7*(page-1))
 			{
 				hoveringCard = 4;
-				repaint();
+				repaintHover = true;
+				paintImmediately(x(490), y(650), x(1350)-x(490), y(982)-y(650));
 			}
 			else if(e.getX()>= x(1090) && e.getX()<x(1210) && e.getY()>=y(800) && e.getY()<=y(980)&&p.getHand().size()>5+7*(page-1))
 			{
 				hoveringCard = 5;
-				repaint();
+				repaintHover = true;
+				paintImmediately(x(490), y(650), x(1350)-x(490), y(982)-y(650));
 			}
-			else if(e.getX()>= x(1210) && e.getX()<=x(1330) && e.getY()>=y(800) && e.getY()<=y(980)&&p.getHand().size()>6+7*(page-1))
+			else if(e.getX()>= x(1210) && e.getX()<=x(1350) && e.getY()>=y(800) && e.getY()<=y(980)&&p.getHand().size()>6+7*(page-1))
 			{
 				hoveringCard = 6;
-				repaint();
+				repaintHover = true;
+				paintImmediately(x(490), y(650), x(1350)-x(490), y(982)-y(650));
 			}
-			else
-			{
-				hoveringCard = -1;
-				repaint();
-			}
+//			else
+//			{
+//				if(hoveringCard>-1)
+//				{
+//					hoveringCard = -1;
+//					repaintHover = true;
+//					paintImmediately(x(490), y(650), x(1350)-x(490), y(982)-y(650));
+//				}
+//			}
 
 		}
 		else 
@@ -2382,7 +2694,8 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 			if(hoveringCard>-1)
 			{
 				hoveringCard = -1;
-				repaint();
+				repaintHover = true;
+				paintImmediately(x(490), y(650), x(1350)-x(490), y(982)-y(650));
 			}
 		}
 		
