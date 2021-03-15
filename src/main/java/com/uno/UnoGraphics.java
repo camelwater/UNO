@@ -2754,7 +2754,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 		}
 		
 		//cards hovering
-		if(!game.cpuActive && !menu && !game.isOver() && !colorPickerPlay && !colorPickerDraw && e.getX()>= x(490) && e.getX()<=x(1350) && e.getY()>=y(650) && e.getY()<=y(980))
+		if(!menu && !game.isOver() && !colorPickerPlay && !colorPickerDraw && e.getX()>= x(490) && e.getX()<=x(1350) && e.getY()>=y(650) && e.getY()<=y(980))
 		{
 			Player p = cpu?game.playerList.get(0):game.current_player;
 			if(e.getX()>= x(490) && e.getX()<x(610) && e.getY()>=y(800+hoveringCard0) && e.getY()<=y(980) && p.getHand().size()>0+7*(page-1))
