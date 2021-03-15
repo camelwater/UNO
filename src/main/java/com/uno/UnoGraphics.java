@@ -1200,7 +1200,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 		g.setFont(new Font("Trebuchet", Font.BOLD, font(13)));
 		if(!(bgColor.equals(Color.DARK_GRAY) || bgColor.equals(new Color(22, 71, 53))|| bgColor.equals(Color.LIGHT_GRAY) || bgColor.equals(new Color(0,138,138).darker())))
 			g.setColor(Color.DARK_GRAY.darker());
-		if(hoveringCard==2)
+		if(hoveringCard==2 && game.playerList.get(0).getHandSize()>2)
 			g.drawString(game.playerList.get(0).getPaintName(), x(775), y(775-60));
 		else
 			g.drawString(game.playerList.get(0).getPaintName(), x(775), y(775));
@@ -1208,7 +1208,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 			g.setColor(Color.LIGHT_GRAY);
 		else
 			g.setColor(Color.DARK_GRAY);
-		if(hoveringCard==3||hoveringCard==4)
+		if((hoveringCard==3&& game.playerList.get(0).getHandSize()>3)||(hoveringCard==4 && game.playerList.get(0).getHandSize()>4))
 			g.drawString("Cards: "+Integer.toString((game.playerList.get(0).getHandSize())), x(925), y(775-60));
 		else
 			g.drawString("Cards: "+Integer.toString((game.playerList.get(0).getHandSize())), x(925), y(775));
@@ -1465,7 +1465,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 		g.setFont(new Font("Trebuchet", Font.BOLD, font(13)));
 		if(!(bgColor.equals(Color.DARK_GRAY) || bgColor.equals(new Color(22, 71, 53))|| bgColor.equals(Color.LIGHT_GRAY) || bgColor.equals(new Color(0,138,138).darker())))
 			g.setColor(Color.DARK_GRAY.darker());
-		if(hoveringCard == 2)
+		if(hoveringCard == 2&&game.current_player.getHandSize()>2)
 			g.drawString(game.current_player.getPaintName(), x(775), y(775-60));
 		else
 			g.drawString(game.current_player.getPaintName(), x(775), y(775));
@@ -1473,7 +1473,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 			g.setColor(Color.LIGHT_GRAY);
 		else
 			g.setColor(Color.DARK_GRAY);
-		if(hoveringCard == 3 || hoveringCard==4)
+		if((hoveringCard == 3 &&game.current_player.getHandSize()>3)|| (hoveringCard==4&&game.current_player.getHandSize()>4))
 			g.drawString("Cards: "+Integer.toString((game.current_player.getHandSize())), x(925), y(775-60));
 		else
 			g.drawString("Cards: "+Integer.toString((game.current_player.getHandSize())), x(925), y(775));
