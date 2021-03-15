@@ -26,12 +26,15 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.plaf.synth.SynthSeparatorUI;
 
 import java.util.*;
 
+
 public class UnoGraphics extends JPanel implements MouseListener, MouseMotionListener
 {
+	
 	JFrame frame;
 	Board game;
 	GameState gamestate;
@@ -133,12 +136,50 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 	};
 	private Timer timer = new Timer(750, cpuTask);
 	
-	
-	public UnoGraphics() //Board game, GameState gamestate
+	public UnoGraphics()
 	{
 		frame = new JFrame("UNO");
-		this.game = new Board();
-		this.gamestate = new GameState(game);
+		frame.add(this);
+		game = new Board();
+		gamestate = new GameState(game);
+		bgOptions.add(new Color(0,138,138).darker());
+		bgOptions.add(Color.LIGHT_GRAY.darker());
+		bgOptions.add(new Color(222, 213, 242));
+		bgOptions.add(new Color(240, 194, 199));
+		bgOptions.add(new Color(207, 255, 245));
+		bgOptions.add(new Color(22, 71, 53));
+		
+		frame.setSize((int)scrWidth, (int)scrHeight);
+		System.out.println("Screen Dimension: "+scrWidth+" x "+scrHeight);
+		frame.setResizable(true);
+		frame.setAutoRequestFocus(true);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setLocationRelativeTo(null);
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		frame.setVisible(true);	
+		frame.toFront();
+		
+		timer.setRepeats(false);
+		
+		setVisible(true);
+		addMouseListener(this);
+		addMouseMotionListener(this);
+		
+		
+		try {
+			frame.setIconImage(ImageIO.read(getClass().getResource("/card_back_large.png")));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	public UnoGraphics(JFrame frame) 	
+	{
+	
+		this.frame = frame;
+		game = new Board();
+		gamestate = new GameState(game);
 		bgOptions.add(new Color(0,138,138).darker());
 		bgOptions.add(Color.LIGHT_GRAY.darker());
 		bgOptions.add(new Color(222, 213, 242));
@@ -151,29 +192,11 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 		setVisible(true);
 		addMouseListener(this);
 		addMouseMotionListener(this);
-		
-		try {
-			frame.setIconImage(ImageIO.read(getClass().getResource("/card_back_large.png")));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		frame.add(this);
-		frame.setSize((int)scrWidth, (int)scrHeight);
-		System.out.println("Screen Dimension: "+scrWidth+" x "+scrHeight);
-		frame.setResizable(true);
-		frame.setAutoRequestFocus(true);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setLocationRelativeTo(null);
-		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
-		frame.setVisible(true);	
-		frame.toFront();
-		
-		
 	}
 	
 	public void paint(Graphics g)
 	{
+		System.out.println(EventQueue.isDispatchThread());
 		scrWidth = frame.getContentPane().getWidth();
 		scrHeight = frame.getContentPane().getHeight(); 
 		//System.out.println("Frame Dimensions: "+scrWidth+" x "+scrHeight);
@@ -2245,10 +2268,10 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 					frame.setVisible(false);
 					frame.dispose();
 					//UnoGraphics g = new UnoGraphics(game, gamestate);
-					UnoGraphics g = new UnoGraphics();
-					g.setBG(bgColor);
-					g.game.laxWildCard = laxWildCard;
-					g.game.infiniteDraw = infiniteDraw;
+					Frame g = new Frame();
+//					g.setBG(bgColor);
+//					g.game.laxWildCard = laxWildCard;
+//					g.game.infiniteDraw = infiniteDraw;
 				}
 				else if(e.getX()>= x(804) && e.getX()<=x(1080) && e.getY()>=y(641) && e.getY()<=y(721)) //rematch
 				{
