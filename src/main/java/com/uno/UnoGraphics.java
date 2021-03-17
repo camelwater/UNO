@@ -527,7 +527,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 				g.setFont(new Font("Trebuchet", Font.BOLD, font(45)));
 				tColor = hoverStart.equals("exit")?Color.red:Color.black;
 				g.setColor(tColor);
-				g.drawString("EXIT", x(882), y(842));
+				g.drawString("EXIT", x(883), y(842));
 				tColor = hoverStart.equals("cpu")?Color.red:Color.black;
 				g.setColor(tColor);
 				g.drawString("CPU", x(883), y(578));
@@ -969,10 +969,12 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 	}
 	public int font(int s)
 	{
-		return (int)(s*wFactor);
+		s+=3;
+		return (int)(Math.min(s*wFactor,s*hFactor));
 	}
 	public int xs(int s)
 	{
+		
 		return (int)(s*wFactor);
 	}
 	public int y(int y)
@@ -994,9 +996,9 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 			}
 			else
 				g.setColor(Color.black);
-			int fontSize = 12;
+			int fontSize = 11;
 			if(scrWidth == 1920.0)
-				fontSize=11;
+				fontSize=10;
 			g.setFont(new Font("Arial", Font.BOLD | Font.ROMAN_BASELINE, font(fontSize)));
 			String[]x = new String[8];
 			System.arraycopy(history.toArray(), 0, x, 0, history.size());
