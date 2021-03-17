@@ -476,7 +476,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 				g.fillRect(0, 0, xs(1920), ys(1080));
 				g.setColor(Color.red);
 				g.setFont(new Font("Trebuchet", Font.BOLD, font(100)));
-				g.drawString("UNO", x(823), y(175));
+				g.drawString("UNO", x(825), y(175));
 				try {
 					g.drawImage(ImageIO.read(getClass().getResource("/card_back_alt.png")), x(867), y(225), xs(cardWidth), ys(cardHeight), null);
 				} catch (IOException e) {
@@ -492,52 +492,39 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 				g.fillRect(x(857), y(690), xs(150), ys(62));
 				g.fillRect(x(872),y(799), xs(120), ys(52));
 				
-				Color outlineColor = hoverStart.equals("local")?Color.red:Color.black;
-				g.setColor(outlineColor);
+				g.setColor(hoverStart.equals("local")?Color.red:Color.black);
 				g.drawRect(x(857),y(450), xs(150), ys(62));
 				g.drawRect(x(857)+1,y(450)+1, xs(150-2), ys(62-2));
 				
-				outlineColor = hoverStart.equals("cpu")?Color.red:Color.black;
-				g.setColor(outlineColor);
+				g.setColor(hoverStart.equals("cpu")?Color.red:Color.black);
 				g.drawRect(x(857),y(530), xs(150), ys(62));
 				g.drawRect(x(857)+1,y(530)+1, xs(150-2), ys(62-2));
 				
-				outlineColor = hoverStart.equals("lan")?Color.red:Color.black;
-				g.setColor(outlineColor);
+				g.setColor(hoverStart.equals("lan")?Color.red:Color.black);
 				g.drawRect(x(857), y(610), xs(150), ys(62));
 				g.drawRect(x(857)+1,y(610)+1, xs(150-2), ys(62-2));
 				
-				outlineColor = hoverStart.equals("options")?Color.red:Color.black;
-				g.setColor(outlineColor);
+				g.setColor(hoverStart.equals("options")?Color.red:Color.black);
 				g.drawRect(x(857), y(690), xs(150), ys(62));
 				g.drawRect(x(857)+1,y(690)+1, xs(150-2), ys(62-2));
 				
-				outlineColor = hoverStart.equals("exit")?Color.red:Color.black;
-				g.setColor(outlineColor);
+				g.setColor(hoverStart.equals("exit")?Color.red:Color.black);
 				g.drawRect(x(872),y(799), xs(120), ys(52));
 				g.drawRect(x(872)+1,y(799)+1, xs(120-2), ys(52-2));
 				
 				
-				
-				
-				
-				Color tColor = hoverStart.equals("local")?Color.red:Color.black;
-				g.setColor(tColor);
+				g.setColor(hoverStart.equals("local")?Color.red:Color.black);
 				g.drawString("LOCAL", x(865), y(495));
 				g.setFont(new Font("Trebuchet", Font.BOLD, font(45)));
-				tColor = hoverStart.equals("exit")?Color.red:Color.black;
-				g.setColor(tColor);
+				g.setColor(hoverStart.equals("exit")?Color.red:Color.black);
 				g.drawString("EXIT", x(883), y(842));
-				tColor = hoverStart.equals("cpu")?Color.red:Color.black;
-				g.setColor(tColor);
-				g.drawString("CPU", x(883), y(578));
-				tColor = hoverStart.equals("lan")?Color.red:Color.black;
-				g.setColor(tColor);
-				g.drawString("LAN", x(886), y(658));
+				g.setColor(hoverStart.equals("cpu")?Color.red:Color.black);
+				g.drawString("CPU", x(884), y(578));
+				g.setColor(hoverStart.equals("lan")?Color.red:Color.black);
+				g.drawString("LAN", x(888), y(658));
 				
 				g.setFont(new Font("Tecbuchet", Font.BOLD, font(32)));
-				tColor = hoverStart.equals("options")?Color.red:Color.black;
-				g.setColor(tColor);
+				g.setColor(hoverStart.equals("options")?Color.red:Color.black);
 				g.drawString("OPTIONS", x(864), y(734));
 				
 			}
@@ -925,7 +912,6 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 				if(cpu && !(colorPickerPlay || colorPickerDraw) && !gamestate.isOver() && !gameEndedBack && !game.cpuActive && !timer.isRunning())
 			    {
 					
-					//int next = game.getCurrentDirection().equals("Clockwise")?3:1;
 							
 			    	if(game.current_player!=game.playerList.get(0))
 			    	{
@@ -969,7 +955,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 	}
 	public int font(int s)
 	{
-		s+=3;
+		s+=2.5;
 		return (int)(Math.min(s*wFactor,s*hFactor));
 	}
 	public int xs(int s)
