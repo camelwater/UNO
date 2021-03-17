@@ -2332,7 +2332,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 					start = true;
 					endScreen = false;
 					try {
-						Thread.sleep(250);
+						Thread.sleep(375);
 					} catch (InterruptedException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -2378,7 +2378,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 		{
 			if(!game.cpuActive)
 			{
-				if(!gameEndedBack)
+				if(!gameEndedBack && (!cpu||game.getTurn()==0))
 				{
 					if(e.getX()>= x(drawClick) && e.getX()<=x(drawClick+cardWidth) && e.getY()>=y(400) && e.getY()<=y(580) && game.deck.deck.size()>0)
 					{
@@ -2432,8 +2432,9 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 					    	    	page = 1;
 					    	    	game.nextTurn();
 					    	    	addHistory(game.getLastPlayerTurn("play"));
+					    	    	repaint();
 					    	    }
-								repaint();
+								
 							}
 						}
 						
@@ -2463,9 +2464,9 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 					    	    	page = 1;
 					    	    	game.nextTurn();
 					    	    	addHistory(game.getLastPlayerTurn("play"));
-
+					    	    	repaint();
 					    	    }
-								repaint();
+							
 							}
 						}
 					}
@@ -2495,9 +2496,9 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 					    			page = 1;
 					    	    	game.nextTurn();
 					    	    	addHistory(game.getLastPlayerTurn("play"));
-
+					    	    	repaint();
 					    	    }
-								repaint();
+								
 							}
 						}
 					}
@@ -2526,9 +2527,9 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 					    			page = 1;
 					    	    	game.nextTurn();
 					    	    	addHistory(game.getLastPlayerTurn("play"));
-
+					    	    	repaint();
 					    	    }
-								repaint();
+								
 							}
 						}
 					}
@@ -2557,9 +2558,9 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 					    			page = 1;
 					    	    	game.nextTurn();
 					    	    	addHistory(game.getLastPlayerTurn("play"));
-
+					    	    	repaint();
 					    	    }
-								repaint();
+								
 							}
 						}
 					}
@@ -2587,9 +2588,9 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 					    			page = 1;
 					    	    	game.nextTurn();
 					    	    	addHistory(game.getLastPlayerTurn("play"));
-
+					    	    	repaint();
 					    	    }
-								repaint();
+								
 							}
 						}
 					}
@@ -2617,9 +2618,9 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 					    			page = 1;
 					    	    	game.nextTurn();
 					    	    	addHistory(game.getLastPlayerTurn("play"));
-
+					    	    	repaint();
 					    	    }
-								repaint();
+								
 							}
 						}
 					}
