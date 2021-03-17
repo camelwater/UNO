@@ -370,7 +370,6 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 				g.drawString("REMATCH", x(814), y(700));
 				if(hoveringEnd.equals("new"))
 				{
-					System.out.println("heajshdalksjdah kjh asd");
 					try {
 						g.drawImage(ImageIO.read(getClass().getResource("/select arrow.png")), x(700), y(525),xs(50), ys(50), null);
 					} catch (IOException e) {
@@ -2332,7 +2331,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 					start = true;
 					endScreen = false;
 					try {
-						Thread.sleep(375);
+						Thread.sleep(250);
 					} catch (InterruptedException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
