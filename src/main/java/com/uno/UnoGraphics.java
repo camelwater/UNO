@@ -205,6 +205,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 		scrHeight = frame.getContentPane().getHeight(); 
 		wFactor = scrWidth/1920;
 		hFactor = scrHeight/1080;
+		//System.out.println(scrWidth+", "+scrHeight);
 		
 		Rectangle r = g.getClipBounds();
 		if(repaintHover||repaintHoverNames||repaintHoverEnd)
@@ -956,7 +957,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 	public int font(int s)
 	{
 		s+=2.5;
-		return (int)(Math.min(s*wFactor,s*hFactor));
+		return (int)(Math.min((s-1.5)*wFactor,s*hFactor));
 	}
 	public int xs(int s)
 	{
