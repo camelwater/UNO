@@ -198,9 +198,9 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 		addMouseMotionListener(this);
 	}
 	
-	public void paint(Graphics g)
+	public void paintComponent(Graphics g)
 	{
-		//System.out.println(EventQueue.isDispatchThread());
+		System.out.println(EventQueue.isDispatchThread());
 		scrWidth = frame.getContentPane().getWidth();
 		scrHeight = frame.getContentPane().getHeight(); 
 		wFactor = scrWidth/1920;
@@ -544,7 +544,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 	    		{
 	    			nameText.setEnabled(true);
 	    			nameText.addActionListener(action);
-	    			nameText.grabFocus();
+	    			//nameText.grabFocus();
 				    nameText.requestFocusInWindow();
 	    		}
 				
