@@ -200,7 +200,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 	
 	public void paintComponent(Graphics g)
 	{
-		System.out.println(EventQueue.isDispatchThread());
+		//System.out.println(EventQueue.isDispatchThread());
 		scrWidth = frame.getContentPane().getWidth();
 		scrHeight = frame.getContentPane().getHeight(); 
 		wFactor = scrWidth/1920;
