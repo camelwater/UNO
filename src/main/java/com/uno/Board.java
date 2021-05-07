@@ -567,9 +567,9 @@ public class Board extends Player
 		if(yellow == Math.max(yellow, Math.max(red, Math.max(blue, green))))
 			return "yellow";
 		else if(blue == Math.max(blue, Math.max(red, Math.max(yellow, green))))
-			return "yellow";
+			return "blue";
 		else if(green == Math.max(green, Math.max(red, Math.max(blue, yellow))))
-			return "yellow";
+			return "green";
 		else
 			return "red";
 	}
