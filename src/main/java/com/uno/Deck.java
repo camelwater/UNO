@@ -63,7 +63,7 @@ public class Deck
 	}
 	public UnoCard getCard()
 	{
-		if(deck.size()<2)
+		if(deck.size()==0)
 			takeFromDis();
 		try
 		{
