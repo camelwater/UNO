@@ -59,6 +59,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 	
 	//private Color bgColor = new Color(0,138,138).darker();
 	private Color bgColor = Color.DARK_GRAY;
+	private Color mainScreenColor = Color.DARK_GRAY;
 	private ArrayList<Color> bgOptions = new ArrayList<Color>();
 	private boolean bgOptionBox = false;
 	
@@ -211,7 +212,11 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 		Rectangle r = g.getClipBounds();
 		if(repaintHover||repaintHoverNames||repaintHoverEnd)
 		{
-			g.setColor(bgColor);
+			if(repaintHover)
+				g.setColor(bgColor);
+			else
+				g.setColor(mainScreenColor);
+			
 			g.fillRect(r.x, r.y, r.width, r.height);
 			if(repaintHover)
 			{
@@ -363,7 +368,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 			}
 			else if(repaintHoverEnd)
 			{
-				g.setColor(bgColor);
+				g.setColor(mainScreenColor);
 				g.fillRect(r.x, r.y, r.width, r.height);
 				
 				g.setFont(new Font("Trebuchet", Font.CENTER_BASELINE,font(50)));
@@ -725,7 +730,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 				g.drawString("Infinite Draw", x(730), y(300));
 				g.drawString("Lax Wild Four", x(730), y(400));
 				g.setFont(new Font("Trebuchet", Font.BOLD, font(37)));
-				g.drawString("Background Color", x(730), y(500));
+				g.drawString("Game Background Color", x(665), y(500));
 				
 				if(infiniteDraw)
 				{
@@ -1795,7 +1800,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 	{
 		int x = 538+((Math.max(5-game.current_player.getPaintName().length(), 0))*40);
 		int y = 350;
-		g.setColor(Color.DARK_GRAY);
+		g.setColor(mainScreenColor);
 		g.fillRect(0,0,xs(1920),ys(1080));
 		
 		
