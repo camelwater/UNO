@@ -35,6 +35,14 @@ public class UnoCard
 			return true;
 		return false;
 	}
+	public boolean match(UnoCard card) //this = card being played, card = card on the discard pile
+	{
+		if(this.color.equals(Color.Wild)) //only this card can be wild, not "card" 
+			return true;
+		if (this.value.equals(card.value)|| this.color.equals(card.color))
+			return true;
+		return false;
+	}
 	public String toString()
 	{
 		return color+" "+value;

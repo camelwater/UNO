@@ -246,7 +246,7 @@ public class Board extends Player
 	}
 	public void checkPlayable()
 	{
-		if(firstTurn||current_player.getHand().get(current_player.getHandSize()-1).match(current_player.getHand().get(current_player.getHandSize()-1),showTopCard()))
+		if(firstTurn||current_player.getHand().get(current_player.getHandSize()-1).match(showTopCard()))
 		{
 			if(current_player.getHand().get(current_player.getHandSize()-1).getColor().equals(UnoCard.Color.Wild))
 				return;
@@ -355,24 +355,23 @@ public class Board extends Player
 	{
 		return deck.discard.get(deck.discard.size()-1);
 	}
-	public boolean pushCard(UnoCard card)
-	{
-		if(card == null)
-			return false;
-		if(deck.discard.get(deck.discard.size()-1).match(deck.discard.get(deck.discard.size()-1),card))
-		{
-			deck.addToDis(card);
-			return true;
-		}
-		else
-			return false;
-	}
+//	public boolean pushCard(UnoCard card)
+//	{
+//		if(card == null)
+//			return false;
+//		if(deck.discard.get(deck.discard.size()-1).match(deck.discard.get(deck.discard.size()-1),card))
+//		{
+//			deck.addToDis(card);
+//			return true;
+//		}
+//		else
+//			return false;
+//	}
 	public String getCurrentDirection()
 	{
 		return direction.toString();
 	}
 
-	
 	public void setLastMove(String x)
 	{
 		lastMove = x;
@@ -523,13 +522,11 @@ public class Board extends Player
 	}
 	public void cpuTurn()
 	{
-//		if(current_player==playerList.get(0))
-//			return;
 		cpuActive = true;
 		current_player.sortHand(showTopCard().getColor(), showTopCard().getValue());
 		UnoCard card = playCard(0, current_player);
 		
-		if(firstTurn||card.match(card,deck.discard.get(deck.discard.size()-1)))
+		if(firstTurn||card.match(deck.discard.get(deck.discard.size()-1)))
 		{
 			
 			play(0);
@@ -667,7 +664,7 @@ public class Board extends Player
 			{
 				card = null;
 			}
-			else if(firstTurn || card.match(card,deck.discard.get(deck.discard.size()-1)))
+			else if(firstTurn || card.match(deck.discard.get(deck.discard.size()-1)))
 			{
 				deck.discard.add(card);
 				current_player.getHand().remove(index);

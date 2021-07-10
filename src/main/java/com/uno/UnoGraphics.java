@@ -139,7 +139,6 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 	        cpuTurn();
 	    }
 	};
-	//private Timer timer = new Timer(750, cpuTask);
 	private Timer timer = new Timer(850, cpuTask);
 	
 	public UnoGraphics()
@@ -923,7 +922,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 			    	if(game.current_player!=game.playerList.get(0))
 			    	{
 			    		System.out.println("PLAYER: "+game.current_player.name);
-			    		timer.setInitialDelay((int)(Math.random()*1250+500));
+			    		timer.setInitialDelay((int)(Math.random()*1000+500));
 			    		timer.start();
 			    		//repaint();
 			    	}
@@ -1890,12 +1889,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 	    	  
 	    	    colorPickerDraw = false;
 	    	    game.lastDraw = 0;
-//	    	    if(cpu)
-//	    	    {
-//	    	    	Timer timer = new Timer(1000, cpuTask);
-//		    		timer.setRepeats(false);
-//		    		timer.start();
-//	    	    }
+
 	    	    repaint();
 			}
 			else if(e.getX()>= x(682) && e.getX()<=x(732) && e.getY()>=y(665) && e.getY()<=y(715) && colorPickerDraw)
