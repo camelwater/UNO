@@ -2387,7 +2387,6 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 						}
 						else
 						{
-							//System.out.println("drew a "+game.current_player.getHand().get(game.current_player.getHandSize()-1));
 				    		
 				    		System.out.println(game.current_player.getName());
 				    		System.out.println(game.current_player.getHand());
@@ -2399,7 +2398,6 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 				    	    game.lastDraw = 0;
 				    	    repaint();
 						}
-						//}
 					}
 					
 					if(e.getX()>= x(490) && e.getX()<x(610) && e.getY()>=y(800+hoveringCard0) && e.getY()<=y(980))

@@ -5,20 +5,16 @@ import java.util.Collections;
 public class Player
 {
 	public ArrayList<UnoCard>hand;
-//	public ArrayList<Player>playerList;
 	private ArrayList<UnoCard> temp = new ArrayList<UnoCard>();
 	public String name;
-	Board game;
 	
 	public Player()
 	{
 		hand = new ArrayList<UnoCard>();
-//		playerList = new ArrayList<Player>();
 	}
 	public Player(String name)
 	{
 		hand = new ArrayList<UnoCard>();
-//		playerList = new ArrayList<Player>();
 		this.name = name;
 	}
 	public UnoCard playCard(int i)
@@ -114,9 +110,6 @@ public class Player
 				
 				
 	}
-//	public Player getNextHand()
-//	{
-//		return playerList.get(game.turn+1);
-//	}
+
 }
 
