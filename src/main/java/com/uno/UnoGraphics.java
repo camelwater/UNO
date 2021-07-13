@@ -35,6 +35,10 @@ import java.util.*;
 public class UnoGraphics extends JPanel implements MouseListener, MouseMotionListener
 {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	JFrame frame;
 	Board game;
 	GameState gamestate;
@@ -523,7 +527,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 				g.drawString("LOCAL", x(865), y(495));
 				g.setFont(new Font("Trebuchet", Font.BOLD, font(45)));
 				g.setColor(hoverStart.equals("exit")?Color.red:Color.black);
-				g.drawString("EXIT", x(883), y(842));
+				g.drawString("QUIT", x(880), y(842));
 				g.setColor(hoverStart.equals("cpu")?Color.red:Color.black);
 				g.drawString("CPU", x(884), y(578));
 				g.setColor(hoverStart.equals("lan")?Color.red:Color.black);
@@ -534,7 +538,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 				g.drawString("OPTIONS", x(864), y(734));
 				
 			}
-			else if(enterNames) //NEED TO ADD CLEAR BUTTON TO CLEAR NAMES
+			else if(enterNames) 
 			{
 				g.setColor(Color.DARK_GRAY);
 				g.fillRect(0, 0, xs(1920), ys(1080));
@@ -2093,6 +2097,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 					//names.clear();
 					repaint();
 				}
+				
 				else if(e.getX()>= x(1070) && e.getX()<=x(1190) && e.getY()>=y(400) && e.getY()<=y(450) && enterNames)// start button
 				{
 					if(names.size()>=2 && names.size()<=4)
@@ -2317,6 +2322,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 					gamestate = new GameState(game);
 					history.clear();
 					gameEndedBack = false;
+					cpu = false;
 					menu = false;
 					start = true;
 					endScreen = false;

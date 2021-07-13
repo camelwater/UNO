@@ -5,7 +5,7 @@ import java.util.Collections;
 public class Player
 {
 	public ArrayList<UnoCard>hand;
-	public ArrayList<Player>playerList;
+//	public ArrayList<Player>playerList;
 	private ArrayList<UnoCard> temp = new ArrayList<UnoCard>();
 	public String name;
 	Board game;
@@ -13,18 +13,18 @@ public class Player
 	public Player()
 	{
 		hand = new ArrayList<UnoCard>();
-		playerList = new ArrayList<Player>();
+//		playerList = new ArrayList<Player>();
 	}
 	public Player(String name)
 	{
 		hand = new ArrayList<UnoCard>();
-		playerList = new ArrayList<Player>();
+//		playerList = new ArrayList<Player>();
 		this.name = name;
 	}
-	public UnoCard playCard(int i, Player p)
+	public UnoCard playCard(int i)
 	{
 		
-		UnoCard card=p.getHand().get(i);
+		UnoCard card= this.hand.get(i);
 		
 		return card;
 	}
@@ -111,14 +111,12 @@ public class Player
 				if(hand.get(i).getValue().equals(value))
 					hand.add(0, hand.remove(i));
 		}
-			
-			
-			
+				
 				
 	}
-	public Player getNextHand()
-	{
-		return playerList.get(game.turn+1);
-	}
+//	public Player getNextHand()
+//	{
+//		return playerList.get(game.turn+1);
+//	}
 }
 

@@ -3,9 +3,10 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Collections;
 
-public class Board extends Player
+public class Board
 {
 	public Deck deck;
+	public ArrayList<Player> playerList;
 	public Player current_player;
 	private Player lastPlayer;
 	public int turn = 0;
@@ -32,6 +33,7 @@ public class Board extends Player
 	Direction direction = Direction.Clockwise;
 	public Board()
 	{
+		playerList = new ArrayList<Player>();
 		deck = new Deck();
 		for(int i = 0;i<4;i++)
 			playerList.add(new Player("Player "+(i+1)));
@@ -186,6 +188,7 @@ public class Board extends Player
 		System.out.println("Initial card is "+deck.discard.get(deck.discard.size()-1));
 		current_player.sortHand(showTopCard().getColor(), showTopCard().getValue());
 	}
+	
 	public void changeColor(String c)
 	{
 		deck.discard.get(deck.discard.size()-1).color = UnoCard.Color.valueOf((c.charAt(0)+"").toUpperCase()+c.substring(1)); 
@@ -250,7 +253,7 @@ public class Board extends Player
 		{
 			if(current_player.getHand().get(current_player.getHandSize()-1).getColor().equals(UnoCard.Color.Wild))
 				return;
-			UnoCard card = playCard(current_player.getHandSize()-1, current_player);
+			UnoCard card = current_player.playCard(current_player.getHandSize()-1);
 			
 			deck.discard.add(card);
 			current_player.getHand().remove(current_player.getHandSize()-1);
@@ -524,7 +527,7 @@ public class Board extends Player
 	{
 		cpuActive = true;
 		current_player.sortHand(showTopCard().getColor(), showTopCard().getValue());
-		UnoCard card = playCard(0, current_player);
+		UnoCard card = current_player.playCard(0);
 		
 		if(firstTurn||card.match(deck.discard.get(deck.discard.size()-1)))
 		{
@@ -659,7 +662,7 @@ public class Board extends Player
 		}
 		else
 		{
-			card = playCard(index, current_player);
+			card = current_player.playCard(index);
 			if(!laxWildCard &&card.getValue().equals(UnoCard.Value.Wild_Four)&&findFirstNonWild()<index)
 			{
 				card = null;
