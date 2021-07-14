@@ -10,6 +10,7 @@ public class Board
 	public Player current_player;
 	private Player lastPlayer;
 	public int turn = 0;
+	Direction direction;
 	String lastMove = "";
 	private boolean canPlay = true;
 	public boolean cpu = false;
@@ -24,16 +25,12 @@ public class Board
 	public enum Direction
 	{
 		Clockwise, Counter_Clockwise;
-		private static final Direction[] values = Direction.values();
-		public static Direction getDirection(int i)
-		{
-			return Direction.values[i];
-		}
 	}
-	Direction direction = Direction.Clockwise;
+	
 	public Board()
 	{
 		playerList = new ArrayList<Player>();
+		direction = Direction.Clockwise;
 		deck = new Deck();
 		for(int i = 0;i<4;i++)
 			playerList.add(new Player("Player "+(i+1)));
@@ -195,7 +192,7 @@ public class Board
 		if(showTopCard().getValue().equals(UnoCard.Value.Wild_Four))
 		{
 
-			if(direction.toString().equals("Clockwise"))
+			if(direction.equals(Direction.Clockwise))
 			{
 				if(turn==maxTurn)
 				{
@@ -261,14 +258,14 @@ public class Board
 		
 			if(showTopCard().getValue().equals(UnoCard.Value.Reverse))
 			{
-				if(direction.toString().equals("Clockwise"))
+				if(direction.equals(Direction.Clockwise))
 					direction = Direction.Counter_Clockwise;
 				else
 					direction = Direction.Clockwise;
 			}
 			if(showTopCard().getValue().equals(UnoCard.Value.DrawTwo))
 			{
-				if(direction.toString().equals("Clockwise"))
+				if(direction.equals(Direction.Clockwise))
 				{
 					if(turn==maxTurn)
 					{
@@ -302,7 +299,7 @@ public class Board
 			}
 			if(showTopCard().getValue().equals(UnoCard.Value.Skip))
 			{
-				if(direction.toString().equals("Clockwise"))
+				if(direction.equals(Direction.Clockwise))
 				{
 					if(turn==maxTurn)
 					{
@@ -389,16 +386,10 @@ public class Board
 		int t = turn;
 		boolean drawCheck = lastMove.contains("draw then play")&&(showTopCard().getValue().equals(UnoCard.Value.DrawTwo)||
 				showTopCard().getValue().equals(UnoCard.Value.Skip)||showTopCard().getValue().equals(UnoCard.Value.Wild_Four))?true:false;
-		if(direction.toString().equals("Clockwise"))
+		if(direction.equals(Direction.Clockwise))
 		{
 			if(lastMove.contains("Skip")||lastMove.contains("DrawTwo")||lastMove.contains("Wild_Four")||drawCheck)
 			{
-//				if(t==0)
-//					t=2;
-//				else if (t==1)
-//					t=3;
-//				else
-//					t-=2;
 				t = ((t-2)+numPlayers)%(maxTurn+1);
 			}
 			else
@@ -438,16 +429,10 @@ public class Board
 	{
 		int numPlayers = playerList.size();
 		int t = turn;
-		if(direction.toString().equals("Clockwise"))
+		if(direction.equals(Direction.Clockwise))
 		{
 			if(lastMove.contains("Skip")||lastMove.contains("DrawTwo")||lastMove.contains("Wild_Four"))
 			{
-//				if(t==0)
-//					t=2;
-//				else if (t==1)
-//					t=3;
-//				else
-//					t-=2;
 				t = ((t-2)+numPlayers)%(maxTurn+1);
 				
 			}
@@ -484,7 +469,7 @@ public class Board
 	public void nextTurn()
 	{
 		
-		if(direction.toString().equals("Clockwise"))
+		if(direction.equals(Direction.Clockwise))
 		{
 			turn++;
 			if(turn>maxTurn)
@@ -500,15 +485,14 @@ public class Board
 		current_player = playerList.get(turn);
 		if(firstTurn)
 			firstTurn = false;
-		//System.out.println("CARDS LEFT In DIS: "+deck.discard.size());
-		//System.out.println("CARDS LEFT IN DECK: "+deck.deck.size());
+		
 		if(deck.deck.size()<1)
 			deck.takeFromDis();
 	}
 	public int seeNextTurn()
 	{
 		int t = turn;
-		if(direction.toString().equals("Clockwise"))
+		if(direction.equals(Direction.Clockwise))
 		{
 			t++;
 			if(t>maxTurn)
@@ -694,14 +678,14 @@ public class Board
 	
 		if(showTopCard().getValue().equals(UnoCard.Value.Reverse))
 		{
-			if(direction.toString().equals("Clockwise"))
+			if(direction.equals(Direction.Clockwise))
 				direction = Direction.Counter_Clockwise;
 			else
 				direction = Direction.Clockwise;
 		}
 		else if(showTopCard().getValue().equals(UnoCard.Value.DrawTwo))
 		{
-			if(direction.toString().equals("Clockwise"))
+			if(direction.equals(Direction.Clockwise))
 			{
 				if(turn==maxTurn)
 				{
@@ -735,7 +719,7 @@ public class Board
 		}
 		else if(showTopCard().getValue().equals(UnoCard.Value.Skip))
 		{
-			if(direction.toString().equals("Clockwise"))
+			if(direction.equals(Direction.Clockwise))
 			{
 
 				if(turn==maxTurn)
