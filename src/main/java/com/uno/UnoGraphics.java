@@ -178,7 +178,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 		try {
 			frame.setIconImage(ImageIO.read(getClass().getResource("/card_back_large.png")));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		
@@ -261,7 +261,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 							try {
 								g.drawImage(ImageIO.read(getClass().getResource(a)),x(x+120*(i%7)),y(y-60), xs(cardWidth), ys(cardHeight), null);
 							} catch (IOException e) {
-								// TODO Auto-generated catch block
+								
 								e.printStackTrace();
 							}
 						}
@@ -270,7 +270,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 							try {
 								g.drawImage(ImageIO.read(getClass().getResource(a)),x(x+120*(i%7)),y(y), xs(cardWidth), ys(cardHeight), null);
 							} catch (IOException e) {
-								// TODO Auto-generated catch block
+								
 								e.printStackTrace();
 							}
 						}
@@ -329,7 +329,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 							try {
 								g.drawImage(ImageIO.read(getClass().getResource(a)),x(x+120*(i%7)),y(y-60), xs(cardWidth), ys(cardHeight), null);
 							} catch (IOException e) {
-								// TODO Auto-generated catch block
+								
 								e.printStackTrace();
 							}
 						}
@@ -338,7 +338,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 							try {
 								g.drawImage(ImageIO.read(getClass().getResource(a)),x(x+120*(i%7)),y(y), xs(cardWidth), ys(cardHeight), null);
 							} catch (IOException e) {
-								// TODO Auto-generated catch block
+								
 								e.printStackTrace();
 							}
 						}
@@ -383,14 +383,14 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 					try {
 						g.drawImage(ImageIO.read(getClass().getResource("/select arrow.png")), x(700), y(525),xs(50), ys(50), null);
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
+						
 						e.printStackTrace();
 					}
 					
 					try {
 						g.drawImage(rotate180(ImageIO.read(getClass().getResource("/select arrow.png"))), x(1132), y(525),xs(50), ys(50), null);
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
+						
 						e.printStackTrace();
 					}
 				}
@@ -399,14 +399,14 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 					try {
 						g.drawImage(ImageIO.read(getClass().getResource("/select arrow.png")), x(705), y(660),xs(50), ys(50), null);
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
+						
 						e.printStackTrace();
 					}
 					
 					try {
 						g.drawImage(rotate180(ImageIO.read(getClass().getResource("/select arrow.png"))), x(1127), y(660),xs(50), ys(50), null);
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
+						
 						e.printStackTrace();
 					}
 				}
@@ -490,7 +490,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 				try {
 					g.drawImage(ImageIO.read(getClass().getResource("/card_back_alt.png")), x(867), y(225), xs(cardWidth), ys(cardHeight), null);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
+					
 					e.printStackTrace();
 				}
 				
@@ -560,7 +560,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 				try {
 					g.drawImage(ImageIO.read(getClass().getResource("/plus.png")), x(1100),y(250), xs(75), ys(75), null);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
+					
 					e.printStackTrace();
 				}
 				g.setFont(new Font("Roboto", Font.BOLD| Font.CENTER_BASELINE, font(75)));
@@ -740,7 +740,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 					try {
 						g.drawImage(ImageIO.read(getClass().getResource("/toggle icon.png")), x(1100), y(250), xs(75), ys(75), null);
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
+						
 						e.printStackTrace();
 					}
 				}
@@ -749,7 +749,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 					try {
 						g.drawImage((ImageIO.read(getClass().getResource("/toggle icon off.png"))), x(1100), y(250), xs(75), ys(75), null);
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
+						
 						e.printStackTrace();
 					}
 				}
@@ -759,7 +759,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 					try {
 						g.drawImage(ImageIO.read(getClass().getResource("/toggle icon.png")), x(1100), y(350), xs(75), ys(75), null);
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
+						
 						e.printStackTrace();
 					}
 				}
@@ -768,7 +768,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 					try {
 						g.drawImage((ImageIO.read(getClass().getResource("/toggle icon off.png"))), x(1100), y(350), xs(75), ys(75), null);
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
+						
 						e.printStackTrace();
 					}
 				}
@@ -824,7 +824,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 				try {
 					g.drawImage(ImageIO.read(getClass().getResource("/menu.png")), x(1715), y(10), xs(150), ys(100), null);
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
+					
 					e1.printStackTrace();
 				}
 				
@@ -847,7 +847,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 						try {
 							g.drawImage(ImageIO.read(getClass().getResource("/card_back.png")),x(640+i*1),y(400), xs(cardWidth), ys(cardHeight), null);
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
+							
 							e.printStackTrace();
 						}
 						if(i==max-1)
@@ -908,7 +908,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 					try {
 						g.drawImage(ImageIO.read(getClass().getResource("/menu.png")), x(1715), y(10), xs(150), ys(100), null);
 					} catch (IOException e1) {
-						// TODO Auto-generated catch block
+						
 						e1.printStackTrace();
 					}
 					
@@ -1015,7 +1015,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 		try {
 			img = ImageIO.read(getClass().getResource("/arrow pointer.png"));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		if(turn == 0)
@@ -1178,7 +1178,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 				try {
 					g.drawImage(ImageIO.read(getClass().getResource(a)),x(x+120*(i%7)),y(y-60), xs(cardWidth), ys(cardHeight), null);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
+					
 					e.printStackTrace();
 				}
 			}
@@ -1187,7 +1187,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 				try {
 					g.drawImage(ImageIO.read(getClass().getResource(a)),x(x+120*(i%7)),y(y), xs(cardWidth), ys(cardHeight), null);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
+					
 					e.printStackTrace();
 				}
 			}
@@ -1246,7 +1246,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 						try {
 							g.drawImage(rotate180(ImageIO.read(getClass().getResource(a))),x(1150-cardWidth-100*(h%5)),y(100), xs(cardWidth), ys(cardHeight), null);
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
+							
 							e.printStackTrace();
 						}
 					}
@@ -1259,7 +1259,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 						try {
 							g.drawImage(rotate180(ImageIO.read(getClass().getResource("/card_back_alt.png"))),x(1150-cardWidth-50*h),y(100), xs(cardWidth), ys(cardHeight), null);
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
+							
 							e.printStackTrace();
 						}
 					}
@@ -1309,7 +1309,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 						try {
 							im = rotateClockwise90(ImageIO.read(getClass().getResource(a)));
 						} catch (IOException e1) {
-							// TODO Auto-generated catch block
+							
 							e1.printStackTrace();
 						}
 						
@@ -1323,7 +1323,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 							try {
 								im = rotateClockwise90(ImageIO.read(getClass().getResource("/card_back_alt.png")));
 							} catch (IOException e1) {
-								// TODO Auto-generated catch block
+								
 								e1.printStackTrace();
 							}
 						g.drawImage(im,x(200),y(250+50*h), xs(cardHeight), ys(cardWidth), null);
@@ -1376,7 +1376,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 						try {
 							im = rotateClockwise270(ImageIO.read(getClass().getResource(a)));
 						} catch (IOException e1) {
-							// TODO Auto-generated catch block
+							
 							e1.printStackTrace();
 						}
 						g.drawImage(im,x(1480),y(780-cardWidth-100*(h%5)), xs(cardHeight), ys(cardWidth), null);
@@ -1390,7 +1390,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 						try {
 							im = rotateClockwise270(ImageIO.read(getClass().getResource("/card_back_alt.png")));
 						} catch (IOException e1) {
-							// TODO Auto-generated catch block
+							
 							e1.printStackTrace();
 						}
 					
@@ -1444,7 +1444,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 				try {
 					g.drawImage(ImageIO.read(getClass().getResource(a)),x(x+120*(i%7)),y(y-60), xs(cardWidth), ys(cardHeight), null);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
+					
 					e.printStackTrace();
 				}
 			}
@@ -1453,7 +1453,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 				try {
 					g.drawImage(ImageIO.read(getClass().getResource(a)),x(x+120*(i%7)),y(y), xs(cardWidth), ys(cardHeight), null);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
+					
 					e.printStackTrace();
 				}
 			}
@@ -1516,7 +1516,6 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 							try {
 								g.drawImage(rotate180(ImageIO.read(getClass().getResource(a))),x(1200-cardHeight-100*(h%5)),y(100), xs(cardWidth), ys(cardHeight), null);
 							} catch (IOException e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
 						}
@@ -1529,7 +1528,6 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 							try {
 								g.drawImage(rotate180(ImageIO.read(getClass().getResource("/card_back_alt.png"))),x(1150-cardWidth-50*h),y(100), xs(cardWidth), ys(cardHeight), null);
 							} catch (IOException e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
 							
@@ -1582,7 +1580,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 							try {
 								im = rotateClockwise90(ImageIO.read(getClass().getResource(a)));
 							} catch (IOException e1) {
-								// TODO Auto-generated catch block
+								
 								e1.printStackTrace();
 							}
 							g.drawImage(im,x(200),y(250+100*(h%5)), xs(cardHeight), ys(cardWidth), null);
@@ -1595,7 +1593,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 							try {
 								im = rotateClockwise90(ImageIO.read(getClass().getResource("/card_back_alt.png")));
 							} catch (IOException e1) {
-								// TODO Auto-generated catch block
+								
 								e1.printStackTrace();
 							}
 							
@@ -1651,7 +1649,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 							try {
 								im = rotateClockwise270(ImageIO.read(getClass().getResource(a)));
 							} catch (IOException e1) {
-								// TODO Auto-generated catch block
+								
 								e1.printStackTrace();
 							}
 							
@@ -1665,7 +1663,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 							try {
 								im = rotateClockwise270(ImageIO.read(getClass().getResource("/card_back_alt.png")));
 							} catch (IOException e1) {
-								// TODO Auto-generated catch block
+								
 								e1.printStackTrace();
 							}
 						
@@ -1752,7 +1750,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 		try {
 			g.drawImage(ImageIO.read(getClass().getResource(a)),x(x),y(y), xs(cardWidth), ys(cardHeight), null);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 
@@ -1771,7 +1769,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 		try {
 			img = ImageIO.read(getClass().getResource("/direction arrow.png"));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		
@@ -1833,7 +1831,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 	
 	//@Override
 	public void mouseClicked(MouseEvent arg0) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 	//@Override
@@ -1842,12 +1840,12 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 	}
 	//@Override
 	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 	//@Override
 	public void mousePressed(MouseEvent arg0) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 	//@Override
@@ -1888,7 +1886,6 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 				game.nextTurn();
 				
 	    		page = 1;
-	    	    //addHistory(game.getLastTurn().getName()+" drew a card.");
 	    		addHistory(game.getLastPlayerTurn("draw"));
 	    	  
 	    	    colorPickerDraw = false;
@@ -1903,7 +1900,6 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 				game.nextTurn();
 				
 	    		page = 1;
-	    	    //addHistory(game.getLastTurn().getName()+" drew a card.");
 	    	    addHistory(game.getLastPlayerTurn("draw"));
 	    	  
 	    	    colorPickerDraw = false;
@@ -1918,7 +1914,6 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 				game.nextTurn();
 				
 	    		page = 1;
-	    	    //addHistory(game.getLastTurn().getName()+" drew a card.");
 	    		addHistory(game.getLastPlayerTurn("draw"));
 	    	   
 	    	    colorPickerDraw = false;
@@ -1933,7 +1928,6 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 				game.nextTurn();
 				
 	    		page = 1;
-	    	    //addHistory(game.getLastTurn().getName()+" drew a card.");
 	    		addHistory(game.getLastPlayerTurn("draw"));
 	    	    
 	    	    colorPickerDraw = false;
@@ -1951,7 +1945,6 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 	    		addHistory(game.getLastPlayerTurn("play"));
 	    		
 	    	    colorPickerPlay = false;
-//	    	    if(cpu)
 
 	    	    repaint();
 			}
@@ -2026,9 +2019,6 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 					this.remove(nameText);
 					enterNames = false;
 					confirm = false;
-//					int size = names.size();
-//					for(int i = 1;i<=4-size;i++)
-//						names.add("Player "+i);
 					game.start(names);
 					game.laxWildCard = laxWildCard;
 					game.infiniteDraw = infiniteDraw;
@@ -2329,7 +2319,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 					try {
 						Thread.sleep(250);
 					} catch (InterruptedException e1) {
-						// TODO Auto-generated catch block
+						
 						e1.printStackTrace();
 					}
 					repaint();
@@ -2876,7 +2866,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 	}
 	//@Override
 	public void mouseDragged(MouseEvent e) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 }

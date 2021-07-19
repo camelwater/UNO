@@ -105,6 +105,12 @@ public class Board
 			firstTurn = true;
 		if(showTopCard().getValue().equals(UnoCard.Value.DrawTwo))
 		{
+//			try {
+//			Thread.sleep(150);
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 			drawCard(current_player);
 			drawCard(current_player);
 			nextTurn();
@@ -115,7 +121,12 @@ public class Board
 		}
 		if (showTopCard().getValue().equals(UnoCard.Value.Skip))
 		{
-
+//			try {
+//			Thread.sleep(250);
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 			nextTurn();
 		}
 		System.out.println("Initial card is "+deck.discard.get(deck.discard.size()-1));
@@ -163,23 +174,30 @@ public class Board
 			firstTurn = true;
 		if(showTopCard().getValue().equals(UnoCard.Value.DrawTwo))
 		{
+//			try {
+//			Thread.sleep(150);
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 			drawCard(current_player);
 			drawCard(current_player);
 			nextTurn();
-//			try {
-//				Thread.sleep(500);
-//			} catch (InterruptedException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
+
 		}
 		if(showTopCard().getValue().equals(UnoCard.Value.Reverse))
 		{
+
 			direction = Direction.Counter_Clockwise;
 		}
 		if (showTopCard().getValue().equals(UnoCard.Value.Skip))
 		{
-
+//			try {
+//			Thread.sleep(250);
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 			nextTurn();
 		}
 		System.out.println("Initial card is "+deck.discard.get(deck.discard.size()-1));
@@ -306,7 +324,6 @@ public class Board
 						turn=0;
 						current_player = playerList.get(turn);
 						System.out.println("top card is now "+deck.discard.get(deck.discard.size()-1));
-						//return;
 					}
 
 					else	
@@ -314,7 +331,6 @@ public class Board
 						turn++;
 						current_player = playerList.get(turn);
 						System.out.println("top card is now "+deck.discard.get(deck.discard.size()-1));
-						//return;
 					}
 				}
 				else
@@ -324,7 +340,6 @@ public class Board
 						turn = maxTurn;
 						current_player = playerList.get(turn);
 						System.out.println("top card is now "+deck.discard.get(deck.discard.size()-1));
-						//return;
 					}
 
 					else
@@ -332,7 +347,6 @@ public class Board
 						turn--;
 						current_player = playerList.get(turn);
 						System.out.println("top card is now "+deck.discard.get(deck.discard.size()-1));
-						//return;
 					}
 				}
 			}
@@ -355,18 +369,7 @@ public class Board
 	{
 		return deck.discard.get(deck.discard.size()-1);
 	}
-//	public boolean pushCard(UnoCard card)
-//	{
-//		if(card == null)
-//			return false;
-//		if(deck.discard.get(deck.discard.size()-1).match(deck.discard.get(deck.discard.size()-1),card))
-//		{
-//			deck.addToDis(card);
-//			return true;
-//		}
-//		else
-//			return false;
-//	}
+
 	public String getCurrentDirection()
 	{
 		return direction.toString();
@@ -405,12 +408,6 @@ public class Board
 		{
 			if(lastMove.contains("Skip")||lastMove.contains("DrawTwo")||lastMove.contains("Wild_Four")||drawCheck)
 			{
-//				if(t==3)
-//					t=1;
-//				else if(t==2)
-//					t=0;
-//				else
-//					t+=2;
 				t = (t+2)%(maxTurn+1);
 			}
 			else
@@ -447,12 +444,7 @@ public class Board
 		{
 			if(lastMove.contains("Skip")||lastMove.contains("DrawTwo")||lastMove.contains("Wild_Four"))
 			{
-//				if(t==3)
-//					t=1;
-//				else if(t==2)
-//					t=0;
-//				else
-//					t+=2;
+
 				t = (t+2)%(maxTurn+1);
 			}
 			else
@@ -574,7 +566,6 @@ public class Board
 			if(turn==0)
 			{
 				setLastMove(current_player.name+" rid draw");
-				//cpuActive=false;
 			}
 			else
 				setLastMove(current_player.name+" draw");
@@ -588,11 +579,9 @@ public class Board
 			if(turn==0)
 			{
 				setLastMove(current_player.name+" rid draw");
-				//cpuActive=false;
 			}
 			else
 				setLastMove(current_player.name+" draw");
-			//System.out.println(lastMove);
 			checkPlayable();
 		}
 	}
@@ -639,7 +628,6 @@ public class Board
 			if(turn==0)
 			{
 				setLastMove(current_player.name+" rid "+card.toString());
-				//cpuActive = false;
 			}
 			else
 				setLastMove(current_player.name+" "+card.toString());
@@ -658,7 +646,6 @@ public class Board
 				if(turn==0)
 				{
 					setLastMove(current_player.name+" rid "+card.toString());
-					//cpuActive = false;
 				}
 				else
 					setLastMove(current_player.name+" "+card.toString());
@@ -727,7 +714,6 @@ public class Board
 					turn=0;
 					current_player = playerList.get(turn);
 					System.out.println("top card is now "+deck.discard.get(deck.discard.size()-1));
-					//return;
 				}
 
 				else	
@@ -735,7 +721,6 @@ public class Board
 					turn++;
 					current_player = playerList.get(turn);
 					System.out.println("top card is now "+deck.discard.get(deck.discard.size()-1));
-					//return;
 				}
 			}
 			else
@@ -745,14 +730,12 @@ public class Board
 					turn = maxTurn;
 					current_player = playerList.get(turn);
 					System.out.println("top card is now "+deck.discard.get(deck.discard.size()-1));
-					//return;
 				}
 				else
 				{
 					turn--;
 					current_player = playerList.get(turn);
 					System.out.println("top card is now "+deck.discard.get(deck.discard.size()-1));
-					//return;
 				}
 			}
 				

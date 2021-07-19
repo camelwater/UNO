@@ -5,12 +5,10 @@ import java.util.*;
 
 public class Deck 
 {
-	//public ArrayList<UnoCard>deck;
 	public Stack<UnoCard>deck;
 	public ArrayList<UnoCard>discard;
 	public Deck()
 	{
-		//deck = new ArrayList<UnoCard>();
 		deck = new Stack<UnoCard>();
 		discard = new ArrayList<UnoCard>();
 		UnoCard.Color[] col = new UnoCard.Color[] 
@@ -67,7 +65,6 @@ public class Deck
 			takeFromDis();
 		try
 		{
-			//return deck.remove(deck.size()-1);
 			return deck.pop();
 		}catch(Exception e)
 		{
@@ -104,7 +101,6 @@ public class Deck
 		for(int i =discard.size()-2;i>-1;i--)
 		{
 			deck.push(discard.remove(i));
-			//System.out.println("CARDS IN DISCARD: "+discard.size());
 		}
 		shuffle();
 		for(UnoCard c:deck)
