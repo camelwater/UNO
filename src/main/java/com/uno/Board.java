@@ -21,6 +21,8 @@ public class Board
 	public int lastDraw= 0;
 	public boolean firstTurn = false;
 	public int maxTurn = 3;
+	public boolean initCard = true; //only initial card has been placed; check if need to initWait
+	public boolean initWaiting = false;
 	
 	public enum Direction
 	{
@@ -53,32 +55,9 @@ public class Board
 
 		if(showTopCard().getValue().equals(UnoCard.Value.Wild))
 			firstTurn = true;
-		if(showTopCard().getValue().equals(UnoCard.Value.DrawTwo))
-		{
-			drawCard(current_player);
-			drawCard(current_player);
-			nextTurn();
-			try {
-				Thread.sleep(500);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		if(showTopCard().getValue().equals(UnoCard.Value.Reverse))
-		{
+		else if(showTopCard().getValue().equals(UnoCard.Value.Reverse))
 			direction = Direction.Counter_Clockwise;
-		}
-		if (showTopCard().getValue().equals(UnoCard.Value.Skip))
-		{
-			try {
-				Thread.sleep(500);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			nextTurn();
-		}
+		
 		System.out.println("Initial card is "+deck.discard.get(deck.discard.size()-1));
 		current_player.sortHand(showTopCard().getColor(), showTopCard().getValue());
 	}
@@ -93,6 +72,8 @@ public class Board
 		deal();
 		current_player = playerList.get(0);
 		deck.discard.add(deck.getCard());
+		current_player.getHand().add(new UnoCard(UnoCard.Color.Wild, UnoCard.Value.Wild_Four));
+		current_player.getHand().add(new UnoCard(UnoCard.Color.Wild, UnoCard.Value.Wild));
 		
 		while(showTopCard().getValue().equals(UnoCard.Value.Wild_Four))
 		{
@@ -103,32 +84,12 @@ public class Board
 
 		if(showTopCard().getValue().equals(UnoCard.Value.Wild))
 			firstTurn = true;
-		if(showTopCard().getValue().equals(UnoCard.Value.DrawTwo))
+		else if(showTopCard().getValue().equals(UnoCard.Value.Reverse))
 		{
-//			try {
-//			Thread.sleep(150);
-//		} catch (InterruptedException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-			drawCard(current_player);
-			drawCard(current_player);
-			nextTurn();
-		}
-		if(showTopCard().getValue().equals(UnoCard.Value.Reverse))
-		{
+
 			direction = Direction.Counter_Clockwise;
 		}
-		if (showTopCard().getValue().equals(UnoCard.Value.Skip))
-		{
-//			try {
-//			Thread.sleep(250);
-//		} catch (InterruptedException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-			nextTurn();
-		}
+		
 		System.out.println("Initial card is "+deck.discard.get(deck.discard.size()-1));
 		
 		current_player.sortHand(showTopCard().getColor(), showTopCard().getValue());
@@ -172,36 +133,38 @@ public class Board
 
 		if(showTopCard().getValue().equals(UnoCard.Value.Wild))
 			firstTurn = true;
-		if(showTopCard().getValue().equals(UnoCard.Value.DrawTwo))
-		{
-//			try {
-//			Thread.sleep(150);
-//		} catch (InterruptedException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-			drawCard(current_player);
-			drawCard(current_player);
-			nextTurn();
-
-		}
-		if(showTopCard().getValue().equals(UnoCard.Value.Reverse))
+		else if(showTopCard().getValue().equals(UnoCard.Value.Reverse))
 		{
 
 			direction = Direction.Counter_Clockwise;
 		}
-		if (showTopCard().getValue().equals(UnoCard.Value.Skip))
-		{
-//			try {
-//			Thread.sleep(250);
-//		} catch (InterruptedException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-			nextTurn();
-		}
+		
 		System.out.println("Initial card is "+deck.discard.get(deck.discard.size()-1));
 		current_player.sortHand(showTopCard().getColor(), showTopCard().getValue());
+	}
+	public UnoCard checkInitWait()
+	{
+		if(showTopCard().getValue().equals(UnoCard.Value.DrawTwo) ||
+				showTopCard().getValue().equals(UnoCard.Value.Reverse) ||
+				showTopCard().getValue().equals(UnoCard.Value.Skip))
+			return showTopCard();
+		return null;
+	}
+	public void doInitWait()
+	{
+		initWaiting = true;
+		if(showTopCard().getValue().equals(UnoCard.Value.DrawTwo))
+		{
+			drawCard(current_player);
+			drawCard(current_player);
+			nextTurn();
+
+		}
+		else if (showTopCard().getValue().equals(UnoCard.Value.Skip))
+		{
+			nextTurn();
+		}
+		initWaiting = false;
 	}
 	
 	public void changeColor(String c)

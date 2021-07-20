@@ -1,6 +1,7 @@
 package com.uno;
 
-public class UnoCard 
+@SuppressWarnings("rawtypes")
+public class UnoCard implements Comparable
 {
 	enum Color
 	{
@@ -47,6 +48,18 @@ public class UnoCard
 	{
 		return color+" "+value;
 	}
+	public int colorToInt() {
+		if (this.color.equals(Color.Blue))
+			return 0;
+		if (this.color.equals(Color.Green))
+			return 1;
+		if (this.color.equals(Color.Red))
+			return 2;
+		if (this.color.equals(Color.Yellow))
+			return 3;
+		else
+			return 4;
+	}
 	public int toInt()
 	{
 		if(value.toString().equals("Zero"))
@@ -82,6 +95,17 @@ public class UnoCard
 		else
 			return 14;
 	}
-	
+	public int compareTo(Object obj)
+	{
+		int x = colorToInt();
+		UnoCard comp = (UnoCard)(obj);
+		int y = comp.colorToInt();
+		if (x!=y)
+			return x - y;
+		x = 14-toInt();
+		y = 14-comp.toInt();
+		return x - y;
+		
+	}
 	
 }

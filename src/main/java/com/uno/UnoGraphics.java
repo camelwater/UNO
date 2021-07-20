@@ -145,6 +145,14 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 	};
 	private Timer timer = new Timer(850, cpuTask);
 	
+	ActionListener initWaitTask = new ActionListener() {
+		public void actionPerformed(ActionEvent e)
+		{
+			doInitWait();
+		}
+	};
+	private Timer initWaitTimer = new Timer(350, initWaitTask);
+	
 	public UnoGraphics()
 	{
 		frame = new JFrame("UNO");
@@ -169,6 +177,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 		frame.toFront();
 		
 		timer.setRepeats(false);
+		initWaitTimer.setRepeats(false);
 		
 		setVisible(true);
 		addMouseListener(this);
@@ -197,6 +206,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 		bgOptions.add(new Color(22, 71, 53));
 		
 		timer.setRepeats(false);
+		initWaitTimer.setRepeats(false);
 		
 		setVisible(true);
 		addMouseListener(this);
@@ -205,12 +215,10 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 	
 	public void paintComponent(Graphics g)
 	{
-		//System.out.println(EventQueue.isDispatchThread());
 		scrWidth = frame.getContentPane().getWidth();
 		scrHeight = frame.getContentPane().getHeight(); 
 		wFactor = scrWidth/1920;
 		hFactor = scrHeight/1080;
-		//System.out.println(scrWidth+", "+scrHeight);
 		
 		Rectangle r = g.getClipBounds();
 		if(repaintHover||repaintHoverNames||repaintHoverEnd)
@@ -235,7 +243,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 				int y = 800;
 				if(!cpu)
 				{
-					game.current_player.sortHand(game.showTopCard().getColor(), game.showTopCard().getValue());	
+//					game.current_player.sortHand(game.showTopCard().getColor(), game.showTopCard().getValue());	
 					int start = (page-1)*7;
 					int end = Math.min(start+7, game.current_player.getHandSize());
 					int hoveringIndex = hoveringCard +7*(page-1);
@@ -302,8 +310,8 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 				
 				else
 				{
-					if(game.getTurn()==0)
-						game.playerList.get(0).sortHand(game.showTopCard().getColor(), game.showTopCard().getValue());	
+//					if(game.getTurn()==0)
+//						game.playerList.get(0).sortHand(game.showTopCard().getColor(), game.showTopCard().getValue());	
 					int start = (page-1)*7;
 					int end = Math.min(start+7, game.playerList.get(0).getHandSize());
 					int hoveringIndex = hoveringCard +7*(page-1);
@@ -344,7 +352,6 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 						}
 						
 					}
-					//paintArrows(g, game.playerList.get(0).getHandSize());
 					g.setColor(Color.white);
 					g.setFont(new Font("Trebuchet", Font.BOLD, font(13)));
 					if(!(bgColor.equals(Color.DARK_GRAY) || bgColor.equals(new Color(22, 71, 53))|| bgColor.equals(Color.LIGHT_GRAY) || bgColor.equals(new Color(0,138,138).darker())))
@@ -918,15 +925,26 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 					g.setFont(new Font("Trebuchet", Font.BOLD|Font.CENTER_BASELINE, font(30)));
 					g.drawString("QUIT", x(1715), y(149));
 				}
+			    UnoCard checkInit = game.checkInitWait();
+			    if (game.initCard && checkInit!=null && !game.initWaiting && !initWaitTimer.isRunning())
+			    {
+			    	if (checkInit.getValue().equals(UnoCard.Value.Skip))
+			    		initWaitTimer.setInitialDelay(500);
+			    	else if(checkInit.getValue().equals(UnoCard.Value.DrawTwo))
+			    		initWaitTimer.setInitialDelay(500);
+			    	
+			    	initWaitTimer.start();
+			    	return;
+			    }
 	
 				if(cpu && !(colorPickerPlay || colorPickerDraw) && !gamestate.isOver() && !gameEndedBack && !game.cpuActive && !timer.isRunning())
 			    {
 					
-							
 			    	if(game.current_player!=game.playerList.get(0))
 			    	{
-			    		System.out.println("PLAYER: "+game.current_player.name);
+//			    		System.out.println("PLAYER: "+game.current_player.name);
 			    		timer.setInitialDelay((int)(Math.random()*1000+500));
+			    		
 			    		timer.start();
 			    		//repaint();
 			    	}
@@ -945,6 +963,13 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 		else
 			addHistory(game.getLastPlayerTurn("play"));
 		game.lastDraw=0;
+		repaint();
+	}
+	public void doInitWait()
+	{
+		game.doInitWait();
+		game.initCard = false;
+		initWaitTimer.stop();
 		repaint();
 	}
 	public void skipStart()
@@ -1225,6 +1250,8 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 				{
 					int s= (page3-1)*5;
 					int en = Math.min(s+5, game.playerList.get(2).getHandSize());
+					p.sortHand(game.showTopCard().getColor(), game.showTopCard().getValue());
+
 					for(int h = s;h<en;h++)
 					{
 						String a = "/";
@@ -1288,6 +1315,8 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 				{
 					int s= (page2-1)*5;
 					int en = Math.min(s+5, game.playerList.get(1).getHandSize());
+					p.sortHand(game.showTopCard().getColor(), game.showTopCard().getValue());
+
 					for(int h = s;h<en;h++)
 					{
 						String a = "/";
@@ -1355,6 +1384,8 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 				{
 					int s= (page4-1)*5;
 					int en = Math.min(s+5, game.playerList.get(3).getHandSize());
+					p.sortHand(game.showTopCard().getColor(), game.showTopCard().getValue());
+
 					for(int h = s;h<en;h++)
 					{
 						String a = "/";
@@ -1494,11 +1525,12 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 					{
 						int s = (page3-1)*5;
 						int en = Math.min(s+5, game.playerList.get(playerIndex).getHandSize());
+						p.sortHand(game.showTopCard().getColor(), game.showTopCard().getValue());
+
 						for(int h = s;h<en;h++)
 						{
 							String a = "/";
 							UnoCard card = p.getHand().get(h);
-							p.sortHand(game.showTopCard().getColor(), game.showTopCard().getValue());
 							
 							if(card.getValue().toString().equals("Reverse"))
 								a += card.getColor().toString().toLowerCase()+"_reverse"+".png";
@@ -1558,11 +1590,12 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 					{
 						int s = (page2-1)*5;
 						int en = Math.min(s+5, game.playerList.get(playerIndex).getHandSize());
+						p.sortHand(game.showTopCard().getColor(), game.showTopCard().getValue());
+
 						for(int h = s;h<en;h++)
 						{
 							String a = "/";
 							UnoCard card = p.getHand().get(h);
-							p.sortHand(game.showTopCard().getColor(), game.showTopCard().getValue());
 							
 							if(card.getValue().toString().equals("Reverse"))
 								a += card.getColor().toString().toLowerCase()+"_reverse"+".png";
@@ -1627,11 +1660,12 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 					{
 						int s = (page4-1)*5;
 						int en = Math.min(s+5, game.playerList.get(playerIndex).getHandSize());
+						p.sortHand(game.showTopCard().getColor(), game.showTopCard().getValue());
+
 						for(int h = s;h<en;h++)
 						{
 							String a = "/";
 							UnoCard card = p.getHand().get(h);
-							p.sortHand(game.showTopCard().getColor(), game.showTopCard().getValue());
 							
 							if(card.getValue().toString().equals("Reverse"))
 								a += card.getColor().toString().toLowerCase()+"_reverse"+".png";
@@ -2033,7 +2067,6 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 				{
 					start = false;
 					enterNames = true;
-					//game.start(names);
 					repaint();
 				}
 				else if(e.getX()>= x(857) && e.getX()<=x(1007) && e.getY()>=y(530) && e.getY()<=y(592) && start)
@@ -2361,7 +2394,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 		}
 		else
 		{
-			if(!game.cpuActive)
+			if(!game.cpuActive && !game.initWaiting && !initWaitTimer.isRunning())
 			{
 				if(!gameEndedBack && (!cpu||game.getTurn()==0))
 				{
