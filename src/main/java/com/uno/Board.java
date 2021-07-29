@@ -72,8 +72,8 @@ public class Board
 		deal();
 		current_player = playerList.get(0);
 		deck.discard.add(deck.getCard());
-		current_player.getHand().add(new UnoCard(UnoCard.Color.Wild, UnoCard.Value.Wild_Four));
-		current_player.getHand().add(new UnoCard(UnoCard.Color.Wild, UnoCard.Value.Wild));
+//		current_player.getHand().add(new UnoCard(UnoCard.Color.Wild, UnoCard.Value.Wild_Four));
+//		current_player.getHand().add(new UnoCard(UnoCard.Color.Wild, UnoCard.Value.Wild));
 		
 		while(showTopCard().getValue().equals(UnoCard.Value.Wild_Four))
 		{
