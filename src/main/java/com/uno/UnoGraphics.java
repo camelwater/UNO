@@ -1886,6 +1886,8 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 	public void mouseReleased(MouseEvent e) {
 		System.out.println("X: "+e.getX()+" Y: "+e.getY());
 		
+//		Graphics g = this.getGraphics();
+		
 		if(e.getX()>= x(1760) && e.getX()<=x(1810) && e.getY()>=y(40) && e.getY()<= y(75) && game.started) //open menu
 		{
 			menu = !menu;
