@@ -1,5 +1,5 @@
 # UNO
-Java implementation of UNO (game has LAN mode but I haven't gotten around to code it yet and cba to any time soon)
+Java implementation of the UNO card game.
 
-jar file of the latest version is in the `target` folder.
+Jar file of the latest version is in the `target` folder - the jar file with "dependencies" in its name is the correct one.
 If you want an executable you'll have to build it yourself. You can use launch4j for that; it's pretty simple.
