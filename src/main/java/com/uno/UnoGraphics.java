@@ -514,7 +514,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
                 g.fillRect(x(872),y(799), xs(120), ys(52));
 
                 Graphics2D g2 = (Graphics2D) g;
-                g2.setStroke(new BasicStroke(3f));
+                g2.setStroke(new BasicStroke(adjustThickness(5.0f)));
 
                 g2.setColor(hoverStart.equals("local")?Color.red:Color.black);
                 g2.drawRect(x(857),y(450), xs(150), ys(62));
@@ -586,7 +586,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 
                 g.setColor(Color.black);
                 Graphics2D g2 = (Graphics2D) g;
-                g2.setStroke(new BasicStroke(3f));
+                g2.setStroke(new BasicStroke(adjustThickness(5.0f)));
                 g2.drawRect(x(725), y(400), xs(120), ys(50));
                 g2.drawRect(x(1070), y(400), xs(120), ys(50));
                 //			g.drawRect(726, 401, 118, 48);
@@ -661,7 +661,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
                     g.setColor(Color.white);
                     g.fillRect(x(770), y(375), xs(360), ys(365));
                     g.setColor(Color.black);
-                    g2.setStroke(new BasicStroke(3f));
+                    g2.setStroke(new BasicStroke(adjustThickness(5.0f)));
                     g2.drawRect(x(770), y(375), xs(360), ys(365));
 
                     g2.drawRect(x(915), y(660), xs(70), ys(40));
@@ -722,7 +722,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 
                 g.setColor(Color.black);
                 Graphics2D g2 = (Graphics2D) g;
-                g2.setStroke(new BasicStroke(3f));
+                g2.setStroke(new BasicStroke(adjustThickness(5.0f)));
                 g2.drawRect(x(960-75-35),y(500),xs(150),ys(75));
                 g2.drawRect(x(960-112-35),y(400),xs(225),ys(75));
                 g2.drawRect(x(960-75-35),y(700),xs(150),ys(65));
@@ -794,7 +794,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
                 g.fillRect(x(1100), y(472), xs(75), ys(35));
                 g.setColor(Color.black);
                 Graphics2D g2 = (Graphics2D) g;
-                g2.setStroke(new BasicStroke(2f));
+                g2.setStroke(new BasicStroke(adjustThickness(2.0f)));
                 g2.drawRect(x(1100), y(472), xs(75), ys(35));
                 g.fillPolygon(new int[] {x(1185), x(1207), x(1196)}, new int[] {y(483),y(483), y(498)}, 3);
 
@@ -815,7 +815,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
                 g.setColor(Color.white);
                 g.fillRect(x(960-75-35), y(650), xs(150), ys(60));
                 g.setColor(Color.black);
-                g2.setStroke(new BasicStroke(3f));
+                g2.setStroke(new BasicStroke(adjustThickness(5.0f)));
                 g2.drawRect(x(960-75-35), y(650), xs(150), ys(60));
                 g.setFont(new Font("Trebuchet", Font.BOLD, font(47)));
                 g.drawString("BACK", x(960-75-35+9), y(697));
@@ -855,7 +855,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
                     g.fillRect(x(1645), y(915), xs(125), ys(53));
                     g.setColor(Color.black);
                     Graphics2D g2 = (Graphics2D) g;
-                    g2.setStroke(new BasicStroke(3f));
+                    g2.setStroke(new BasicStroke(adjustThickness(5.0f)));
                     g2.drawRect(x(1645), y(915), xs(125), ys(53));
                     g.setFont(new Font("Trebuchet", Font.BOLD|Font.CENTER_BASELINE, font(35)));
                     g.drawString("FINISH", x(1653), y(956));
@@ -936,9 +936,9 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
 
                     g.setColor(Color.black);
                     Graphics2D g2 = (Graphics2D) g;
-                    g2.setStroke(new BasicStroke(3f));
+                    g2.setStroke(new BasicStroke(adjustThickness(5.0f)));
                     g2.drawRect(x(1700), y(115), xs(100), ys(45));
-                    g2.setStroke(new BasicStroke(2f));
+                    g2.setStroke(new BasicStroke(adjustThickness(2.0f)));
                     g2.drawRect(x(1650), 0, xs(267), ys(1080));
                     g.setFont(new Font("Trebuchet", Font.BOLD|Font.CENTER_BASELINE, font(30)));
                     g.drawString("QUIT", x(1715), y(149));
@@ -1002,6 +1002,9 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
     {
         bgColor = x;
     }
+    public float adjustThickness(float x) {
+        return Math.min((float) (x*wFactor), (float) (x*hFactor));
+    }
     public int x(int x)
     {
         x+=35;
@@ -1010,7 +1013,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
     public int font(int s)
     {
         s+=2.5;
-        return (int)(Math.min((s-1.5)*wFactor,s*hFactor));
+        return (int)(Math.min((s*14/15)*wFactor,s*hFactor));
     }
     public int xs(int s)
     {
@@ -1868,7 +1871,7 @@ public class UnoGraphics extends JPanel implements MouseListener, MouseMotionLis
         g.fillRect(x(887), y(398), xs(110), ys(50));
         g.setColor(Color.black);
         Graphics2D g2 = (Graphics2D) g;
-        g2.setStroke(new BasicStroke(3));
+        g2.setStroke(new BasicStroke(adjustThickness(5.0f)));
         g2.drawRect(x(887), y(398), xs(110), ys(50));
 //		g.drawRect(x(887+1), y(398+1), xs(110-2), ys(50-2));
 
